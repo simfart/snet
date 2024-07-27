@@ -1,0 +1,14 @@
+.updateUser {
+  &-container {
+    margin: 0 auto;
+  }
+  &-title {
+    line-height: 1.5;
+    font-size: 2rem;
+  }
+  &-iconlink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
