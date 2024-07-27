@@ -14,14 +14,6 @@ interface AuthFormProps {
   linkText: string;
 }
 
-const initialFormState = {
-  email: '',
-  password: '',
-  name: '',
-  avatar: '',
-  about: '',
-};
-
 export const AuthForm = ({
   mode,
   title,
@@ -29,9 +21,9 @@ export const AuthForm = ({
   linkUrl,
   linkText,
 }: AuthFormProps) => {
-  const [formState, setFormState] = useState(initialFormState);
   const { mutate: login, isLoading: isloadLogin } = useLogin();
   const { mutate: register, isLoading } = useRegister();
+  const [formData, setFormData] = useState(initialDataAuth.initial);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,9 +32,13 @@ export const AuthForm = ({
       if (mode === 'login') {
         login({ login: formData.email, password: formData.password });
       } else {
+        //   if (formData.[].trim() === "" || values.description.trim() === "") {
+        //     setError("Заполните все обязательные поля");
+        // }
+
         register({
           name: formData.name,
-          email: formState.email,
+          email: formData.email,
           password: formData.password,
           avatar: formData.avatar,
           about: formData.about,
@@ -58,16 +54,6 @@ export const AuthForm = ({
       return null;
     }
   };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormState((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const [formData, setFormData] = useState(initialDataAuth.initial);
 
   const handleChange = (
     name: keyof typeof initialDataAuth.initial,
@@ -119,7 +105,6 @@ export const AuthForm = ({
       <button type="submit" className="ctaLink">
         {buttonText}
       </button>
-
       <Link to={linkUrl} className="auth-iconlink">
         {linkText}
       </Link>

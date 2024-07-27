@@ -1,0 +1,1 @@
+export { formInputs } from './formInputs';
