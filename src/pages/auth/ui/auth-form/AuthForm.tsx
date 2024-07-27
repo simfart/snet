@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRegister, useLogin } from '../hooks';
 import { Loader } from 'shared/ui';
+import { initialDataAuth } from 'shared/ui/initial-data';
 
 import './AuthForm.scss';
 
@@ -17,6 +18,8 @@ const initialFormState = {
   email: '',
   password: '',
   name: '',
+  avatar: '',
+  about: '',
 };
 
 export const AuthForm = ({
@@ -35,12 +38,14 @@ export const AuthForm = ({
 
     try {
       if (mode === 'login') {
-        login({ login: formState.email, password: formState.password });
+        login({ login: formData.email, password: formData.password });
       } else {
         register({
-          name: formState.name,
+          name: formData.name,
           email: formState.email,
-          password: formState.password,
+          password: formData.password,
+          avatar: formData.avatar,
+          about: formData.about,
         });
       }
     } catch (err) {
@@ -54,6 +59,28 @@ export const AuthForm = ({
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormState((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const [formData, setFormData] = useState(initialDataAuth.initial);
+
+  const handleChange = (
+    name: keyof typeof initialDataAuth.initial,
+    value: string,
+  ) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    console.log(formData);
+  };
+  type FieldName = keyof typeof initialDataAuth.initial;
+
   if (isLoading || isloadLogin) {
     return <Loader />;
   }
@@ -61,41 +88,32 @@ export const AuthForm = ({
   return (
     <form onSubmit={handleSubmit} className="auth-container">
       <h1 className="auth-tile">{title}</h1>
-      <input
-        type="email"
-        placeholder="Email"
-        value={formState.email}
-        onChange={(event) =>
-          setFormState((prevState) => ({
-            ...prevState,
-            email: event.target.value,
-          }))
-        }
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={formState.password}
-        onChange={(event) =>
-          setFormState((prevState) => ({
-            ...prevState,
-            password: event.target.value,
-          }))
-        }
-      />
+      {Object.keys(initialDataAuth.login).map((field) => (
+        <div key={field}>
+          <input
+            type={initialDataAuth.type[field as FieldName]}
+            placeholder={initialDataAuth.placeholder[field as FieldName]}
+            value={formData[field as FieldName]}
+            onChange={(e) => handleChange(field as FieldName, e.target.value)}
+            required={initialDataAuth.require[field as FieldName]}
+          />
+        </div>
+      ))}
       {mode === 'register' && (
         <>
-          <input
-            type="text"
-            placeholder="Name"
-            value={formState.name}
-            onChange={(event) =>
-              setFormState((prevState) => ({
-                ...prevState,
-                name: event.target.value,
-              }))
-            }
-          />
+          {Object.keys(initialDataAuth.register).map((field) => (
+            <div key={field}>
+              <input
+                type={initialDataAuth.type[field as FieldName]}
+                placeholder={initialDataAuth.placeholder[field as FieldName]}
+                value={formData[field as FieldName]}
+                onChange={(e) =>
+                  handleChange(field as FieldName, e.target.value)
+                }
+                required={initialDataAuth.require[field as FieldName]}
+              />
+            </div>
+          ))}
         </>
       )}
       <button type="submit" className="ctaLink">

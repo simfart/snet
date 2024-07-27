@@ -7,6 +7,8 @@ export interface IUser {
   ownerId: string;
   'user-token': string;
   objectId: string;
+  avatar: string;
+  about: string;
 }
 
 export interface GenericResponse {

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { GenericResponse, ILoginResponse, IUserResponse } from './types';
+import { backendBaseUrl } from 'shared/config';
 
-const BASE_URL = 'https://keywire-us.backendless.app/api';
+const BASE_URL = backendBaseUrl;
 
 export const authApi = axios.create({
   baseURL: BASE_URL,
@@ -23,6 +24,8 @@ export const registerUserFn = async (user: {
   name: string;
   email: string;
   password: string;
+  about: string;
+  avatar: string;
 }) => {
   const response = await authApi.post<GenericResponse>('/users/register', user);
   return response.data;

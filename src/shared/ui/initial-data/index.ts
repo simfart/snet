@@ -1,0 +1,1 @@
+export { initialDataAuth } from './initialDataAuth';
