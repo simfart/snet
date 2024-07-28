@@ -91,28 +91,16 @@ export const useForm = (initialValues: InitialValues) => {
     [validateForm, values, initialValues],
   );
 
-  const renderInputs = useCallback(() => {
-    return Object.entries(initialValues).map(([key, config]) => (
-      <div key={key}>
-        <label htmlFor={key}>{config.label || key}</label>
-        <input
-          id={key}
-          name={key}
-          type={config.type}
-          value={values[key]}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          required={config.required}
-        />
-        {/* {errors[key] && <span className="error">{errors[key]}</span>} */}
-      </div>
-    ));
-  }, [initialValues, values, handleChange, handleFocus]);
+  const getErrorClass = (fieldName: string) => {
+    return errors[fieldName] ? 'error' : '';
+  };
 
   return {
-    renderInputs,
+    handleChange,
+    handleFocus,
     handleSubmit,
     errors,
     values,
+    getErrorClass,
   };
 };

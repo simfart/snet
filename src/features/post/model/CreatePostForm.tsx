@@ -1,28 +1,27 @@
 import { FC, useCallback } from 'react';
-
-import './formStyles.scss';
-import { loginInputs } from 'features/useForm/model';
-import { useLogin } from './hooks';
-import { Loader } from 'shared/ui';
-import { Link } from 'react-router-dom';
+import { postInputs } from './formInputs';
+import { useCreatePost } from './useCreatePost';
 import { useForm } from 'features/useForm/ui';
+import { Loader } from 'shared/ui';
+import { getPostWithUser } from 'entities/post/model/api';
 
-export const LoginPage: FC = () => {
+export const CreatePostForm: FC = () => {
   const { handleChange, handleFocus, handleSubmit, values, getErrorClass } =
-    useForm(loginInputs);
+    useForm(postInputs);
 
-  const { mutate, isLoading } = useLogin();
+  const { mutate, isLoading } = useCreatePost();
 
   const onSubmit = (formData: Record<string, string>) => {
+    getPostWithUser();
     try {
-      mutate({ login: formData.email, password: formData.password });
+      mutate({ description: formData.description, image: formData.image });
     } catch (err) {
       console.log(err);
     }
   };
 
   const renderInputs = useCallback(() => {
-    return Object.entries(loginInputs).map(([key, config]) => (
+    return Object.entries(postInputs).map(([key, config]) => (
       <div key={key}>
         <label htmlFor={key}>{key}</label>
         <input
@@ -45,15 +44,9 @@ export const LoginPage: FC = () => {
   }
 
   return (
-    <div className="authContainer">
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <h1 className="auth-title">Login</h1>
-        {renderInputs()}
-        <button type="submit">Sign in</button>
-        <Link to="/register" className="auth-iconlink">
-          Register
-        </Link>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      {renderInputs()}
+      <button type="submit">Create Post</button>
+    </form>
   );
 };

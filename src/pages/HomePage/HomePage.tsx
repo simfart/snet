@@ -1,3 +1,5 @@
+import { CreatePostForm } from 'features/post/model/CreatePostForm';
+import { PostList } from 'features/post/ui/PostList';
 import { useLogout } from 'pages/auth/ui/hooks';
 import { useUser } from 'pages/auth/ui/hooks/useUser';
 import { FC } from 'react';
@@ -23,6 +25,13 @@ export const HomePage: FC = () => {
       </Link>
       <div>{user?.name}</div>
       <div>{user?.email}</div>
+      <div>{user?.avatar}</div>
+      <div>{user?.about}</div>
+      <div>
+        <h1>Posts</h1>
+        <CreatePostForm />
+        <PostList />
+      </div>
     </div>
   );
 };

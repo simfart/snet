@@ -1,12 +1,16 @@
 import { useRegister } from 'pages/auth/ui/hooks';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { Loader } from 'shared/ui';
 import { useForm } from 'features/useForm/ui';
 import { registerInputs } from 'features/useForm/model';
 import { Link } from 'react-router-dom';
 
+import './formStyles.scss';
+
 export const RegisterPage: FC = () => {
-  const { errors, handleSubmit, renderInputs } = useForm(registerInputs);
+  const { handleChange, handleFocus, handleSubmit, values, getErrorClass } =
+    useForm(registerInputs);
+
   const { mutate, isLoading } = useRegister();
 
   const onSubmit = (formData: Record<string, string>) => {
@@ -19,15 +23,28 @@ export const RegisterPage: FC = () => {
         about: formData.about,
       });
     } catch (err) {
-      if (err instanceof Error) {
-        console.error(err.message);
-        alert(err.message);
-      } else {
-        console.error('Unexpected error', err);
-      }
-      return null;
+      console.log(err);
     }
   };
+
+  const renderInputs = useCallback(() => {
+    return Object.entries(registerInputs).map(([key, config]) => (
+      <div key={key}>
+        <label htmlFor={key}>{key}</label>
+        <input
+          id={key}
+          name={key}
+          type={config.type}
+          value={values[key]}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          required={config.required}
+          className={getErrorClass(key)}
+          placeholder={key}
+        />
+      </div>
+    ));
+  }, [values, handleChange, handleFocus, getErrorClass]);
 
   if (isLoading) {
     return <Loader />;
@@ -42,13 +59,6 @@ export const RegisterPage: FC = () => {
       >
         <h1 className="auth-title">Register</h1>
         {renderInputs()}
-        <div>
-          {Object.entries(errors).map(([field, message]) => (
-            <div key={field} className="error-message">
-              {message}
-            </div>
-          ))}
-        </div>
         <button type="submit">Submit</button>
         <Link to="/login" className="auth-iconlink">
           Sign in

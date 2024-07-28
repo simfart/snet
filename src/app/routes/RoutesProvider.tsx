@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { RegisterPage, LoginPage } from 'pages/auth';
 import { FC } from 'react';
-import { HomePage } from 'pages/home';
+import { HomePage } from 'pages/HomePage';
 import { PageNotFound, ProtectedRoute } from 'shared/ui';
 import { UpdatePage } from 'features/update-user';
 import { Profile } from 'pages/profile/Profile';
