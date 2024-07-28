@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRegister, useLogin } from '../hooks';
 import { Loader } from 'shared/ui';
 import { initialDataAuth } from 'shared/ui/initial-data';
 
 import './AuthForm.scss';
+import { loginInputs } from 'features/useForm/model';
 
 interface AuthFormProps {
   mode: 'login' | 'register';
@@ -12,6 +13,7 @@ interface AuthFormProps {
   buttonText: string;
   linkUrl: string;
   linkText: string;
+  onSubmit?: () => void;
 }
 
 export const AuthForm = ({
@@ -63,9 +65,24 @@ export const AuthForm = ({
       ...prevData,
       [name]: value,
     }));
-    console.log(formData);
   };
   type FieldName = keyof typeof initialDataAuth.initial;
+
+  const renderInputs = useCallback(() => {
+    return Object.entries(loginInputs).map(([key, config]) => (
+      <div key={key}>
+        <label htmlFor={key}>{key}</label>
+        <input
+          id={key}
+          name={key}
+          type={config.type}
+          value={values[key]}
+          onChange={handleChange}
+          required={config.required}
+        />
+      </div>
+    ));
+  }, [values, handleChange]);
 
   if (isLoading || isloadLogin) {
     return <Loader />;
