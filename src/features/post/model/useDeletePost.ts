@@ -1,13 +1,12 @@
-import { useMutation, useQueryClient } from 'react-query';
-import { createPost } from 'entities/post/model/api';
-import { QUERY_KEY } from 'shared/constants/queryKeys';
+import { deletePostFn } from 'entities/post/model/api';
 import { useMemo } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { QUERY_KEY } from 'shared/constants/queryKeys';
 
-export const useCreatePost = () => {
+export const useDeletePost = () => {
   const queryClient = useQueryClient();
-
   const mutation = useMutation({
-    mutationFn: createPost,
+    mutationFn: deletePostFn,
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEY.posts]);
     },
@@ -15,7 +14,6 @@ export const useCreatePost = () => {
       console.log(err);
     },
   });
-
   return useMemo(
     () => ({
       mutate: mutation.mutate,

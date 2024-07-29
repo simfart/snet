@@ -1,12 +1,18 @@
-import { useEffect, useState } from 'react';
-import { fetchPosts } from 'entities/Post/model/api';
+import { getPostFn } from 'entities/post/model/api';
+import { useMemo } from 'react';
+import { useQuery } from 'react-query';
+import { QUERY_KEY } from 'shared/constants/queryKeys';
 
 export const usePosts = () => {
-  const [posts, setPosts] = useState([]);
+  const {
+    data: posts,
+    isLoading,
+    error,
+    isFetching,
+  } = useQuery(QUERY_KEY.posts, getPostFn);
 
-  useEffect(() => {
-    fetchPosts().then((data) => setPosts(data));
-  }, []);
-
-  return { posts };
+  return useMemo(
+    () => ({ posts, isLoading, error, isFetching }),
+    [error, isFetching, isLoading, posts],
+  );
 };

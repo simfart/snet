@@ -3,7 +3,6 @@ import { postInputs } from './formInputs';
 import { useCreatePost } from './useCreatePost';
 import { useForm } from 'features/useForm/ui';
 import { Loader } from 'shared/ui';
-import { getPostWithUser } from 'entities/post/model/api';
 
 export const CreatePostForm: FC = () => {
   const { handleChange, handleFocus, handleSubmit, values, getErrorClass } =
@@ -12,7 +11,6 @@ export const CreatePostForm: FC = () => {
   const { mutate, isLoading } = useCreatePost();
 
   const onSubmit = (formData: Record<string, string>) => {
-    getPostWithUser();
     try {
       mutate({ description: formData.description, image: formData.image });
     } catch (err) {

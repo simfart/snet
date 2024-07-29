@@ -1,11 +1,10 @@
 import { FC } from 'react';
 import { PostList } from 'features/post/ui/PostList';
-import { CreatePostForm } from 'features/post/ui/CreatePostForm';
-import styles from './HomePage.module.css';
+import { CreatePostForm } from 'features/post/model/CreatePostForm';
 
 export const PostPage: FC = () => {
   return (
-    <div className={styles.container}>
+    <div className="container">
       <h1>Posts</h1>
       <CreatePostForm />
       <PostList />

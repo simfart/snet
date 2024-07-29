@@ -1,10 +1,10 @@
 export type Post = {
-  created?: number;
+  created: number;
   description: string;
   image?: string;
-  obgectId?: number;
+  objectId: string;
   ownerId?: number;
   updated?: number;
-  likes?: number;
+  likesCount?: number;
   comments?: number;
 };

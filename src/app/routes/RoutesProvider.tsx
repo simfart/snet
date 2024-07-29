@@ -5,12 +5,14 @@ import { HomePage } from 'pages/HomePage';
 import { PageNotFound, ProtectedRoute } from 'shared/ui';
 import { UpdatePage } from 'features/update-user';
 import { Profile } from 'pages/profile/Profile';
+import { PostPage } from 'pages/PostPage/PostPage';
 
 export const RoutesProvider: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<ProtectedRoute children={<HomePage />} />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/posts" element={<PostPage />} />
       <Route
         path="/update"
         element={<ProtectedRoute children={<UpdatePage />} />}

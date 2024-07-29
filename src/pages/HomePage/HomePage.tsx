@@ -29,8 +29,7 @@ export const HomePage: FC = () => {
       <div>{user?.about}</div>
       <div>
         <h1>Posts</h1>
-        <CreatePostForm />
-        <PostList />
+        <Link to="/posts">Posts</Link>
       </div>
     </div>
   );

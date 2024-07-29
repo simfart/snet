@@ -1,32 +1,60 @@
-import axios from 'axios';
 import { Post } from './types';
 import { api } from 'shared/api/auth/api';
 
-// Функция для получения постов
-export const fetchPosts = async (): Promise<Post[]> => {
-  const response = await api.get('/data/Posts');
+export const getPostFn = async (): Promise<Post[]> => {
+  const response = await api.get(
+    `/data/Posts?sortBy=created desc&loadRelations=user`,
+  );
   return response.data;
 };
 
-// Функция для создания нового поста
-export const createPost = async (newPost: Omit<Post, 'id'>): Promise<Post> => {
-  const response = await api.post('/data/Posts', newPost);
+interface PostArgs {
+  description?: string;
+  image?: string;
+  obgectId?: string;
+}
+
+export const createPost = async ({ description, image }: PostArgs) => {
+  const userId = localStorage.getItem('ownerId');
+  if (!userId) {
+    throw new Error('User is not logged in');
+  }
+  const postData = {
+    description,
+    image,
+    user: [
+      {
+        ___class: 'Users',
+        objectId: localStorage.getItem('ownerId'),
+      },
+    ],
+  };
+  const response = await api.put('/data/Posts/deep-save', postData, {
+    headers: {
+      isTokenNeed: true,
+    },
+  });
   return response.data;
 };
 
-export const getPostWithUser = async () => {
-  const response = await api.get(`/data/Posts?loadRelations=user`);
+export const deletePostFn = async (objectId: string) => {
+  const response = await api.delete(`/data/Posts/${objectId}`, {
+    headers: {
+      isTokenNeed: true,
+    },
+  });
   return response.data;
 };
 
-// export const createPost = async (description: string, userId: string) => {
-//   const postData = {
-//     description,
-//     user: {
-//       "__op": "AddRelation",
-//       "objectId": userId
-//     }
-//   };
-//   const response = await axios.post(`${BASE_URL}/Posts`, postData);
-//   return response.data;
-// };
+export const likePostFn = async (objectId: string): Promise<void> => {
+  const userId = [localStorage.getItem('ownerId')];
+  if (!userId) {
+    throw new Error('User is not logged in');
+  }
+  try {
+    await api.put(`/data/Posts/${objectId}/likes`, userId),
+      console.log('Post liked successfully');
+  } catch (error) {
+    console.error('Error liking post:', error);
+  }
+};

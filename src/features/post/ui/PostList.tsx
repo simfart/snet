@@ -1,22 +1,19 @@
-import React from 'react';
-import { fetchPosts, getPostWithUser } from 'entities/post/model/api';
+import { FC } from 'react';
 import { PostCard } from 'features/post/ui/PostCard';
-import { useQuery } from 'react-query';
+import { Loader } from 'shared/ui';
+import { Post } from 'entities/post/model/types';
+import { usePosts } from '../model/usePosts';
 
-export const PostList: React.FC = () => {
-  const {
-    data: posts,
-    isLoading,
-    error,
-  } = useQuery(['posts'], getPostWithUser);
+export const PostList: FC = () => {
+  const { posts, isLoading, error, isFetching } = usePosts();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading || isFetching) return <Loader />;
   if (error) return <div>Error: {(error as Error).message}</div>;
 
   return (
     <div>
-      {posts?.map((post) => (
-        <PostCard key={post.id} post={post} />
+      {posts?.map((post: Post) => (
+        <PostCard key={post.objectId} post={post} />
       ))}
     </div>
   );
