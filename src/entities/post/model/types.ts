@@ -1,3 +1,5 @@
+import { IUser } from 'shared/api/auth/types';
+
 export type Post = {
   created: number;
   description: string;
@@ -7,4 +9,5 @@ export type Post = {
   updated?: number;
   likesCount?: number;
   comments?: number;
+  likes: IUser[];
 };

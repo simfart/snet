@@ -3,7 +3,7 @@ import { api } from 'shared/api/auth/api';
 
 export const getPostFn = async (): Promise<Post[]> => {
   const response = await api.get(
-    `/data/Posts?sortBy=created desc&loadRelations=user`,
+    `/data/Posts?sortBy=created desc&loadRelations=user,likes`,
   );
   return response.data;
 };
@@ -12,6 +12,13 @@ interface PostArgs {
   description?: string;
   image?: string;
   obgectId?: string;
+  likes: Like[];
+}
+
+interface Like {
+  objectId: string;
+  postId: string;
+  userId: string;
 }
 
 export const createPost = async ({ description, image }: PostArgs) => {
@@ -51,10 +58,16 @@ export const likePostFn = async (objectId: string): Promise<void> => {
   if (!userId) {
     throw new Error('User is not logged in');
   }
-  try {
-    await api.put(`/data/Posts/${objectId}/likes`, userId),
-      console.log('Post liked successfully');
-  } catch (error) {
-    console.error('Error liking post:', error);
+  await api.put(`/data/Posts/${objectId}/likes`, userId),
+    console.log('Post liked successfully');
+};
+
+export const unLikePostFn = async (objectId: string) => {
+  const userId = [localStorage.getItem('ownerId')];
+  if (!userId) {
+    throw new Error('User is not logged in');
   }
+  await api.delete(`/data/Posts/${objectId}/likes`, {
+    data: userId,
+  });
 };
