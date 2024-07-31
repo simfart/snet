@@ -12,7 +12,7 @@ interface PostArgs {
   description?: string;
   image?: string;
   obgectId?: string;
-  likes: Like[];
+  likes?: Like[];
 }
 
 interface Like {

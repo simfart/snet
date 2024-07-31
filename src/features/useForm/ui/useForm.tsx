@@ -72,7 +72,7 @@ export const useForm = (initialValues: InitialValues) => {
 
   const handleSubmit = useCallback(
     (callback: (formData: Record<string, string>) => void) =>
-      (event: React.FormEvent) => {
+      (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const { isValid, newErrors } = validateForm();
