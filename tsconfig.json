@@ -21,6 +21,6 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "src",
   },
-  "include": ["src"],
+  "include": ["src", "src/shared/api/auth/.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
