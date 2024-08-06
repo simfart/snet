@@ -8,6 +8,7 @@ import { RegisterPage } from 'pages/auth/RegisterPage';
 import { LoginPage } from 'pages/auth/LoginPage';
 import { UpdateUserForm } from 'features/user';
 import { ProtectedRoute } from 'features/protectedRoute/ProtectedRoute';
+import { Form } from 'features/auth/AuthForm/Form';
 
 export const RoutesProvider: FC = () => {
   return (
@@ -21,7 +22,7 @@ export const RoutesProvider: FC = () => {
       />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
-
+      <Route path="/form" element={<Form />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

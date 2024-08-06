@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
 import './PostPage.module.scss';
-import { CreatePostForm } from 'features/post/CreatePostForm/CreatePostForm';
-import { PostList } from 'widgets/PostList';
+import { CreatePostForm } from 'widgets/Posts/CreatePostForm/CreatePostForm';
+import { PostList } from 'widgets/Posts/PostList';
 
 export const PostPage: FC = () => {
   return (
