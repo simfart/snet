@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { QueryClientProvider } from './providers/QueryClientProvider';
-import { RoutesProvider } from './providers/RoutesProvider';
+import { QueryClientProvider, RoutesProvider } from './providers';
 
 import './styles/model.scss';
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useUpdateUser } from '../model/useUpdateUser';
 import { Loader } from '../../../shared/ui/loader/Loader';
 
-import { useUser } from 'features/auth/hooks/useUser';
+import { useUser } from 'features/auth/useUser';
 
 interface IUserForm {
   name: string;

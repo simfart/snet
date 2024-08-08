@@ -1,10 +1,10 @@
 import { FC, useCallback } from 'react';
 import { Loader } from 'shared/ui';
 import { IPost } from 'entities/post/model/PostModel';
-import { useDeletePost } from '../hooks/useDeletePost';
-import { useLikePost } from '../hooks/useLikePost';
-import { useUser } from 'features/auth/hooks/useUser';
-import { useRemoveLikePost } from '../hooks/useUnLikePost';
+import { useDeletePost } from '../model/useDeletePost';
+import { useLikePost } from '../model/useLikePost';
+import { useUser } from 'features/auth/useUser';
+import { useRemoveLikePost } from '../model/useUnLikePost';
 
 interface PostCardProps {
   post: IPost;

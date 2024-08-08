@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { FC } from 'react';
-import { useToken } from 'features/auth/hooks/useToken';
+import { useToken } from 'features/auth/useToken';
 import { Loader } from '../../shared/ui/loader/Loader';
 
 type ProtectedRouteProps = {

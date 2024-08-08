@@ -1,20 +1,19 @@
 import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { HomePage } from 'pages/HomePage';
 import { PageNotFound } from 'shared/ui';
-import { Profile } from 'pages/ProfilePage';
-import { PostPage } from 'pages/PostPage';
-import { RegisterPage } from 'pages/auth/RegisterPage';
-import { LoginPage } from 'pages/auth/LoginPage';
 import { UpdateUserForm } from 'features/user';
-import { ProtectedRoute } from 'features/protectedRoute/ProtectedRoute';
-import { Form } from 'features/auth/AuthForm/Form';
+import { Form } from 'widgets/authForm/ui/Form';
+import { LoginPage, RegisterPage } from 'pages/auth';
+import { HomePage } from 'pages/homePage';
+import { ProfilePage } from 'pages/profilePage';
+import { PostPage } from 'pages/postPage';
+import { ProtectedRoute } from 'features/protectedRoute';
 
 export const RoutesProvider: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<ProtectedRoute children={<HomePage />} />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile" element={<ProfilePage />} />
       <Route path="/posts" element={<PostPage />} />
       <Route
         path="/update"

@@ -5,8 +5,8 @@ import { Loader } from 'shared/ui';
 import { initialDataAuth } from 'shared/ui/initial-data';
 
 import './AuthForm.scss';
-import { useRegister } from '../hooks/useRegister';
-import { useLogin } from '../hooks/useLogin';
+import { useRegister } from '../../../features/auth/useRegister';
+import { useLogin } from '../../../features/auth/useLogin';
 import { loginInputs } from 'shared/inputs/formInputs';
 
 interface AuthFormProps {

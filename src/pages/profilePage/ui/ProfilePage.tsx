@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { IUser } from 'entities/user/model/userModel';
 import UserList from 'entities/user/components/UserList';
 
-export const Profile: FC = () => {
+export const ProfilePage: FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
 
   // useEffect(() => {

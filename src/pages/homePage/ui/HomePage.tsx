@@ -1,9 +1,9 @@
-import { useUser } from 'features/auth/hooks/useUser';
+import { useUser } from 'features/auth/useUser';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Loader } from 'shared/ui';
 
-import { useLogout } from 'features/auth/hooks/useLogout';
+import { useLogout } from 'features/auth/useLogout';
 
 import './HomePage.module.scss';
 

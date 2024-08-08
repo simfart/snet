@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { Loader } from 'shared/ui';
-import { usePosts } from 'features/post/hooks/usePosts';
+import { usePosts } from 'features/post/model/usePosts';
 import { PostCard } from 'features/post/PostCard';
 import { IPost } from 'entities/post/model/PostModel';
 
