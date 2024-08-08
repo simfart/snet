@@ -2,9 +2,9 @@ import { FC, useCallback } from 'react';
 import { Loader } from 'shared/ui';
 import { Link } from 'react-router-dom';
 
-import { useRegister } from 'widgets/auth/hooks/useRegister';
 import { useForm } from 'shared/hooks/useForm';
 import { registerInputs } from 'shared/inputs/formInputs';
+import { useRegister } from 'features/auth/useRegister';
 
 export const RegisterPage: FC = () => {
   const { handleChange, handleFocus, handleSubmit, values, getErrorClass } =

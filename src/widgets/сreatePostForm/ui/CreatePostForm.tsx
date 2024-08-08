@@ -1,8 +1,8 @@
 import { FC, useCallback } from 'react';
-import { useCreatePost } from '../useCreatePost';
 import { Loader } from 'shared/ui';
 import { createPostInputs } from 'shared/inputs/formInputs';
 import { useForm } from 'shared/hooks/useForm';
+import { useCreatePost } from '../model/useCreatePost';
 
 export const CreatePostForm: FC = () => {
   const { handleChange, handleFocus, handleSubmit, values, getErrorClass } =

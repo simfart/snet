@@ -11,13 +11,3 @@ export type IPost = {
   comments?: number;
   likes: IUser[];
 };
-
-export interface CreatePostInput {
-  title: string;
-  content: string;
-}
-
-export interface UpdatePostInput {
-  title?: string;
-  content?: string;
-}

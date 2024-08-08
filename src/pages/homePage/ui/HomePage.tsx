@@ -2,10 +2,10 @@ import { useUser } from 'features/auth/useUser';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Loader } from 'shared/ui';
-
 import { useLogout } from 'features/auth/useLogout';
+import { Header } from 'widgets/header';
 
-import './HomePage.module.scss';
+import styles from './HomePage.module.scss';
 
 export const HomePage: FC = () => {
   const { user, isLoading: isLoadingUser } = useUser();
@@ -18,8 +18,19 @@ export const HomePage: FC = () => {
   if (isLoading || isLoadingUser) return <Loader />;
 
   return (
-    <div className="home-page">
-      <Link to="/login">Login</Link>
+    <section className={styles.homePage}>
+      <Header />
+      <div className={styles.container}>
+        <div className={styles.profile}>
+          <div>{user?.name}</div>
+          <div>{user?.email}</div>
+          <div>{user?.avatar}</div>
+          <div>{user?.about}</div>
+        </div>
+        <div className={styles.posts}>bbbb</div>
+        <div className={styles.tags}>bbb</div>
+      </div>
+      {/* <Link to="/login">Login</Link>
       <button onClick={onLogoutClick}>Logout</button>
       <Link to="/update" className="updateUser-iconlink">
         Редактировать
@@ -31,7 +42,7 @@ export const HomePage: FC = () => {
       <div>
         <h1>Posts</h1>
         <Link to="/posts">Posts</Link>
-      </div>
-    </div>
+      </div> */}
+    </section>
   );
 };
