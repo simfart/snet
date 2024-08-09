@@ -1,15 +1,18 @@
-import { FC, MouseEvent } from 'react';
+import { FC } from 'react';
 
 import React, { useState } from 'react';
 import styles from './Header.module.scss';
-import { useUser } from 'features/auth/useUser';
-import { dropDownIcon, logoIcon, seachIcon } from 'shared/assets/images';
+import { logoIcon, seachIcon } from 'shared/assets/images';
+import { Dropdown } from 'entities/menu';
+import { motion } from 'framer-motion';
+import {
+  buttonHoverAnimation,
+  formAnimation,
+  inputFocusAnimation,
+} from 'shared/animations/animationSettings';
 
 export const Header: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const { user } = useUser();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -20,13 +23,6 @@ export const Header: FC = () => {
     console.log('Search Term:', searchTerm);
   };
 
-  const toggleMenu = (e: MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    setMenuOpen((prevState) => !prevState);
-  };
-
-  const closeMenu = () => setMenuOpen(false);
-
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -36,28 +32,28 @@ export const Header: FC = () => {
         </div>
       </div>
 
-      <form className={styles.searchForm} onSubmit={handleSearchSubmit}>
-        <input
+      <motion.form
+        className={styles.searchForm}
+        onSubmit={handleSearchSubmit}
+        {...formAnimation}
+      >
+        <motion.input
           type="text"
           className={styles.searchInput}
           value={searchTerm}
           onChange={handleSearchChange}
           placeholder="Search"
+          {...inputFocusAnimation}
         />
-        <button type="submit" className={styles.searchButton}>
+        <motion.button
+          type="submit"
+          className={styles.searchButton}
+          {...buttonHoverAnimation}
+        >
           <img src={seachIcon} alt={seachIcon} />
-        </button>
-      </form>
-      <div className={styles.profile} onClick={toggleMenu}>
-        <span>{user.name}</span>
-        <img src={dropDownIcon} alt="Dropdown Icon" />
-        {menuOpen && (
-          <div className={styles.dropdownMenu}>
-            <button className={styles.menuItem}>Settings</button>
-            <button className={styles.menuItem}>Log out</button>
-          </div>
-        )}
-      </div>
+        </motion.button>
+      </motion.form>
+      <Dropdown />
     </header>
   );
 };

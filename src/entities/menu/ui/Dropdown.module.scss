@@ -1,0 +1,61 @@
+.profile {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  padding: 6px 20px;
+  border-radius: 10px;
+  background-color: rgba(232, 77, 149, 0.08);
+
+  span {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    color: #e25a99;
+    margin-right: 25px;
+  }
+  img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .username {
+    font-size: 18px;
+  }
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  color: #000;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  padding: 8px 0;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: #fff;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+.menuIcon {
+  margin-right: 8px;
+}

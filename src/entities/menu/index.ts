@@ -1,1 +1,1 @@
-export { Dropdown } from './ui/Menu';
+export { Dropdown } from './ui/Dropdown';
