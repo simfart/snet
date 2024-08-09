@@ -2,11 +2,14 @@ import { FC, MouseEvent } from 'react';
 
 import React, { useState } from 'react';
 import styles from './Header.module.scss';
-import { logoIcon, seachIcon } from 'shared/assets/icons';
+import { useUser } from 'features/auth/useUser';
+import { dropDownIcon, logoIcon, seachIcon } from 'shared/assets/images';
 
 export const Header: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const { user } = useUser();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -28,9 +31,8 @@ export const Header: FC = () => {
     <header className={styles.header}>
       <div className={styles.logo}>
         <img src={logoIcon} alt="Logo" />
-        <div className={styles['logo-title']}>Social</div>
         <div className={`${styles['logo-title']} ${styles['logo-title_mark']}`}>
-          Net
+          SOCIUM
         </div>
       </div>
 
@@ -47,11 +49,12 @@ export const Header: FC = () => {
         </button>
       </form>
       <div className={styles.profile} onClick={toggleMenu}>
-        <span className={styles.username}>Пользователь</span>
+        <span>{user.name}</span>
+        <img src={dropDownIcon} alt="Dropdown Icon" />
         {menuOpen && (
           <div className={styles.dropdownMenu}>
-            <button className={styles.menuItem}>Настройки</button>
-            <button className={styles.menuItem}>Выйти</button>
+            <button className={styles.menuItem}>Settings</button>
+            <button className={styles.menuItem}>Log out</button>
           </div>
         )}
       </div>

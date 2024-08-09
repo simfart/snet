@@ -18,7 +18,7 @@
     font-size: 18px;
     line-height: 27px;
     &_mark {
-      color: #9c2c9e;
+      color: #e25a99;
     }
   }
 }
@@ -28,7 +28,12 @@
   align-items: center;
   border-radius: 10px;
   overflow: hidden;
-  background-color: rgba(156, 44, 158, 0.08);
+  background-color: rgba(232, 77, 149, 0.08);
+  width: 100%;
+  max-width: 611px;
+  margin: 0 15px;
+  justify-items: flex-end;
+  justify-content: space-between;
 
   input[type='text'] {
     border: none;
@@ -39,6 +44,7 @@
     outline: none;
     background: none;
     width: 200px;
+    color: #555555;
     &::placeholder {
       color: #c4c4c4;
     }
@@ -49,7 +55,8 @@
     height: 22px;
     background: none;
     border: none;
-    padding: 8px 8px;
+    padding: 8px 0;
+    margin-right: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -61,10 +68,20 @@
   align-items: center;
   position: relative;
   cursor: pointer;
+  padding: 6px 20px;
+  border-radius: 10px;
+  background-color: rgba(232, 77, 149, 0.08);
 
-  .profileIcon {
-    font-size: 24px;
-    margin-right: 8px;
+  span {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    color: #e25a99;
+    margin-right: 25px;
+  }
+  img {
+    width: 15px;
+    height: 15px;
   }
 
   .username {
