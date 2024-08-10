@@ -1,37 +1,25 @@
 import { useUser } from 'features/auth/useUser';
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
-import { Loader } from 'shared/ui';
-import { useLogout } from 'features/auth/useLogout';
 import { Header } from 'widgets/header';
 
 import styles from './HomePage.module.scss';
-import { Container } from 'entities/menu/container/cons';
+import { Link } from 'react-router-dom';
+import { Profile } from 'widgets/profile';
 
 export const HomePage: FC = () => {
   const { user, isLoading: isLoadingUser } = useUser();
-  const { mutate: logout, isLoading } = useLogout();
-
-  const onLogoutClick = () => {
-    logout();
-  };
-
-  if (isLoading || isLoadingUser) return <Loader />;
-
   return (
     <section className={styles.homePage}>
       <Header />
-      <Container />
-
       <div className={styles.container}>
-        <div className={styles.profile}>
-          <div>{user?.name}</div>
-          <div>{user?.email}</div>
-          <div>{user?.avatar}</div>
-          <div>{user?.about}</div>
-        </div>
+        <Profile />
         <div className={styles.posts}>bbbb</div>
-        <div className={styles.tags}>bbb</div>
+        <div className={styles.tags}>
+          bbb
+          <Link to="/update" className="updateUser-iconlink">
+            Редактировать
+          </Link>
+        </div>
       </div>
       {/* <Link to="/login">Login</Link>
       <button onClick={onLogoutClick}>Logout</button>

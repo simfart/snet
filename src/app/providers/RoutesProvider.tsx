@@ -2,7 +2,6 @@ import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { PageNotFound } from 'shared/ui';
 import { UpdateUserForm } from 'features/user';
-import { Form } from 'widgets/authForm/ui/AuthForm';
 import { LoginPage, RegisterPage } from 'pages/auth';
 import { HomePage } from 'pages/homePage';
 import { ProfilePage } from 'pages/profilePage';

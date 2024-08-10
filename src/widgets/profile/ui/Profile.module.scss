@@ -1,0 +1,97 @@
+.profile {
+  max-width: 309px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  box-sizing: border-box;
+
+  h1 {
+    font-size: 14px;
+    line-height: 21px;
+    margin: 92px 0 0;
+  }
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  position: absolute;
+  top: 104px;
+}
+.backdrop {
+  width: 100%;
+  height: 154px;
+  background: rgba(232, 77, 149, 0.08);
+}
+
+.digit {
+  max-width: 280px;
+  padding: 37px 0 50px;
+  display: flex;
+}
+
+.digitItem {
+  margin-right: 78px;
+  &:last-child {
+    margin-right: 0;
+  }
+  div {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 36px;
+  }
+  p {
+    font-size: 14px;
+    line-height: 21px;
+    color: #c4c4c4;
+  }
+}
+
+.line {
+  width: 280px;
+  height: 0px;
+  padding: 0 14px;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.social {
+  h2 {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    margin: 41px 0 38px;
+  }
+  span {
+    line-height: 18px;
+    color: #9c9c9c;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 26px;
+  }
+  li {
+    display: inline-block;
+  }
+  img {
+    width: 30px;
+    height: 30px;
+    display: block;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

@@ -5,13 +5,12 @@
 
 .container {
   display: flex;
-  justify-content: space-between;
+  padding: 38px 20px 0;
 }
 
-.profile {
-  width: 309px;
+.posts {
+  flex-grow: 1;
 }
-
 .tags {
-  width: 309px;
+  max-width: 309px;
 }
