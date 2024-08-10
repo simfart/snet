@@ -6,6 +6,7 @@ import { useLogout } from 'features/auth/useLogout';
 import { Header } from 'widgets/header';
 
 import styles from './HomePage.module.scss';
+import { Container } from 'entities/menu/container/cons';
 
 export const HomePage: FC = () => {
   const { user, isLoading: isLoadingUser } = useUser();
@@ -20,6 +21,7 @@ export const HomePage: FC = () => {
   return (
     <section className={styles.homePage}>
       <Header />
+      <Container />
 
       <div className={styles.container}>
         <div className={styles.profile}>

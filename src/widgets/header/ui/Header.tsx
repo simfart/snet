@@ -1,8 +1,6 @@
 import { FC } from 'react';
-
 import React, { useState } from 'react';
-import styles from './Header.module.scss';
-import { logoIcon, seachIcon } from 'shared/assets/images';
+import { seachIcon } from 'shared/assets/images';
 import { Dropdown } from 'entities/menu';
 import { motion } from 'framer-motion';
 import {
@@ -10,9 +8,15 @@ import {
   formAnimation,
   inputFocusAnimation,
 } from 'shared/animations/animationSettings';
+import { useLogout } from 'features/auth/useLogout';
+import { Loader } from 'shared/ui';
+import { LogoItem } from 'shared/components';
+
+import styles from './Header.module.scss';
 
 export const Header: FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const { mutate: logout, isLoading } = useLogout();
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -23,15 +27,14 @@ export const Header: FC = () => {
     console.log('Search Term:', searchTerm);
   };
 
+  const handleLogout = () => {
+    logout();
+  };
+  isLoading && <Loader />;
+
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>
-        <img src={logoIcon} alt="Logo" />
-        <div className={`${styles['logo-title']} ${styles['logo-title_mark']}`}>
-          SOCIUM
-        </div>
-      </div>
-
+      <LogoItem />
       <motion.form
         className={styles.searchForm}
         onSubmit={handleSearchSubmit}
@@ -53,7 +56,7 @@ export const Header: FC = () => {
           <img src={seachIcon} alt={seachIcon} />
         </motion.button>
       </motion.form>
-      <Dropdown />
+      <Dropdown onLogoutClick={handleLogout} />
     </header>
   );
 };

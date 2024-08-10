@@ -26,7 +26,6 @@ export const useForm = (initialValues: InitialValues) => {
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;
-
       setValues((prevValues) => ({
         ...prevValues,
         [name]: value,
@@ -76,6 +75,7 @@ export const useForm = (initialValues: InitialValues) => {
         event.preventDefault();
 
         const { isValid, newErrors } = validateForm();
+
         if (isValid) {
           const filteredValues = Object.fromEntries(
             Object.entries(values).filter(([key, value]) => {
@@ -83,7 +83,7 @@ export const useForm = (initialValues: InitialValues) => {
               return required || value.trim() !== '';
             }),
           );
-          callback(filteredValues);
+          callback(filteredValues); // Вызов callback с данными формы
         } else {
           setErrors(newErrors);
         }

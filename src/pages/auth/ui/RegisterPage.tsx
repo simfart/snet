@@ -1,16 +1,14 @@
-import { FC, useCallback } from 'react';
-import { Loader } from 'shared/ui';
-import { Link } from 'react-router-dom';
-
-import { useForm } from 'shared/hooks/useForm';
+import { FC } from 'react';
 import { registerInputs } from 'shared/inputs/formInputs';
 import { useRegister } from 'features/auth/useRegister';
+import { useForm } from 'shared/hooks/useForm';
+import { Loader } from 'shared/ui';
+import { AuthForm } from 'widgets/authForm';
 
 export const RegisterPage: FC = () => {
+  const { mutate, isLoading } = useRegister();
   const { handleChange, handleFocus, handleSubmit, values, getErrorClass } =
     useForm(registerInputs);
-
-  const { mutate, isLoading } = useRegister();
 
   const onSubmit = (formData: Record<string, string>) => {
     try {
@@ -26,43 +24,24 @@ export const RegisterPage: FC = () => {
     }
   };
 
-  const renderInputs = useCallback(() => {
-    return Object.entries(registerInputs).map(([key, config]) => (
-      <div key={key}>
-        <label htmlFor={key}>{key}</label>
-        <input
-          id={key}
-          name={key}
-          type={config.type}
-          value={values[key]}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          required={config.required}
-          className={getErrorClass(key)}
-          placeholder={key}
-        />
-      </div>
-    ));
-  }, [values, handleChange, handleFocus, getErrorClass]);
-
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
-    <div className="authContainer">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="auth-container"
-        noValidate
-      >
-        <h1 className="auth-title">Register</h1>
-        {renderInputs()}
-        <button type="submit">Submit</button>
-        <Link to="/login" className="auth-iconlink">
-          Sign in
-        </Link>
-      </form>
-    </div>
+    <>
+      {isLoading && <Loader />}
+      <AuthForm
+        buttonText="Register"
+        initialData={registerInputs}
+        linkText="Log In"
+        title="Register"
+        linkUrl="/login"
+        handleChange={handleChange}
+        getErrorClass={getErrorClass}
+        handleFocus={handleFocus}
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        values={values}
+        mode="register"
+        spanText="Already have an account? "
+      />
+    </>
   );
 };

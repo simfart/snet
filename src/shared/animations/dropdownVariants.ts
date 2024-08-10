@@ -26,9 +26,19 @@ export const dropdownVariants = {
 export const iconVariants = {
   open: {
     rotate: 180,
+    transition: {
+      type: 'spring',
+      stiffness: 200,
+      damping: 30,
+    },
   },
   closed: {
     rotate: 0,
+  },
+  transition: {
+    type: 'spring',
+    stiffness: 200,
+    damping: 30,
   },
 };
 
@@ -55,7 +65,8 @@ export const itemVariants = {
   },
   hover: {
     scale: 1.1,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: 'rgba(232, 77, 149, 0.08)',
+    color: 'rgb(226, 90, 153)',
     transition: {
       type: 'spring',
       stiffness: 300,
@@ -64,5 +75,24 @@ export const itemVariants = {
   },
   tap: {
     scale: 0.95,
+  },
+};
+
+export const overlayVariants = {
+  open: {
+    opacity: 1,
+    display: 'block',
+    transition: {
+      duration: 0.3,
+    },
+  },
+  closed: {
+    opacity: 0,
+    transitionEnd: {
+      display: 'none',
+    },
+    transition: {
+      duration: 0.3,
+    },
   },
 };

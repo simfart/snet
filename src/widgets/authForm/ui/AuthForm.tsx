@@ -1,13 +1,20 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
+import { LogoItem } from 'shared/components';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import {
+  buttonAuthAnimation,
+  containerAnimation,
+  inputFocusAnimation,
+} from 'shared/animations/animationSettings';
 
-import { Loader } from 'shared/ui';
-import { initialDataAuth } from 'shared/ui/initial-data';
+import styles from './AuthForm.module.scss';
 
-import './AuthForm.scss';
-import { useRegister } from '../../../features/auth/useRegister';
-import { useLogin } from '../../../features/auth/useLogin';
-import { loginInputs } from 'shared/inputs/formInputs';
+type InputConfig = {
+  value: string;
+  required: boolean;
+  type: string;
+};
 
 interface AuthFormProps {
   mode: 'login' | 'register';
@@ -15,7 +22,17 @@ interface AuthFormProps {
   buttonText: string;
   linkUrl: string;
   linkText: string;
-  onSubmit?: () => void;
+  spanText: string;
+  values: Record<string, string>;
+  initialData: Record<string, InputConfig>;
+
+  onSubmit: (formData: Record<string, string>) => void;
+  handleSubmit: (
+    callback: (formData: Record<string, string>) => void,
+  ) => (event: React.FormEvent<HTMLFormElement>) => void;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleFocus: (event: React.FocusEvent<HTMLInputElement>) => void;
+  getErrorClass: (fieldName: string) => string;
 }
 
 export const AuthForm = ({
@@ -24,109 +41,59 @@ export const AuthForm = ({
   buttonText,
   linkUrl,
   linkText,
+  initialData,
+  handleChange,
+  handleFocus,
+  onSubmit,
+  handleSubmit,
+  values,
+  getErrorClass,
+  spanText,
 }: AuthFormProps) => {
-  const { mutate: login, isLoading: isloadLogin } = useLogin();
-  const { mutate: register, isLoading } = useRegister();
-  const [formData, setFormData] = useState(initialDataAuth.initial);
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    try {
-      if (mode === 'login') {
-        login({ login: formData.email, password: formData.password });
-      } else {
-        //   if (formData.[].trim() === "" || values.description.trim() === "") {
-        //     setError("Заполните все обязательные поля");
-        // }
-
-        register({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          avatar: formData.avatar,
-          about: formData.about,
-        });
-      }
-    } catch (err) {
-      if (err instanceof Error) {
-        console.error(err.message);
-        alert(err.message);
-      } else {
-        console.error('Unexpected error', err);
-      }
-      return null;
-    }
-  };
-
-  const handleChange = (
-    name: keyof typeof initialDataAuth.initial,
-    value: string,
-  ) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-  type FieldName = keyof typeof initialDataAuth.initial;
-
   const renderInputs = useCallback(() => {
-    return Object.entries(loginInputs).map(([key, config]) => (
-      <div key={key}>
-        <label htmlFor={key}>{key}</label>
-        <input
+    return Object.entries(initialData).map(([key, config]) => (
+      <div key={key} className={styles.inputItem}>
+        <motion.input
           id={key}
           name={key}
           type={config.type}
           value={values[key]}
           onChange={handleChange}
+          onFocus={handleFocus}
           required={config.required}
+          className={`${styles.input} ${styles[getErrorClass(key)]}`}
+          placeholder={key}
+          {...inputFocusAnimation}
         />
       </div>
     ));
-  }, [values, handleChange]);
-
-  if (isLoading || isloadLogin) {
-    return <Loader />;
-  }
+  }, [initialData, values, handleChange, handleFocus, getErrorClass]);
 
   return (
-    <form onSubmit={handleSubmit} className="auth-container">
-      <h1 className="auth-tile">{title}</h1>
-      {Object.keys(initialDataAuth.login).map((field) => (
-        <div key={field}>
-          <input
-            type={initialDataAuth.type[field as FieldName]}
-            placeholder={initialDataAuth.placeholder[field as FieldName]}
-            value={formData[field as FieldName]}
-            onChange={(e) => handleChange(field as FieldName, e.target.value)}
-            required={initialDataAuth.require[field as FieldName]}
-          />
-        </div>
-      ))}
-      {mode === 'register' && (
-        <>
-          {Object.keys(initialDataAuth.register).map((field) => (
-            <div key={field}>
-              <input
-                type={initialDataAuth.type[field as FieldName]}
-                placeholder={initialDataAuth.placeholder[field as FieldName]}
-                value={formData[field as FieldName]}
-                onChange={(e) =>
-                  handleChange(field as FieldName, e.target.value)
-                }
-                required={initialDataAuth.require[field as FieldName]}
-              />
-            </div>
-          ))}
-        </>
-      )}
-      <button type="submit" className="ctaLink">
-        {buttonText}
-      </button>
-      <Link to={linkUrl} className="auth-iconlink">
-        {linkText}
-      </Link>
-    </form>
+    <motion.div
+      className={`${styles.container} ${
+        mode === 'register' ? styles.registerMode : ''
+      }`}
+      variants={containerAnimation}
+      initial="hidden"
+      animate="visible"
+    >
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        <LogoItem />
+        <h1 className={`${mode === 'register' ? styles.registerMode : ''}`}>
+          {title}
+        </h1>
+        {renderInputs()}
+        <motion.button type="submit" {...buttonAuthAnimation}>
+          {buttonText}
+        </motion.button>
+        <span>
+          {spanText}
+          <Link to={linkUrl} className="auth-iconlink">
+            {linkText}
+          </Link>
+        </span>
+      </form>
+    </motion.div>
   );
 };
