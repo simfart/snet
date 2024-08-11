@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import { getUserDisplayName } from '../model/userUtils';
 import { IUser } from '../model/userModel';
 
 import './UserProfile.model.scss';

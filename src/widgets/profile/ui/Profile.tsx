@@ -8,9 +8,11 @@ import {
 } from 'shared/assets/images';
 
 import styles from './Profile.module.scss';
+import { Loader } from 'shared/ui';
 
 export const Profile: FC = () => {
   const { user, isLoading } = useUser();
+  isLoading && <Loader />;
   return (
     <div className={styles.profile}>
       <div className={styles.backdrop}></div>

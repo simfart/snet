@@ -8,6 +8,5 @@ export const useUser = () => {
     queryKey: [QUERY_KEY.user],
     queryFn: getUserFn,
   });
-
   return useMemo(() => ({ user, isLoading }), [user, isLoading]);
 };

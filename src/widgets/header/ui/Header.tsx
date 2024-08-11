@@ -11,13 +11,16 @@ import {
 import { useLogout } from 'features/auth/useLogout';
 import { Loader } from 'shared/ui';
 import { LogoItem } from 'shared/components';
+import { useUser } from 'features/auth/useUser';
 
 import styles from './Header.module.scss';
 
 export const Header: FC = () => {
+  const { user, isLoading: isLoadUser } = useUser();
   const [searchTerm, setSearchTerm] = useState('');
   const { mutate: logout, isLoading } = useLogout();
 
+  console.log(user);
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
@@ -30,7 +33,7 @@ export const Header: FC = () => {
   const handleLogout = () => {
     logout();
   };
-  isLoading && <Loader />;
+  (isLoading || isLoadUser) && <Loader />;
 
   return (
     <header className={styles.header}>
@@ -56,7 +59,7 @@ export const Header: FC = () => {
           <img src={seachIcon} alt={seachIcon} />
         </motion.button>
       </motion.form>
-      <Dropdown onLogoutClick={handleLogout} />
+      <Dropdown onLogoutClick={handleLogout} user={user} />
     </header>
   );
 };

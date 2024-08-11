@@ -10,14 +10,12 @@ export interface IUser {
   avatar: string;
   about: string;
 }
-// Интерфейс для создания нового пользователя (например, при регистрации)
 export interface CreateUserInput {
   name: string;
   email: string;
-  password: string; // Необходимо для регистрации, но не возвращается в User
+  password: string;
 }
 
-// Интерфейс для обновления пользователя
 export interface UpdateUserInput {
   name?: string;
   email?: string;

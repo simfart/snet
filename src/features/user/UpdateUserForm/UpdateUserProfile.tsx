@@ -58,7 +58,7 @@ export const UpdateUserForm: FC = () => {
 
   return (
     <>
-      <form className="updateUser" onSubmit={handleSubmit}>
+      {/* <form className="updateUser" onSubmit={handleSubmit}>
         <h1 className="updateUser-title">Редактировать</h1>
         <input
           type="email"
@@ -86,7 +86,7 @@ export const UpdateUserForm: FC = () => {
         <Link to="/" className="updateUser-iconlink">
           На главную
         </Link>
-      </form>
+      </form> */}
     </>
   );
 };

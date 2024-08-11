@@ -1,6 +1,5 @@
 import { FC, useState, MouseEvent, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useUser } from 'features/auth/useUser';
 import { dropDownIcon } from 'shared/assets/images';
 import { useOutsideClick } from 'shared/hooks/useOutsideClick';
 import {
@@ -11,13 +10,14 @@ import {
 } from 'shared/animations/dropdownVariants';
 
 import styles from './Dropdown.module.scss';
+import { IUser } from 'entities/user/model/userModel';
 
 interface DropdownProps {
   onLogoutClick: () => void;
+  user: IUser;
 }
 
-export const Dropdown: FC<DropdownProps> = ({ onLogoutClick }) => {
-  const { user } = useUser();
+export const Dropdown: FC<DropdownProps> = ({ onLogoutClick, user }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -36,7 +36,7 @@ export const Dropdown: FC<DropdownProps> = ({ onLogoutClick }) => {
 
   return (
     <div className={styles.profile} onClick={toggleDropdown}>
-      <span>{user.name}</span>
+      <span>{user?.name}</span>
       <motion.img
         src={dropDownIcon}
         alt="Dropdown Icon"
