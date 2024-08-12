@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
 
-export const useUpdateUser = () => {
+export const useEditUser = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 

@@ -16,12 +16,16 @@ type InitialValues = {
 };
 
 export const useForm = (initialValues: InitialValues) => {
-  const [values, setValues] = useState<Record<string, string>>(() =>
+  const [values, setValues] = useState<Record<string, string>>(
     Object.fromEntries(
       Object.entries(initialValues).map(([key, { value }]) => [key, value]),
     ),
   );
   const [errors, setErrors] = useState<ValidationErrors>({});
+
+  const updateValues = useCallback((newValues: Record<string, string>) => {
+    setValues((prevValues) => ({ ...prevValues, ...newValues }));
+  }, []);
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +41,6 @@ export const useForm = (initialValues: InitialValues) => {
   const handleFocus = useCallback(
     (event: React.FocusEvent<HTMLInputElement>) => {
       const { name } = event.target;
-
       setErrors((prevErrors) => {
         const newErrors = { ...prevErrors };
         delete newErrors[name];
@@ -66,6 +69,7 @@ export const useForm = (initialValues: InitialValues) => {
         isValid = false;
       }
     }
+
     return { isValid, newErrors };
   }, [values, initialValues]);
 
@@ -83,7 +87,7 @@ export const useForm = (initialValues: InitialValues) => {
               return required || value.trim() !== '';
             }),
           );
-          callback(filteredValues); // Вызов callback с данными формы
+          callback(filteredValues);
         } else {
           setErrors(newErrors);
         }
@@ -102,5 +106,6 @@ export const useForm = (initialValues: InitialValues) => {
     errors,
     values,
     getErrorClass,
+    updateValues,
   };
 };

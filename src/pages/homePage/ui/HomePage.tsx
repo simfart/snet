@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
 import { Profile } from 'widgets/profile';
 import { Header } from 'widgets/header';
 
@@ -11,13 +10,8 @@ export const HomePage: FC = () => {
       <Header />
       <div className={styles.container}>
         <Profile />
-        <div className={styles.posts}>bbbb</div>
-        <div className={styles.tags}>
-          bbb
-          <Link to="/update" className="updateUser-iconlink">
-            Редактировать
-          </Link>
-        </div>
+        <div className={styles.posts}>Тут посты</div>
+        <div className={styles.tags}>тут будут теги</div>
       </div>
     </section>
   );

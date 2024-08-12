@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { PageNotFound } from 'shared/ui';
-import { UpdateUserForm } from 'features/user';
 import { LoginPage, RegisterPage } from 'pages/auth';
 import { HomePage } from 'pages/homePage';
 import { ProfilePage } from 'pages/profilePage';
@@ -14,13 +13,8 @@ export const RoutesProvider: FC = () => {
       <Route path="/" element={<ProtectedRoute children={<HomePage />} />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/posts" element={<PostPage />} />
-      <Route
-        path="/update"
-        element={<ProtectedRoute children={<UpdateUserForm />} />}
-      />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
-      {/* <Route path="/form" element={<Register />} /> */}
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

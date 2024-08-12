@@ -15,7 +15,7 @@ export const createPostInputs = {
 };
 
 export const editUserInputs = {
-  userName: { value: '', required: true, type: 'text' },
+  name: { value: '', required: true, type: 'text' },
   avatar: { value: '', required: true, type: 'url' },
   about: { value: '', required: true, type: 'text' },
 };

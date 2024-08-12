@@ -1,28 +1,52 @@
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import styles from './UserEditPopup.module.scss';
 import { motion } from 'framer-motion';
 import { editUserInputs } from 'shared/inputs/formInputs';
 import { InputField } from 'shared/components';
 import { useForm } from 'shared/hooks/useForm';
-import { buttonAuthAnimation } from 'shared/animations/animationSettings';
 import { useUser } from 'features/auth/useUser';
-import { useUpdateUser } from 'features/user/model/useUpdateUser';
+import { IUser } from 'entities/user/model/userModel';
+import { useEditUser } from '../model/useEditUser';
 
 interface UserEditPopupProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+type FormState = {
+  [key in keyof typeof editUserInputs]: string;
+};
+
 export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
-  const { handleChange, handleFocus, handleSubmit, values, getErrorClass } =
-    useForm(editUserInputs);
+  const {
+    handleChange,
+    handleFocus,
+    handleSubmit,
+    values,
+    getErrorClass,
+    updateValues,
+  } = useForm(editUserInputs);
 
   const { user, isLoading: isLoadingUser } = useUser();
+  const { mutate, isLoading } = useEditUser();
 
-    name: user?.name,
-    avatar: user?.avatar,
-    about: user?.about,
+  useEffect(() => {
+    if (user && !isLoadingUser) {
+      const userValues = Object.keys(editUserInputs).reduce((acc, key) => {
+        if (key in user) {
+          acc[key as keyof FormState] = user[key as keyof IUser] || '';
+        }
+        return acc;
+      }, {} as Partial<FormState>);
 
+      updateValues(userValues);
+    }
+  }, [user, isLoadingUser, updateValues]);
+
+  const onSubmit = () => {
+    mutate(values);
+    onClose();
+  };
 
   const renderInputs = useCallback(() => {
     return Object.entries(editUserInputs).map(([key, config]) => (
@@ -31,7 +55,7 @@ export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
         id={key}
         name={key}
         type={config.type}
-        value={values[key]}
+        value={values[key] || ''}
         onChange={handleChange}
         onFocus={handleFocus}
         placeholder={key}
@@ -40,8 +64,6 @@ export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
       />
     ));
   }, [values, handleChange, handleFocus, getErrorClass]);
-
-  const onSubmit = () => {};
 
   if (!isOpen) return null;
 
@@ -67,9 +89,7 @@ export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
         </span>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           {renderInputs()}
-          <motion.button type="submit" {...buttonAuthAnimation}>
-            Update
-          </motion.button>
+          <motion.button type="submit">Save</motion.button>
           <button onClick={onClose}>Close</button>
         </form>
       </motion.div>

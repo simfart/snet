@@ -37,7 +37,7 @@ export const InputField: FC<InputFieldProps> = ({
   const containerClassName = `${styles.container} ${className} ${
     mode === 'login' ? styles.login : styles.register
   }`;
-  const inputClassNames = `${styles.input} ${inputClassName || ''}`; // Объединяем классы инпута
+  const inputClassNames = `${styles.input} ${inputClassName || ''}`;
 
   return (
     <div className={containerClassName}>
