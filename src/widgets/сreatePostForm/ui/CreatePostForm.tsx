@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 import { Loader } from 'shared/ui';
 import { createPostInputs } from 'shared/inputs/formInputs';
 import { useForm } from 'shared/hooks/useForm';
@@ -18,7 +18,7 @@ export const CreatePostForm: FC = () => {
     }
   };
 
-  const renderInputs = useCallback(() => {
+  const renderInputs = () => {
     return Object.entries(createPostInputs).map(([key, config]) => (
       <div key={key}>
         <label htmlFor={key}>{key}</label>
@@ -35,7 +35,7 @@ export const CreatePostForm: FC = () => {
         />
       </div>
     ));
-  }, [values, handleChange, handleFocus, getErrorClass]);
+  };
 
   if (isLoading) {
     return <Loader />;

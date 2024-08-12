@@ -1,0 +1,33 @@
+@import 'app/styles/variables.scss';
+@import 'app/styles/mixins';
+
+.button {
+  width: 100%;
+  padding: 11px 0;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+
+  transition: background-color 0.3s ease;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(219, 52, 216, 0.5);
+  }
+}
+
+.small {
+}
+
+.medium {
+  width: 155px;
+}

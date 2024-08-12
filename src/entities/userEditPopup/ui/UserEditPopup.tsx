@@ -1,12 +1,14 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import styles from './UserEditPopup.module.scss';
 import { motion } from 'framer-motion';
 import { editUserInputs } from 'shared/inputs/formInputs';
-import { InputField } from 'shared/components';
 import { useForm } from 'shared/hooks/useForm';
 import { useUser } from 'features/auth/useUser';
 import { IUser } from 'entities/user/model/userModel';
-import { useEditUser } from '../model/useEditUser';
+import { useEditUser } from '../hooks/useEditUser';
+import { Button, Input } from 'shared/components';
+import { closeIcon } from 'shared/assets/images';
+import { Loader } from 'shared/ui';
 
 interface UserEditPopupProps {
   isOpen: boolean;
@@ -44,13 +46,24 @@ export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
   }, [user, isLoadingUser, updateValues]);
 
   const onSubmit = () => {
-    mutate(values);
+    if (!user) return;
+
+    const changedValues = Object.keys(values).reduce((acc, key) => {
+      if (values[key] !== user[key as keyof typeof user]) {
+        acc[key as keyof FormState] = values[key];
+      }
+      return acc;
+    }, {} as Partial<FormState>);
+
+    if (Object.keys(changedValues).length > 0) {
+      mutate(changedValues);
+    }
     onClose();
   };
 
-  const renderInputs = useCallback(() => {
+  const renderInputs = () => {
     return Object.entries(editUserInputs).map(([key, config]) => (
-      <InputField
+      <Input
         key={key}
         id={key}
         name={key}
@@ -63,9 +76,10 @@ export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
         inputClassName={styles[getErrorClass(key)]}
       />
     ));
-  }, [values, handleChange, handleFocus, getErrorClass]);
+  };
 
   if (!isOpen) return null;
+  if (isLoading) return <Loader />;
 
   return (
     <motion.div
@@ -89,10 +103,12 @@ export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
         </span>
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           {renderInputs()}
-          <motion.button type="submit">Save</motion.button>
-          <button onClick={onClose}>Close</button>
+          <Button label="Save" type="submit" size="medium" />
         </form>
       </motion.div>
+      <button onClick={onClose}>
+        <img src={closeIcon} alt="Close Icon" />
+      </button>
     </motion.div>
   );
 };

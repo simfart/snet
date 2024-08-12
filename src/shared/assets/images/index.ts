@@ -11,6 +11,7 @@ import polygonIcon from './Polygon grey down.svg';
 import twitterIcon from './twitter.svg';
 import writeIcon from './write.svg';
 import youtubeIcon from './youtube.svg';
+import closeIcon from './close.svg';
 
 export {
   logoIcon,
@@ -26,4 +27,5 @@ export {
   twitterIcon,
   writeIcon,
   youtubeIcon,
+  closeIcon,
 };

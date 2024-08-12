@@ -1,0 +1,84 @@
+#DA277B
+
+E84D95
+
+/* Frame 7 */
+
+
+
+background: rgba(232, 77, 149, 0.08);
+color: #CA3178;
+бледный #E25A99
+
+
+
+
+
+src/
+  app/  # Приложение
+    App.tsx  # Основной компонент приложения
+    index.tsx  # Точка входа
+    routes.tsx  # Маршрутизация
+    providers/
+      AuthProvider.tsx  # Поставщик аутентификации
+      ThemeProvider.tsx  # Поставщик тем
+    styles/
+      global.css  # Глобальные стили
+
+  pages/  # Страницы
+    LoginPage.tsx  # Страница логина
+    RegisterPage.tsx  # Страница регистрации
+    HomePage.tsx  # Домашняя страница
+    PostsPage.tsx  # Страница с постами
+    PostDetailPage.tsx  # Страница с деталями поста и комментариями
+
+  widgets/  # Виджеты
+    Auth/
+      LoginForm.tsx  # Форма логина
+      RegisterForm.tsx  # Форма регистрации
+    UserProfile/
+      UserProfile.tsx  # Профиль пользователя
+    Posts/
+      PostList.tsx  # Список постов
+      PostItem.tsx  # Отдельный пост
+      CreatePostForm.tsx  # Форма создания поста
+    Comments/
+      CommentList.tsx  # Список комментариев
+      CommentItem.tsx  # Отдельный комментарий
+      AddCommentForm.tsx  # Форма добавления комментария
+
+  features/  # Функции
+    auth/
+      useLogin.ts  # Хук для логина
+      useRegister.ts  # Хук для регистрации
+    posts/
+      useCreatePost.ts  # Хук для создания поста
+      useDeletePost.ts  # Хук для удаления поста
+      useLikePost.ts  # Хук для лайков поста
+      useUnlikePost.ts  # Хук для дизлайков поста
+      usePosts.ts  # Хук для получения постов
+    comments/
+      useComments.ts  # Хук для получения комментариев
+      useAddComment.ts  # Хук для добавления комментария
+
+  entities/  # Сущности
+    user/
+      User.ts  # Интерфейс и модель пользователя
+      userApi.ts  # API для работы с пользователем
+    post/
+      Post.ts  # Интерфейс и модель поста
+      postApi.ts  # API для работы с постами
+    comment/
+      Comment.ts  # Интерфейс и модель комментария
+      commentApi.ts  # API для работы с комментариями
+
+  shared/  # Совместно используемые ресурсы
+    components/
+      Button.tsx  # Общий компонент кнопки
+      Input.tsx  # Общий компонент ввода
+    hooks/
+      useFetch.ts  # Общий хук для фетчинга данных
+      useLocalStorage.ts  # Общий хук для работы с LocalStorage
+    utils/
+      formatDate.ts  # Утилита для форматирования дат
+      generateId.ts  # Утилита для генерации уникальных идентификаторов

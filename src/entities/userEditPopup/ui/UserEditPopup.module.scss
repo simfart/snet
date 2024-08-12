@@ -1,3 +1,6 @@
+@import 'app/styles/variables.scss';
+@import 'app/styles/mixins.scss';
+
 .popupOverlay {
   position: fixed;
   top: 0;
@@ -12,12 +15,38 @@
 }
 
 .popupContent {
-  background-color: white;
+  background-color: #ffffff;
   border: 1px solid #e5e5e5;
-  padding: 20px;
+  padding: 42px 53px 47px 36px;
   border-radius: 10px;
   position: relative;
   z-index: 1001;
-  width: 300px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  h2 {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 21px;
+    margin: 0;
+  }
+  span {
+    font-size: 14px;
+    line-height: 21px;
+    color: #c4c4c4;
+    margin-bottom: 61px;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+
+  @include respond-to(mobile) {
+    font-size: 0.8rem;
+    padding: 8px 16px;
+  }
 }

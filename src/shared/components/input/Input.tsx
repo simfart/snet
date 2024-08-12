@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import styles from './InputField.module.scss';
+import styles from './Input.module.scss';
 import { motion } from 'framer-motion';
 import { inputFocusAnimation } from 'shared/animations/animationSettings';
 
-interface InputFieldProps {
+interface InputProps {
   type?: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -19,7 +19,7 @@ interface InputFieldProps {
   mode?: 'login' | 'register';
 }
 
-export const InputField: FC<InputFieldProps> = ({
+export const Input: FC<InputProps> = ({
   type = 'text',
   value,
   onChange,

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { InputField, LogoItem } from 'shared/components';
+import { Input, LogoItem } from 'shared/components';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -50,7 +50,7 @@ export const AuthForm = ({
 }: AuthFormProps) => {
   const renderInputs = useCallback(() => {
     return Object.entries(initialData).map(([key, config]) => (
-      <InputField
+      <Input
         key={key}
         id={key}
         name={key}
