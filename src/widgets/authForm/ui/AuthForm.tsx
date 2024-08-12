@@ -1,11 +1,10 @@
 import { useCallback } from 'react';
-import { LogoItem } from 'shared/components';
+import { InputField, LogoItem } from 'shared/components';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   buttonAuthAnimation,
   containerAnimation,
-  inputFocusAnimation,
 } from 'shared/animations/animationSettings';
 
 import styles from './AuthForm.module.scss';
@@ -25,7 +24,6 @@ interface AuthFormProps {
   spanText: string;
   values: Record<string, string>;
   initialData: Record<string, InputConfig>;
-
   onSubmit: (formData: Record<string, string>) => void;
   handleSubmit: (
     callback: (formData: Record<string, string>) => void,
@@ -52,20 +50,19 @@ export const AuthForm = ({
 }: AuthFormProps) => {
   const renderInputs = useCallback(() => {
     return Object.entries(initialData).map(([key, config]) => (
-      <div key={key} className={styles.inputItem}>
-        <motion.input
-          id={key}
-          name={key}
-          type={config.type}
-          value={values[key]}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          required={config.required}
-          className={`${styles.input} ${styles[getErrorClass(key)]}`}
-          placeholder={key}
-          {...inputFocusAnimation}
-        />
-      </div>
+      <InputField
+        key={key}
+        id={key}
+        name={key}
+        type={config.type}
+        value={values[key]}
+        onChange={handleChange}
+        onFocus={handleFocus}
+        placeholder={key}
+        required={config.required}
+        mode="login"
+        inputClassName={styles[getErrorClass(key)]}
+      />
     ));
   }, [initialData, values, handleChange, handleFocus, getErrorClass]);
 

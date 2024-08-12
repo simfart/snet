@@ -1,0 +1,64 @@
+import { FC } from 'react';
+import styles from './InputField.module.scss';
+import { motion } from 'framer-motion';
+import { inputFocusAnimation } from 'shared/animations/animationSettings';
+
+interface InputFieldProps {
+  type?: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus: (event: React.FocusEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  label?: string;
+  name?: string;
+  id?: string;
+  className?: string;
+  disabled?: boolean;
+  required?: boolean;
+  inputClassName?: string;
+  mode?: 'login' | 'register';
+}
+
+export const InputField: FC<InputFieldProps> = ({
+  type = 'text',
+  value,
+  onChange,
+  onFocus,
+  placeholder,
+  label,
+  name,
+  id,
+  className,
+  disabled = false,
+  required = false,
+  mode = 'login',
+  inputClassName,
+}) => {
+  const containerClassName = `${styles.container} ${className} ${
+    mode === 'login' ? styles.login : styles.register
+  }`;
+  const inputClassNames = `${styles.input} ${inputClassName || ''}`; // Объединяем классы инпута
+
+  return (
+    <div className={containerClassName}>
+      {label && (
+        <label htmlFor={id} className={styles.label}>
+          {label}
+        </label>
+      )}
+      <motion.input
+        type={type}
+        value={value}
+        onChange={onChange}
+        onFocus={onFocus}
+        placeholder={placeholder}
+        name={name}
+        id={id}
+        className={inputClassNames}
+        disabled={disabled}
+        required={required}
+        {...inputFocusAnimation}
+      />
+    </div>
+  );
+};

@@ -14,10 +14,15 @@ import { IUser } from 'entities/user/model/userModel';
 
 interface DropdownProps {
   onLogoutClick: () => void;
+  onEditFormClick: (e: MouseEvent<HTMLButtonElement>) => void;
   user: IUser;
 }
 
-export const Dropdown: FC<DropdownProps> = ({ onLogoutClick, user }) => {
+export const Dropdown: FC<DropdownProps> = ({
+  onLogoutClick,
+  onEditFormClick,
+  user,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -60,6 +65,7 @@ export const Dropdown: FC<DropdownProps> = ({ onLogoutClick, user }) => {
         variants={dropdownVariants}
       >
         <motion.button
+          onClick={onEditFormClick}
           className={styles.menuItem}
           variants={itemVariants}
           whileHover="hover"
