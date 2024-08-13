@@ -1,58 +1,91 @@
+@import 'app/styles/variables.scss';
+@import 'app/styles/mixins';
+
 .postContainer {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
+  border: 1px solid rgba(156, 44, 158, 0.08);
+  border-radius: 10px;
+  padding: 13px 0 14px;
   margin: 16px 0;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
 }
 
 .header {
+  padding: 0 27px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
+
+  @include respond-to(mobile) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
-.author {
-  font-weight: bold;
-  font-size: 1.1rem;
+.authorImage {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  margin-right: 12px;
+
+  @include respond-to(mobile) {
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+}
+
+.authorDetails {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  line-height: 18px;
+
+  @include respond-to(mobile) {
+    align-items: flex-start;
+  }
 }
 
 .date {
-  color: #888;
-  font-size: 0.9rem;
-}
-
-.content {
-  margin-bottom: 16px;
-  font-size: 1rem;
+  color: #c4c4c4;
 }
 
 .image {
   max-width: 100%;
-  border-radius: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
+  @include respond-to(mobile) {
+    height: auto;
+  }
 }
 
 .footer {
+  padding: 0 27px;
   display: flex;
   justify-content: space-between;
+
+  @include respond-to(mobile) {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
-.likeButton,
-.commentButton,
-.shareButton {
+.action {
   border: none;
   background: none;
-  color: #007bff;
   cursor: pointer;
-  font-size: 1rem;
-  padding: 8px;
-}
+  display: flex;
+  align-items: center;
 
-.likeButton:hover,
-.commentButton:hover,
-.shareButton:hover {
-  text-decoration: underline;
+  @include respond-to(mobile) {
+    padding: 6px 0;
+  }
+
+  span {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    margin-left: 6px;
+  }
+
+  &:focus {
+    outline: none;
+  }
 }

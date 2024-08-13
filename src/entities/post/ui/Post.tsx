@@ -1,26 +1,58 @@
-import React from 'react';
+import { FC, useState } from 'react';
 import styles from './Post.module.scss';
+import { commentIcon, heartIcon } from 'shared/assets/images';
+import { PostContent } from './post-content/PostContent';
 
 interface PostProps {
   author: string;
+  authorTitle: string;
   date: string;
   content: string;
   image?: string;
+  authorImage?: string;
 }
 
-export const Post: React.FC<PostProps> = ({ author, date, content, image }) => {
+export const Post: FC<PostProps> = ({
+  author,
+  date,
+  content,
+  image,
+  authorImage,
+}) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpand = () => {
+    setIsExpanded((prev) => !prev);
+  };
+
   return (
     <div className={styles.postContainer}>
       <div className={styles.header}>
-        <div className={styles.author}>{author}</div>
-        <div className={styles.date}>{date}</div>
+        <img
+          className={styles.authorImage}
+          src={authorImage || 'https://via.placeholder.com/50'}
+          alt="Author"
+        />
+        <div className={styles.authorDetails}>
+          <div className={styles.author}>{author}</div>
+          <div className={styles.date}>{date}</div>
+        </div>
       </div>
-      <div className={styles.content}>{content}</div>
-      {image && <img className={styles.image} src={image} alt="Post image" />}
+      <PostContent
+        content={content}
+        isExpanded={isExpanded}
+        onToggle={toggleExpand}
+      />
+      {image && <img className={styles.image} src={image} alt="Post" />}
       <div className={styles.footer}>
-        <button className={styles.likeButton}>Like</button>
-        <button className={styles.commentButton}>Comment</button>
-        <button className={styles.shareButton}>Share</button>
+        <button className={styles.action}>
+          <img src={heartIcon} alt="Like Icon" />
+          <span>100</span>
+        </button>
+        <button className={styles.action}>
+          <img src={commentIcon} alt="Comment Icon" />
+          <span>45</span>
+        </button>
       </div>
     </div>
   );
