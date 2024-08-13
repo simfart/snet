@@ -105,10 +105,10 @@ export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
           {renderInputs()}
           <Button label="Save" type="submit" size="medium" />
         </form>
+        <button className={styles.buttonCose} onClick={onClose}>
+          <img src={closeIcon} alt="Close Icon" />
+        </button>
       </motion.div>
-      <button onClick={onClose}>
-        <img src={closeIcon} alt="Close Icon" />
-      </button>
     </motion.div>
   );
 };
