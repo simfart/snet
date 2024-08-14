@@ -1,7 +1,8 @@
 import { FC, useState } from 'react';
-import styles from './Post.module.scss';
 import { commentIcon, heartIcon } from 'shared/assets/images';
 import { PostContent } from './post-content/PostContent';
+
+import styles from './Post.module.scss';
 
 interface PostProps {
   author: string;

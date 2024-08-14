@@ -1,0 +1,45 @@
+.textareaContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollTextarea {
+  width: 100%;
+  height: 50px; /* Зафиксированная высота */
+  box-sizing: border-box;
+  overflow-y: auto; /* Позволяет вертикальную прокрутку */
+  resize: none; /* Убираем возможность изменения размера */
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 16px;
+  outline: none;
+  white-space: pre-wrap; /* Сохраняет пробелы и переносы строк */
+
+  /* Анимация при прокрутке */
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #f9f9f9; /* Светлый фон при наведении */
+  }
+}
+
+/* Полосы прокрутки для Webkit-браузеров */
+.scrollTextarea::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f1f1f1; /* Цвет фона полосы прокрутки */
+}
+
+.scrollTextarea::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.scrollTextarea::-webkit-scrollbar-thumb:hover {
+  background: rgba(
+    0,
+    0,
+    0,
+    0.8
+  ); /* Изменение цвета полосы прокрутки при наведении */
+}

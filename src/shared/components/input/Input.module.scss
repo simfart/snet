@@ -24,18 +24,3 @@
     color: #c4c4c4;
   }
 }
-
-// .error {
-//   border: 1px #e25a99 solid;
-//   background: rgba(232, 77, 149, 0.17);
-// }
-
-.login,
-.register {
-  .container {
-    width: 100%;
-    &:last-of-type {
-      margin-bottom: 40px;
-    }
-  }
-}

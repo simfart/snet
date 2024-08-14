@@ -9,11 +9,6 @@ export const registerInputs = {
   about: { value: '', required: true, type: 'text' },
 };
 
-export const createPostInputs = {
-  description: { value: '', required: true, type: 'text' },
-  image: { value: '', required: false, type: 'url' },
-};
-
 export const editUserInputs = {
   name: { value: '', required: true, type: 'text' },
   avatar: { value: '', required: true, type: 'url' },

@@ -16,7 +16,7 @@ interface InputProps {
   disabled?: boolean;
   required?: boolean;
   inputClassName?: string;
-  mode?: 'login' | 'register';
+  mode?: 'login' | 'register' | 'search';
 }
 
 export const Input: FC<InputProps> = ({
@@ -35,7 +35,13 @@ export const Input: FC<InputProps> = ({
   inputClassName,
 }) => {
   const containerClassName = `${styles.container} ${className} ${
-    mode === 'login' ? styles.login : styles.register
+    mode === 'login'
+      ? styles.login
+      : mode === 'register'
+      ? styles.register
+      : mode === 'search'
+      ? styles.search
+      : ''
   }`;
   const inputClassNames = `${styles.input} ${inputClassName || ''}`;
 
@@ -57,7 +63,7 @@ export const Input: FC<InputProps> = ({
         className={inputClassNames}
         disabled={disabled}
         required={required}
-        {...inputFocusAnimation}
+        {...(mode === 'login' ? inputFocusAnimation : {})}
       />
     </div>
   );
