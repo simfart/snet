@@ -27,6 +27,19 @@ export const buttonAuthAnimation = {
   initial: { scale: 1, backgroundColor: '#e25a99' },
 };
 
+export const uploadButtonAuthAnimation = {
+  whileHover: {
+    boxShadow: '0px 4px 15px rgba(255, 10, 67, 0.2)',
+    transition: { duration: 0.3 },
+  },
+  whileTap: {
+    scale: 0.95,
+    backgroundColor: '#e25a99',
+    transition: { duration: 0.2 },
+  },
+  initial: { scale: 1, backgroundColor: 'rgba(232, 77, 149, 0.08)' },
+};
+
 export const containerAnimation = {
   hidden: { opacity: 0, scale: 0.9 },
   visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },

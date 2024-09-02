@@ -3,23 +3,22 @@ import { commentIcon, heartIcon } from 'shared/assets/images';
 import { PostContent } from './post-content/PostContent';
 
 import styles from './Post.module.scss';
+import { IPost } from '../model/PostModel';
+
+// interface PostProps {
+//   author: string;
+//   authorTitle: string;
+//   date: string;
+//   content: string;
+//   image?: string;
+//   authorImage?: string;
+// }
 
 interface PostProps {
-  author: string;
-  authorTitle: string;
-  date: string;
-  content: string;
-  image?: string;
-  authorImage?: string;
+  post: IPost;
 }
 
-export const Post: FC<PostProps> = ({
-  author,
-  date,
-  content,
-  image,
-  authorImage,
-}) => {
+export const Post: FC<PostProps> = ({ post }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpand = () => {
@@ -31,20 +30,22 @@ export const Post: FC<PostProps> = ({
       <div className={styles.header}>
         <img
           className={styles.authorImage}
-          src={authorImage || 'https://via.placeholder.com/50'}
+          src={post.user.avatar || 'https://via.placeholder.com/50'}
           alt="Author"
         />
         <div className={styles.authorDetails}>
-          <div className={styles.author}>{author}</div>
-          <div className={styles.date}>{date}</div>
+          <div className={styles.author}>{post.user.name}</div>
+          <div className={styles.date}>{post.created}</div>
         </div>
       </div>
       <PostContent
-        content={content}
+        content={post.description}
         isExpanded={isExpanded}
         onToggle={toggleExpand}
       />
-      {image && <img className={styles.image} src={image} alt="Post" />}
+      {post.image && (
+        <img className={styles.image} src={post.image} alt="Post" />
+      )}
       <div className={styles.footer}>
         <button className={styles.action}>
           <img src={heartIcon} alt="Like Icon" />

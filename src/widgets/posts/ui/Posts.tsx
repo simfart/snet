@@ -19,14 +19,17 @@ export const Posts: FC = () => {
 
   return (
     // <div>
-    //   {posts?.map((post: IPost) => (
-    //     <PostCard key={post.objectId} post={post} />
-    //   ))}
+    // {posts?.map((post: IPost) => (
+    //   <PostCard key={post.objectId} post={post} />
+    // ))}
     // </div>
     <div className={styles.postsContainer}>
       <CreatePostForm name={user?.name} avatar={user?.avatar} />
       <div className={styles.posts}>
-        <Post
+        {posts?.map((post: IPost) => (
+          <Post key={post.objectId} post={post} />
+        ))}
+        {/* <Post
           author="John Doe"
           authorTitle="Software Engineer at TechCorp"
           date="1h ago"
@@ -39,7 +42,7 @@ export const Posts: FC = () => {
           authorTitle="Marketing Specialist at MarketGurus"
           date="3h ago"
           content="Had a great time at the marketing conference today. Had a great time at the marketing conference todayLots of insights and networking!"
-        />
+        /> */}
       </div>
     </div>
   );

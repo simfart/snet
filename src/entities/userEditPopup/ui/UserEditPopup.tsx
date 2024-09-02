@@ -1,14 +1,14 @@
 import { FC, useEffect } from 'react';
-import styles from './UserEditPopup.module.scss';
-import { motion } from 'framer-motion';
 import { editUserInputs } from 'shared/inputs/formInputs';
 import { useForm } from 'shared/hooks/useForm';
 import { useUser } from 'features/auth/useUser';
 import { IUser } from 'entities/user/model/userModel';
 import { useEditUser } from '../hooks/useEditUser';
 import { Button, Input } from 'shared/components';
-import { closeIcon } from 'shared/assets/images';
 import { Loader } from 'shared/ui';
+import { Popup } from 'entities/popup';
+
+import styles from './UserEditPopup.module.scss';
 
 interface UserEditPopupProps {
   isOpen: boolean;
@@ -82,33 +82,15 @@ export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
   if (isLoading) return <Loader />;
 
   return (
-    <motion.div
-      className={styles.popupOverlay}
-      onClick={onClose}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
-      <motion.div
-        className={styles.popupContent}
-        onClick={(e) => e.stopPropagation()}
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.8, opacity: 0 }}
-        transition={{ duration: 0.4 }}
-      >
-        <h2>Profile</h2>
-        <span>
-          All information that you will provide can be seen by the public.
-        </span>
-        <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          {renderInputs()}
-          <Button label="Save" type="submit" size="medium" />
-        </form>
-        <button className={styles.buttonCose} onClick={onClose}>
-          <img src={closeIcon} alt="Close Icon" />
-        </button>
-      </motion.div>
-    </motion.div>
+    <Popup isOpen={isOpen} onClose={onClose}>
+      <h2>Profile</h2>
+      <span>
+        All information that you will provide can be seen by the public.
+      </span>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+        {renderInputs()}
+        <Button label="Save" type="submit" size="medium" />
+      </form>
+    </Popup>
   );
 };
