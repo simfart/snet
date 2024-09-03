@@ -14,7 +14,7 @@ import { LogoItem } from 'shared/components';
 import { useUser } from 'features/auth/useUser';
 
 import styles from './Header.module.scss';
-import { UserEditPopup } from 'entities/userEditPopup';
+import { UserEditPopup } from 'features/userEditPopup';
 
 export const Header: FC = () => {
   const { user, isLoading: isLoadUser } = useUser();

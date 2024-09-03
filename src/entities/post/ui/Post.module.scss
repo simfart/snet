@@ -14,6 +14,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 16px;
+  justify-content: space-between;
 
   @include respond-to(mobile) {
     flex-direction: column;
@@ -21,6 +22,10 @@
   }
 }
 
+.user {
+  display: flex;
+  align-items: center;
+}
 .authorImage {
   width: 43px;
   height: 43px;

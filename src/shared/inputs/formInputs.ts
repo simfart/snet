@@ -14,3 +14,7 @@ export const editUserInputs = {
   avatar: { value: '', required: true, type: 'url' },
   about: { value: '', required: true, type: 'text' },
 };
+
+export const uploadInput = {
+  image: { value: '', required: true, type: 'url' },
+};

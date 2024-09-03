@@ -1,21 +1,13 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useState } from 'react';
 import { Loader } from 'shared/ui';
-import { createPostInputs } from 'shared/inputs/formInputs';
-import { useForm } from 'shared/hooks/useForm';
-import { useCreatePost } from '../model/useCreatePost';
-
-import { IUser } from 'entities/user/model/userModel';
+import { Button } from 'shared/components';
+import { useCreatePost } from '../hooks/useCreatePost';
+import { UploadPopup } from 'features/uploadPopup';
+import { AnimatePresence, motion } from 'framer-motion';
+import { uploadButtonAuthAnimation } from 'shared/animations/animationSettings';
+import { cameraIcon } from 'shared/assets/images';
 
 import styles from './CreatePostForm.module.scss';
-import { Button, Input } from 'shared/components';
-import { AnimatePresence, motion, useAnimation } from 'framer-motion';
-import { ScrollTextarea } from './ScrollTextarea';
-import { cameraIcon } from 'shared/assets/images';
-import {
-  buttonAuthAnimation,
-  uploadButtonAuthAnimation,
-} from 'shared/animations/animationSettings';
-import { UploadPopup } from 'entities/uploadPopup';
 
 interface IUserProps {
   name: string;
@@ -24,6 +16,8 @@ interface IUserProps {
 
 export const CreatePostForm: FC<IUserProps> = ({ avatar, name }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [value, setValue] = useState('');
+  const [image, setImage] = useState<string>('');
 
   const { mutate, isLoading } = useCreatePost();
 
@@ -35,8 +29,6 @@ export const CreatePostForm: FC<IUserProps> = ({ avatar, name }) => {
     }
   };
 
-  const [value, setValue] = useState('');
-
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
   };
@@ -47,7 +39,8 @@ export const CreatePostForm: FC<IUserProps> = ({ avatar, name }) => {
       alert('Please fill out the required field.');
       return;
     }
-    console.log('Submitted value:', value);
+    console.log('Submitted value:', value, image);
+    onSubmit({ description: value, image });
     setValue('');
   };
 
@@ -96,7 +89,6 @@ export const CreatePostForm: FC<IUserProps> = ({ avatar, name }) => {
           <motion.button
             className={styles.upload}
             onClick={openPopup}
-            // disabled={disabled}
             type="button"
             {...uploadButtonAuthAnimation}
           >
@@ -105,11 +97,14 @@ export const CreatePostForm: FC<IUserProps> = ({ avatar, name }) => {
           </motion.button>
           <Button type="submit" label="Publish" size="small" />
         </div>
-        {/* <button type="submit">Create Post</button> */}
       </form>
       <AnimatePresence>
         {isPopupOpen && (
-          <UploadPopup isOpen={isPopupOpen} onClose={closePopup} />
+          <UploadPopup
+            isOpen={isPopupOpen}
+            onClose={closePopup}
+            setImage={setImage} // Передаём функцию для установки изображения
+          />
         )}
       </AnimatePresence>
     </>

@@ -7,9 +7,15 @@ interface PopupProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
+  variant?: 'upload';
 }
 
-export const Popup: FC<PopupProps> = ({ isOpen, onClose, children }) => {
+export const Popup: FC<PopupProps> = ({
+  isOpen,
+  onClose,
+  children,
+  variant,
+}) => {
   if (!isOpen) return null;
 
   return (
@@ -21,7 +27,7 @@ export const Popup: FC<PopupProps> = ({ isOpen, onClose, children }) => {
       exit={{ opacity: 0 }}
     >
       <motion.div
-        className={styles.popupContent}
+        className={`${styles.popupContent}  ${variant && styles[variant]}`}
         onClick={(e) => e.stopPropagation()}
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

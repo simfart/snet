@@ -12,6 +12,8 @@ import twitterIcon from './twitter.svg';
 import writeIcon from './write.svg';
 import youtubeIcon from './youtube.svg';
 import closeIcon from './close.svg';
+import dropDownPostIcon from './grey_dropdown.svg';
+import deleteIcon from './delete-o-svgrepo-com.svg';
 
 export {
   logoIcon,
@@ -28,4 +30,6 @@ export {
   writeIcon,
   youtubeIcon,
   closeIcon,
+  dropDownPostIcon,
+  deleteIcon,
 };

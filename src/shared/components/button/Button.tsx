@@ -9,6 +9,7 @@ type ButtonProps = {
   size?: 'small' | 'medium';
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  variant?: 'upload';
 };
 
 export const Button: FC<ButtonProps> = ({
@@ -17,10 +18,13 @@ export const Button: FC<ButtonProps> = ({
   size = 'large',
   disabled = false,
   type = 'button',
+  variant,
 }) => {
   return (
     <motion.button
-      className={`${styles.button} ${styles[size]}`}
+      className={`${styles.button} ${styles[size]} ${
+        variant && styles[variant]
+      }`}
       onClick={onClick}
       disabled={disabled}
       type={type}

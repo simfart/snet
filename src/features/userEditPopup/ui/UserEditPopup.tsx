@@ -6,7 +6,7 @@ import { IUser } from 'entities/user/model/userModel';
 import { useEditUser } from '../hooks/useEditUser';
 import { Button, Input } from 'shared/components';
 import { Loader } from 'shared/ui';
-import { Popup } from 'entities/popup';
+import { Popup } from 'shared/components/popup';
 
 import styles from './UserEditPopup.module.scss';
 
