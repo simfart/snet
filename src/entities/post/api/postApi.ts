@@ -1,18 +1,12 @@
 import { api } from 'shared/api';
 import { IPost } from '../model/PostModel';
 
-export const getPostFn = async (): Promise<IPost[]> => {
-  const response = await api.get(
-    `/data/Posts?sortBy=created desc&loadRelations=user,likes`,
-  );
-  return response.data;
-};
-
 interface PostArgs {
   description?: string;
   image?: string;
   obgectId?: string;
   likes?: Like[];
+  tags?: string[];
 }
 
 interface Like {
@@ -21,7 +15,14 @@ interface Like {
   userId: string;
 }
 
-export const createPost = async ({ description, image }: PostArgs) => {
+export const getPostFn = async (): Promise<IPost[]> => {
+  const response = await api.get(
+    `/data/Posts?sortBy=created desc&loadRelations=user,likes`,
+  );
+  return response.data;
+};
+
+export const createPost = async ({ description, image, tags }: PostArgs) => {
   const userId = localStorage.getItem('ownerId');
   if (!userId) {
     throw new Error('User is not logged in');
@@ -29,6 +30,7 @@ export const createPost = async ({ description, image }: PostArgs) => {
   const postData = {
     description,
     image,
+    tags,
     user: [
       {
         ___class: 'Users',

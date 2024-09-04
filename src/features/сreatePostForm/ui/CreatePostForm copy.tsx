@@ -1,4 +1,3 @@
-import { FC, useState } from 'react';
 import { Loader } from 'shared/ui';
 import { Button } from 'shared/components';
 import { useCreatePost } from '../hooks/useCreatePost';
@@ -9,21 +8,38 @@ import { cameraIcon } from 'shared/assets/images';
 
 import styles from './CreatePostForm.module.scss';
 
-interface IUserProps {
+import React, { useState } from 'react';
+
+interface Props {
+  avatar?: string;
   name: string;
-  avatar: string;
 }
 
-export const CreatePostForm: FC<IUserProps> = ({ avatar, name }) => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [value, setValue] = useState('');
+export const YourComponent: React.FC<Props> = ({ avatar, name }) => {
+  const [value, setValue] = useState<string>('');
   const [image, setImage] = useState<string>('');
-
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const { mutate, isLoading } = useCreatePost();
 
-  const onSubmit = (formData: Record<string, string>) => {
+  const onSubmit = (formData: {
+    description: string;
+    image: string;
+    tags: string[];
+  }) => {
+    console.log(
+      'description:',
+      formData.description,
+      'image:',
+      formData.image,
+      'tags:',
+      formData.tags,
+    );
     try {
-      mutate({ description: formData.description, image: formData.image });
+      mutate({
+        description: formData.description,
+        image: formData.image,
+        tags: formData.tags,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -33,14 +49,28 @@ export const CreatePostForm: FC<IUserProps> = ({ avatar, name }) => {
     setValue(e.target.value);
   };
 
+  const extractHashtags = (text: string): string => {
+    const regex = /#(\w+)/g;
+    const tags = [];
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      tags.push(match[1]); // добавляем хештег без решетки
+    }
+    return tags.join(','); // соединяем теги в строку через запятую
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (value.trim() === '') {
       alert('Please fill out the required field.');
       return;
     }
-    console.log('Submitted value:', value, image);
-    onSubmit({ description: value, image });
+
+    const tags = extractHashtags(value);
+    const description = value.replace(/#\w+/g, '').trim(); // удаляем хештеги из описания
+
+    console.log('Submitted value:', description, image, tags);
+    onSubmit({ description, image, tags });
     setValue('');
   };
 
@@ -51,10 +81,6 @@ export const CreatePostForm: FC<IUserProps> = ({ avatar, name }) => {
   const closePopup = () => {
     setIsPopupOpen(false);
   };
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <>
