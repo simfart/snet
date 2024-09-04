@@ -64,7 +64,7 @@ export const itemVariants = {
     },
   },
   hover: {
-    scale: 1.1,
+    scale: 1.05,
     backgroundColor: 'rgba(232, 77, 149, 0.08)',
     color: 'rgb(226, 90, 153)',
     transition: {

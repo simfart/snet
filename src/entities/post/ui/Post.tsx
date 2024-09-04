@@ -1,63 +1,116 @@
-import { FC, useState } from 'react';
-import { commentIcon, heartIcon } from 'shared/assets/images';
+import { FC, useCallback, useMemo, useState } from 'react';
+import {
+  commentIcon,
+  heartIcon,
+  heartOutlinedIcon,
+} from 'shared/assets/images';
 import { PostContent } from './post-content/PostContent';
 
 import styles from './Post.module.scss';
 import { IPost } from '../model/PostModel';
 import { Dropdown } from 'shared/components/dropdown';
+import { useDeletePost } from '../hooks/useDeletePost';
+import { useUser } from 'features/auth/useUser';
+import { likePostFn, removeLikePostFn } from '../api/postApi';
+import { useToggleLikePost } from '../hooks/useToggleLikePost';
+import { formatTimestamp, getRandomColor } from 'shared/utils';
+
+interface Like {
+  objectId: string;
+}
 
 interface PostProps {
   post: IPost;
 }
 
-const postSettingsMenuItems = [
-  {
-    label: 'Delete Post',
-    onClick: () => {
-      // Логика удаления поста
-    },
-  },
-];
-
 export const Post: FC<PostProps> = ({ post }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const currentUser = useUser();
+  const owner = post.user[0];
+  const isOwner = post.ownerId === currentUser.user?.objectId;
 
-  const toggleExpand = () => {
+  const { objectId: postId, likes = [], description, image, created } = post;
+
+  const isLiked = likes.some(
+    (like: Like) => like.objectId === currentUser.user?.objectId,
+  );
+  const { mutate: deletePost } = useDeletePost();
+  const { mutate: toggleLike, isLoading: isLikeLoading } = useToggleLikePost(
+    isLiked ? removeLikePostFn : likePostFn,
+  );
+
+  const handleDelete = useCallback(() => {
+    if (isOwner) {
+      deletePost(postId);
+    }
+  }, [deletePost, isOwner, postId]);
+
+  const handleToggleLike = useCallback(() => {
+    if (!isLikeLoading) {
+      toggleLike(postId);
+    }
+  }, [toggleLike, postId, isLikeLoading]);
+
+  const postSettingsMenuItems = [
+    {
+      label: 'Delete Post',
+      onClick: handleDelete,
+    },
+  ];
+
+  const toggleExpand = useCallback(() => {
     setIsExpanded((prev) => !prev);
-  };
+  }, []);
+
+  const initial = owner?.name ? owner.name.charAt(0).toUpperCase() : '?';
+  const randomBackgroundColor = useMemo(() => getRandomColor(), []);
 
   return (
     <div className={styles.postContainer}>
       <div className={styles.header}>
         <div className={styles.user}>
-          <img
-            className={styles.authorImage}
-            src={post.user.avatar || 'https://via.placeholder.com/50'}
-            alt="Author"
-          />
+          {owner?.avatar ? (
+            <img
+              className={styles.authorImage}
+              src={owner.avatar}
+              alt="Author"
+            />
+          ) : (
+            <div
+              className={styles.textAvatar}
+              style={{ backgroundColor: randomBackgroundColor }}
+            >
+              {initial}
+            </div>
+          )}
           <div className={styles.authorDetails}>
-            <div className={styles.author}>{post.user.name}</div>
-            <div className={styles.date}>{post.created}</div>
+            <div className={styles.author}>{owner?.name}</div>
+            <div className={styles.date}>{formatTimestamp(created)}</div>
           </div>
         </div>
-        <Dropdown menuItems={postSettingsMenuItems} variant="post" />
+        {isOwner && (
+          <Dropdown menuItems={postSettingsMenuItems} variant="post" />
+        )}
       </div>
       <PostContent
-        content={post.description}
+        content={description}
         isExpanded={isExpanded}
         onToggle={toggleExpand}
       />
-      {post.image && (
-        <img className={styles.image} src={post.image} alt="Post" />
-      )}
+      {image && <img className={styles.image} src={image} alt="Post" />}
       <div className={styles.footer}>
-        <button className={styles.action}>
-          <img src={heartIcon} alt="Like Icon" />
-          <span>100</span>
-        </button>
+        <div className={styles.action}>
+          <button className={styles.like} onClick={handleToggleLike}>
+            <img
+              src={isLiked ? heartIcon : heartOutlinedIcon}
+              alt={isLiked ? 'Unlike' : 'Like'}
+            />
+          </button>
+          <p>{likes.length > 0 ? likes.length : ''}</p>
+        </div>
         <button className={styles.action}>
           <img src={commentIcon} alt="Comment Icon" />
-          <span>45</span>
+          {/* <p>45</p> */}
         </button>
       </div>
     </div>

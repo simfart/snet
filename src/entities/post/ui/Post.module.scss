@@ -31,16 +31,30 @@
   height: 43px;
   border-radius: 50%;
   margin-right: 12px;
-
+  object-fit: cover;
   @include respond-to(mobile) {
     margin-right: 0;
     margin-bottom: 8px;
   }
 }
 
+.textAvatar {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+
+  color: white;
+}
+
 .authorDetails {
   display: flex;
   flex-direction: column;
+  align-items: start;
   font-weight: 500;
   line-height: 18px;
 
@@ -50,6 +64,7 @@
 }
 
 .date {
+  margin-top: 4px;
   color: #c4c4c4;
 }
 
@@ -83,13 +98,20 @@
     padding: 6px 0;
   }
 
-  span {
+  p {
     font-weight: 500;
     font-size: 12px;
     line-height: 18px;
-    margin-left: 6px;
+    margin: 0 0 0 6px;
   }
+}
 
+.like {
+  padding: 0;
+  border: none;
+  img {
+    height: 16px;
+  }
   &:focus {
     outline: none;
   }

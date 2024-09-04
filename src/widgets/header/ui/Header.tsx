@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import React, { useState } from 'react';
 import { seachIcon } from 'shared/assets/images';
-import { Dropdown } from 'entities/dropdown';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   buttonHoverAnimation,
@@ -12,9 +11,10 @@ import { useLogout } from 'features/auth/useLogout';
 import { Loader } from 'shared/ui';
 import { LogoItem } from 'shared/components';
 import { useUser } from 'features/auth/useUser';
+import { UserEditPopup } from 'features/userEditPopup';
+import { Dropdown } from 'shared/components/dropdown';
 
 import styles from './Header.module.scss';
-import { UserEditPopup } from 'features/userEditPopup';
 
 export const Header: FC = () => {
   const { user, isLoading: isLoadUser } = useUser();
@@ -35,7 +35,6 @@ export const Header: FC = () => {
   const handleLogout = () => {
     logout();
   };
-  (isLoading || isLoadUser) && <Loader />;
 
   const openPopup = () => {
     setIsPopupOpen(true);
@@ -44,6 +43,19 @@ export const Header: FC = () => {
   const closePopup = () => {
     setIsPopupOpen(false);
   };
+
+  const menuItems = [
+    {
+      label: 'Settings',
+      onClick: openPopup,
+    },
+    {
+      label: 'Log out',
+      onClick: handleLogout,
+    },
+  ];
+
+  (isLoading || isLoadUser) && <Loader />;
 
   return (
     <header className={styles.header}>
@@ -69,11 +81,7 @@ export const Header: FC = () => {
           <img src={seachIcon} alt={seachIcon} />
         </motion.button>
       </motion.form>
-      <Dropdown
-        onLogoutClick={handleLogout}
-        onEditFormClick={openPopup}
-        user={user}
-      />
+      <Dropdown menuItems={menuItems} user={user} />
       <AnimatePresence>
         {isPopupOpen && (
           <UserEditPopup isOpen={isPopupOpen} onClose={closePopup} />
