@@ -19,6 +19,16 @@
   line-height: 18px;
 }
 
+.tags {
+  display: flex;
+  gap: 10px;
+}
+
+.tag {
+  cursor: pointer;
+  color: #e25a99;
+  font-weight: 500;
+}
 .expanded {
   -webkit-line-clamp: unset;
   line-clamp: unset;

@@ -17,12 +17,12 @@ interface Like {
 
 export const getPostFn = async (): Promise<IPost[]> => {
   const response = await api.get(
-    `/data/Posts?sortBy=created desc&loadRelations=user,likes`,
+    `/data/Posts?sortBy=created desc&loadRelations=user,likes,tags`,
   );
   return response.data;
 };
 
-export const createPost = async ({ description, image, tags }: PostArgs) => {
+export const createPost = async ({ description, image }: PostArgs) => {
   const userId = localStorage.getItem('ownerId');
   if (!userId) {
     throw new Error('User is not logged in');
@@ -30,7 +30,6 @@ export const createPost = async ({ description, image, tags }: PostArgs) => {
   const postData = {
     description,
     image,
-    tags,
     user: [
       {
         ___class: 'Users',

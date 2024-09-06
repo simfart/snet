@@ -1,59 +1,58 @@
-import { IPost } from 'entities/post/model/PostModel';
 import { api } from 'shared/api';
 
-const updatePostTags = async (postId: string, tags: string[]) => {
+const getTagByName = async (tagName: string) => {
   try {
-    const tagsString = tags.join(', '); // Преобразуем массив тегов в строку
-    await api.patch(
-      `/data/posts/${postId}`,
-      { tags: tagsString },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    );
-    console.log('Post updated with new tags successfully');
+    const response = await api.get(`/data/tags?where=name%3D'${tagName}'`);
+    return response.data.length > 0 ? response.data[0] : null;
   } catch (error) {
-    console.error('Error updating post tags:', error);
+    console.error('Error fetching tag:', error);
+    return null;
   }
 };
 
-const searchPostsByTag = async (tag: string) => {
+export const createTag = async (tagName: string) => {
+  const existingTag = await getTagByName(tagName);
+
+  if (existingTag) {
+    return existingTag;
+  }
+
   try {
-    const response = await api.get(`/data/posts`, {
-      params: {
-        where: `tags LIKE '%${tag}%'`,
-      },
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await api.post('/data/tags', { name: tagName });
     return response.data;
   } catch (error) {
-    console.error('Error searching posts by tag:', error);
+    console.error('Error creating tag:', error);
+    throw error;
   }
 };
 
-const getAllTags = async () => {
+export const linkTagsToPost = async (postId: string, tagIds: string[]) => {
   try {
-    const response = await api.get(`/data/posts`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const posts = response.data;
-
-    // Собираем уникальные теги
-    const tagsSet = new Set<string>();
-    posts.forEach((post: IPost) => {
-      if (post.tags) {
-        post.tags.split(', ').forEach((tag: string) => tagsSet.add(tag));
-      }
-    });
-
-    return Array.from(tagsSet);
+    const response = await api.post(`/data/posts/${postId}/tags`, tagIds);
+    console.log('Tags linked to post:', response.data);
+    return response.data;
   } catch (error) {
-    console.error('Error getting all tags:', error);
+    console.error('Error linking tags to post:', error);
+  }
+};
+
+export const getPostsByTag = async (tagId: string) => {
+  try {
+    const response = await api.get(
+      `/data/posts?where=tags.objectId%3D'${tagId}'`,
+    );
+    console.log('Posts with tag:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching posts by tag:', error);
+  }
+};
+
+export const getAllTags = async () => {
+  try {
+    const response = await api.get('/data/tags');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching tags:', error);
   }
 };

@@ -1,0 +1,25 @@
+.tagsContainer {
+  padding: 23px 31px;
+  max-width: 309px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border: 1px solid #9c2c9e14;
+  border-radius: 10px;
+
+  h2 {
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 700;
+    margin: 0 0 23px;
+  }
+}
+
+.tagItem {
+  font-size: 14px;
+  line-height: 21px;
+  padding: 7px 22px 6px;
+  color: #e25a99;
+  margin-bottom: 15px;
+  cursor: pointer;
+}

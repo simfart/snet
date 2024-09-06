@@ -1,6 +1,5 @@
-import { FC, useState } from 'react';
 import { Loader } from 'shared/ui';
-import { Button } from 'shared/components';
+import { Avatar, Button } from 'shared/components';
 import { useCreatePost } from '../hooks/useCreatePost';
 import { UploadPopup } from 'features/uploadPopup';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -9,21 +8,30 @@ import { cameraIcon } from 'shared/assets/images';
 
 import styles from './CreatePostForm.module.scss';
 
-interface IUserProps {
-  name: string;
-  avatar: string;
+import React, { useState } from 'react';
+import { IUser } from 'entities/user/model/userModel';
+
+interface Props {
+  user: IUser;
 }
 
-export const CreatePostForm: FC<IUserProps> = ({ avatar, name }) => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [value, setValue] = useState('');
+export const CreatePostForm: React.FC<Props> = ({ user }) => {
+  const [value, setValue] = useState<string>('');
   const [image, setImage] = useState<string>('');
-
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const { mutate, isLoading } = useCreatePost();
 
-  const onSubmit = (formData: Record<string, string>) => {
+  const onSubmit = (formData: {
+    description: string;
+    image: string;
+    tags: string[];
+  }) => {
     try {
-      mutate({ description: formData.description, image: formData.image });
+      mutate({
+        description: formData.description,
+        image: formData.image,
+        tags: formData.tags,
+      });
     } catch (err) {
       console.log(err);
     }
@@ -33,14 +41,27 @@ export const CreatePostForm: FC<IUserProps> = ({ avatar, name }) => {
     setValue(e.target.value);
   };
 
+  const extractHashtags = (text: string): string[] => {
+    const regex = /#(\w+)/g;
+    const tags = [];
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      tags.push(match[1]);
+    }
+    return tags;
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (value.trim() === '') {
       alert('Please fill out the required field.');
       return;
     }
-    console.log('Submitted value:', value, image);
-    onSubmit({ description: value, image });
+
+    const tags = extractHashtags(value);
+    const description = value.replace(/#\w+/g, '').trim();
+
+    onSubmit({ description, image, tags });
     setValue('');
   };
 
@@ -52,9 +73,7 @@ export const CreatePostForm: FC<IUserProps> = ({ avatar, name }) => {
     setIsPopupOpen(false);
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  if (isLoading) return <Loader />;
 
   return (
     <>
@@ -64,13 +83,9 @@ export const CreatePostForm: FC<IUserProps> = ({ avatar, name }) => {
         className={styles.createPostContainer}
       >
         <div className={styles.header}>
-          <img
-            className={styles.avatar}
-            src={avatar || 'https://via.placeholder.com/50'}
-            alt="Author"
-          />
+          <Avatar owner={user} variant="postAvatar" />
           <div className={styles.authorDetails}>
-            <div className={styles.author}>{name}</div>
+            <div className={styles.author}>{user?.name}</div>
           </div>
         </div>
 

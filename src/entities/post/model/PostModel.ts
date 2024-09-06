@@ -1,3 +1,4 @@
+import { ITag } from 'entities/tag/model/TagModel';
 import { IUser } from 'entities/user/model/userModel';
 
 export type IPost = {
@@ -11,4 +12,5 @@ export type IPost = {
   comments?: number;
   likes: IUser[];
   user: IUser[];
+  tags?: ITag[];
 };

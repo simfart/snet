@@ -7,9 +7,8 @@ import { PostCard } from 'features/post';
 
 import styles from './Posts.module.scss';
 import { Post } from 'entities/post';
-import { CreatePostForm } from 'features/сreatePostForm';
 import { useUser } from 'features/auth/useUser';
-import { YourComponent } from 'features/сreatePostForm/ui/CreatePostForm copy';
+import { CreatePostForm } from 'features/сreatePostForm/ui/CreatePostForm';
 
 export const Posts: FC = () => {
   const { posts, isLoading, error, isFetching } = usePosts();
@@ -20,8 +19,7 @@ export const Posts: FC = () => {
 
   return (
     <div className={styles.postsContainer}>
-      {/* <CreatePostForm name={user?.name} avatar={user?.avatar} /> */}
-      <YourComponent name={user?.name} avatar={user?.avatar} />
+      <CreatePostForm user={user} />
       <div className={styles.posts}>
         {posts?.map((post: IPost) => (
           <Post key={post.objectId} post={post} />

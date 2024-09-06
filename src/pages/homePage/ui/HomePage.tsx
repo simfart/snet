@@ -3,8 +3,8 @@ import { Profile } from 'widgets/profile';
 import { Header } from 'widgets/header';
 
 import styles from './HomePage.module.scss';
-import { Post } from 'entities/post';
 import { Posts } from 'widgets/posts';
+import { Topics } from 'widgets/topics';
 
 export const HomePage: FC = () => {
   return (
@@ -13,7 +13,7 @@ export const HomePage: FC = () => {
       <div className={styles.container}>
         <Profile />
         <Posts />
-        <div className={styles.tags}>тут будут теги</div>
+        <Topics />
       </div>
     </section>
   );

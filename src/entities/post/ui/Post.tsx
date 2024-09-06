@@ -1,19 +1,20 @@
-import { FC, useCallback, useMemo, useState } from 'react';
+import { FC, useCallback, useState } from 'react';
 import {
   commentIcon,
   heartIcon,
   heartOutlinedIcon,
 } from 'shared/assets/images';
 import { PostContent } from './post-content/PostContent';
-
-import styles from './Post.module.scss';
 import { IPost } from '../model/PostModel';
 import { Dropdown } from 'shared/components/dropdown';
 import { useDeletePost } from '../hooks/useDeletePost';
 import { useUser } from 'features/auth/useUser';
 import { likePostFn, removeLikePostFn } from '../api/postApi';
 import { useToggleLikePost } from '../hooks/useToggleLikePost';
-import { formatTimestamp, getRandomColor } from 'shared/utils';
+import { formatTimestamp } from 'shared/utils';
+
+import styles from './Post.module.scss';
+import { Avatar } from 'shared/components';
 
 interface Like {
   objectId: string;
@@ -29,7 +30,14 @@ export const Post: FC<PostProps> = ({ post }) => {
   const owner = post.user[0];
   const isOwner = post.ownerId === currentUser.user?.objectId;
 
-  const { objectId: postId, likes = [], description, image, created } = post;
+  const {
+    objectId: postId,
+    likes = [],
+    description,
+    image,
+    created,
+    tags = [],
+  } = post;
 
   const isLiked = likes.some(
     (like: Like) => like.objectId === currentUser.user?.objectId,
@@ -62,27 +70,11 @@ export const Post: FC<PostProps> = ({ post }) => {
     setIsExpanded((prev) => !prev);
   }, []);
 
-  const initial = owner?.name ? owner.name.charAt(0).toUpperCase() : '?';
-  const randomBackgroundColor = useMemo(() => getRandomColor(), []);
-
   return (
     <div className={styles.postContainer}>
       <div className={styles.header}>
         <div className={styles.user}>
-          {owner?.avatar ? (
-            <img
-              className={styles.authorImage}
-              src={owner.avatar}
-              alt="Author"
-            />
-          ) : (
-            <div
-              className={styles.textAvatar}
-              style={{ backgroundColor: randomBackgroundColor }}
-            >
-              {initial}
-            </div>
-          )}
+          <Avatar owner={owner} variant="postAvatar" />
           <div className={styles.authorDetails}>
             <div className={styles.author}>{owner?.name}</div>
             <div className={styles.date}>{formatTimestamp(created)}</div>
@@ -96,6 +88,7 @@ export const Post: FC<PostProps> = ({ post }) => {
         content={description}
         isExpanded={isExpanded}
         onToggle={toggleExpand}
+        tags={tags}
       />
       {image && <img className={styles.image} src={image} alt="Post" />}
       <div className={styles.footer}>

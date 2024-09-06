@@ -9,6 +9,7 @@ import {
 
 import styles from './Profile.module.scss';
 import { Loader } from 'shared/ui';
+import { Avatar } from 'shared/components';
 
 export const Profile: FC = () => {
   const { user, isLoading } = useUser();
@@ -16,7 +17,7 @@ export const Profile: FC = () => {
   return (
     <div className={styles.profile}>
       <div className={styles.backdrop}></div>
-      <img className={styles.avatar} src={user?.avatar} alt="Avatar" />
+      <Avatar owner={user} />
       <h1>{user?.name}</h1>
       <span>{user?.about}</span>
       <div className={styles.digit}>
