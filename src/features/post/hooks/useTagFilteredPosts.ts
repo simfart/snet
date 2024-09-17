@@ -1,9 +1,9 @@
-import { getPostsByTag } from 'entities/tag/api/tagsApi';
+import { getPostsByTag } from 'entities/post/api/postApi';
 import { useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
 
-export const useFilteredPosts = (selectedTagId: string | null) => {
+export const useTagFilteredPosts = (selectedTagId: string | null) => {
   const {
     data: filteredPosts,
     isLoading: isFilteredPostsLoading,

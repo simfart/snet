@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import React, { useState } from 'react';
-import { seachIcon } from 'shared/assets/images';
+import { closeIcon, seachIcon } from 'shared/assets/images';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
   buttonHoverAnimation,
@@ -16,7 +16,11 @@ import { Dropdown } from 'shared/components/dropdown';
 
 import styles from './Header.module.scss';
 
-export const Header: FC = () => {
+interface HeaderProps {
+  onSearchClick: (tagId: string) => void;
+}
+
+export const Header: FC<HeaderProps> = ({ onSearchClick }) => {
   const { user, isLoading: isLoadUser } = useUser();
   const [searchTerm, setSearchTerm] = useState('');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -29,6 +33,7 @@ export const Header: FC = () => {
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    onSearchClick(searchTerm);
     console.log('Search Term:', searchTerm);
   };
 
@@ -42,6 +47,11 @@ export const Header: FC = () => {
 
   const closePopup = () => {
     setIsPopupOpen(false);
+  };
+
+  const clearSearch = () => {
+    onSearchClick('');
+    setSearchTerm('');
   };
 
   const menuItems = [
@@ -65,6 +75,13 @@ export const Header: FC = () => {
         onSubmit={handleSearchSubmit}
         {...formAnimation}
       >
+        <motion.button
+          type="submit"
+          className={styles.searchButton}
+          {...buttonHoverAnimation}
+        >
+          <img src={seachIcon} alt={seachIcon} />
+        </motion.button>
         <motion.input
           type="text"
           className={styles.searchInput}
@@ -74,11 +91,12 @@ export const Header: FC = () => {
           {...inputFocusAnimation}
         />
         <motion.button
-          type="submit"
-          className={styles.searchButton}
+          type="button"
+          onClick={clearSearch}
+          className={styles.clearButton}
           {...buttonHoverAnimation}
         >
-          <img src={seachIcon} alt={seachIcon} />
+          <img src={closeIcon} alt="Clear" />
         </motion.button>
       </motion.form>
       <Dropdown menuItems={menuItems} user={user} />

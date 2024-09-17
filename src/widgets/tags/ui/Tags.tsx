@@ -1,4 +1,3 @@
-import { useTags } from 'entities/tag/hooks/useTags';
 import { FC } from 'react';
 import { ITag } from 'entities/tag/model/TagModel';
 
@@ -8,6 +7,7 @@ import {
   linkAnimation,
   resetButtonAuthAnimation,
 } from 'shared/animations/animationSettings';
+import { useTags } from 'entities/tag/hooks/useTags';
 
 interface TagsProps {
   onTagClick: (tagId: string) => void;

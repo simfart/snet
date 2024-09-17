@@ -35,17 +35,6 @@ export const linkTagsToPost = async (postId: string, tagIds: string[]) => {
   }
 };
 
-export const getPostsByTag = async (tagId: string) => {
-  try {
-    const response = await api.get(
-      `/data/posts?where=tags.objectId%3D'${tagId}'&loadRelations=user,likes,tags`,
-    );
-    return response.data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 export const getAllTags = async () => {
   try {
     const response = await api.get('/data/tags');

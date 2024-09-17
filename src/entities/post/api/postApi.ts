@@ -22,6 +22,29 @@ export const getPostFn = async (): Promise<IPost[]> => {
   return response.data;
 };
 
+export const searchPosts = async (searchTerm: string) => {
+  try {
+    const encodedSearchTerm = encodeURIComponent(`%${searchTerm}%`);
+    const response = await api.get(
+      `/data/posts?where=description%20LIKE%20'${encodedSearchTerm}'&loadRelations=user,likes,tags&sortBy=created%20desc`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getPostsByTag = async (tagId: string) => {
+  try {
+    const response = await api.get(
+      `/data/posts?where=tags.objectId%3D'${tagId}'&loadRelations=user,likes,tags&sortBy=created%20desc`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const createPost = async ({ description, image }: PostArgs) => {
   const userId = localStorage.getItem('ownerId');
   if (!userId) {
