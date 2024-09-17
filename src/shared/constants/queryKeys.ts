@@ -3,4 +3,5 @@ export const QUERY_KEY = {
   user: 'user',
   posts: 'posts',
   tags: 'tags',
+  filteredPosts: 'filteredPosts',
 };

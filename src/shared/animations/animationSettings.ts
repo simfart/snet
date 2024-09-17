@@ -40,7 +40,28 @@ export const uploadButtonAuthAnimation = {
   initial: { scale: 1, backgroundColor: 'rgba(232, 77, 149, 0.08)' },
 };
 
+export const resetButtonAuthAnimation = {
+  whileHover: {
+    scale: 1.08,
+    color: '#E25A99',
+    transition: { duration: 0.3 },
+  },
+  whileTap: { scale: 0.9, transition: { duration: 0.2 } },
+  transition: { type: 'spring', stiffness: 200 },
+};
+
 export const containerAnimation = {
   hidden: { opacity: 0, scale: 0.9 },
   visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
+};
+
+export const linkAnimation = {
+  whileHover: {
+    scale: 1.08,
+  },
+  whileTap: {
+    scale: 0.9,
+  },
+  initial: { scale: 1 },
+  transition: { type: 'spring', stiffness: 100 },
 };

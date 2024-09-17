@@ -1,19 +1,21 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Profile } from 'widgets/profile';
 import { Header } from 'widgets/header';
+import { Posts } from 'widgets/posts';
+import { Tags } from 'widgets/tags';
 
 import styles from './HomePage.module.scss';
-import { Posts } from 'widgets/posts';
-import { Topics } from 'widgets/topics';
 
 export const HomePage: FC = () => {
+  const [selectedTagId, setSelectedTagId] = useState<string | null>(null);
+
   return (
     <section className={styles.homePage}>
       <Header />
       <div className={styles.container}>
         <Profile />
-        <Posts />
-        <Topics />
+        <Posts selectedTagId={selectedTagId} onTagClick={setSelectedTagId} />
+        <Tags selectedTagId={selectedTagId} onTagClick={setSelectedTagId} />
       </div>
     </section>
   );

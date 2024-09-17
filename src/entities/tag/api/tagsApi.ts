@@ -5,7 +5,7 @@ const getTagByName = async (tagName: string) => {
     const response = await api.get(`/data/tags?where=name%3D'${tagName}'`);
     return response.data.length > 0 ? response.data[0] : null;
   } catch (error) {
-    console.error('Error fetching tag:', error);
+    console.error(error);
     return null;
   }
 };
@@ -21,7 +21,7 @@ export const createTag = async (tagName: string) => {
     const response = await api.post('/data/tags', { name: tagName });
     return response.data;
   } catch (error) {
-    console.error('Error creating tag:', error);
+    console.error(error);
     throw error;
   }
 };
@@ -29,22 +29,20 @@ export const createTag = async (tagName: string) => {
 export const linkTagsToPost = async (postId: string, tagIds: string[]) => {
   try {
     const response = await api.post(`/data/posts/${postId}/tags`, tagIds);
-    console.log('Tags linked to post:', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error linking tags to post:', error);
+    console.error(error);
   }
 };
 
 export const getPostsByTag = async (tagId: string) => {
   try {
     const response = await api.get(
-      `/data/posts?where=tags.objectId%3D'${tagId}'`,
+      `/data/posts?where=tags.objectId%3D'${tagId}'&loadRelations=user,likes,tags`,
     );
-    console.log('Posts with tag:', response.data);
     return response.data;
   } catch (error) {
-    console.error('Error fetching posts by tag:', error);
+    console.error(error);
   }
 };
 
@@ -53,6 +51,6 @@ export const getAllTags = async () => {
     const response = await api.get('/data/tags');
     return response.data;
   } catch (error) {
-    console.error('Error fetching tags:', error);
+    console.error(error);
   }
 };

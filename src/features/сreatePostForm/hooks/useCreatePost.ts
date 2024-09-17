@@ -25,7 +25,7 @@ export const useCreatePost = () => {
           const tag = await createTag(tagName);
           tagIds.push(tag.objectId);
         } catch (error) {
-          console.error('Error creating or fetching tag:', error);
+          console.error(error);
         }
       }
 
@@ -40,7 +40,7 @@ export const useCreatePost = () => {
       queryClient.invalidateQueries([QUERY_KEY.tags]);
     },
     onError: (err) => {
-      console.error('Error creating post:', err);
+      console.error(err);
     },
   });
 

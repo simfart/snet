@@ -22,9 +22,10 @@ interface Like {
 
 interface PostProps {
   post: IPost;
+  onTagClick: (tagId: string) => void;
 }
 
-export const Post: FC<PostProps> = ({ post }) => {
+export const Post: FC<PostProps> = ({ post, onTagClick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const currentUser = useUser();
   const owner = post.user[0];
@@ -70,6 +71,10 @@ export const Post: FC<PostProps> = ({ post }) => {
     setIsExpanded((prev) => !prev);
   }, []);
 
+  const handleTagClick = (tagId: string) => {
+    onTagClick(tagId);
+  };
+
   return (
     <div className={styles.postContainer}>
       <div className={styles.header}>
@@ -89,6 +94,7 @@ export const Post: FC<PostProps> = ({ post }) => {
         isExpanded={isExpanded}
         onToggle={toggleExpand}
         tags={tags}
+        onTagClick={handleTagClick}
       />
       {image && <img className={styles.image} src={image} alt="Post" />}
       <div className={styles.footer}>

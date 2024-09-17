@@ -9,6 +9,7 @@ export const useDeletePost = () => {
     mutationFn: deletePostFn,
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEY.posts]);
+      queryClient.invalidateQueries([QUERY_KEY.filteredPosts]);
     },
     onError: (err) => {
       console.log(err);

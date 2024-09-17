@@ -59,8 +59,7 @@ export const likePostFn = async (objectId: string): Promise<void> => {
   if (!userId) {
     throw new Error('User is not logged in');
   }
-  await api.put(`/data/Posts/${objectId}/likes`, userId),
-    console.log('Post liked successfully');
+  await api.put(`/data/Posts/${objectId}/likes`, userId);
 };
 
 export const removeLikePostFn = async (objectId: string) => {
