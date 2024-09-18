@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { ITag } from 'entities/tag/model/TagModel';
-
 import styles from './Tags.module.scss';
 import { motion } from 'framer-motion';
 import {

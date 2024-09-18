@@ -1,12 +1,7 @@
-import { FC } from 'react';
-import React, { useState } from 'react';
-import { closeIcon, seachIcon } from 'shared/assets/images';
+import React, { FC, useEffect, useState } from 'react';
+import { clearIcon, seachIcon } from 'shared/assets/images';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  buttonHoverAnimation,
-  formAnimation,
-  inputFocusAnimation,
-} from 'shared/animations/animationSettings';
+import { buttonHoverAnimation } from 'shared/animations/animationSettings';
 import { useLogout } from 'features/auth/useLogout';
 import { Loader } from 'shared/ui';
 import { LogoItem } from 'shared/components';
@@ -24,6 +19,7 @@ export const Header: FC<HeaderProps> = ({ onSearchClick }) => {
   const { user, isLoading: isLoadUser } = useUser();
   const [searchTerm, setSearchTerm] = useState('');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const { mutate: logout, isLoading } = useLogout();
 
@@ -34,7 +30,6 @@ export const Header: FC<HeaderProps> = ({ onSearchClick }) => {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearchClick(searchTerm);
-    console.log('Search Term:', searchTerm);
   };
 
   const handleLogout = () => {
@@ -48,11 +43,16 @@ export const Header: FC<HeaderProps> = ({ onSearchClick }) => {
   const closePopup = () => {
     setIsPopupOpen(false);
   };
-
   const clearSearch = () => {
     onSearchClick('');
     setSearchTerm('');
   };
+
+  useEffect(() => {
+    if (searchTerm === '') {
+      setIsFocused(false);
+    }
+  }, [searchTerm]);
 
   const menuItems = [
     {
@@ -65,6 +65,13 @@ export const Header: FC<HeaderProps> = ({ onSearchClick }) => {
     },
   ];
 
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => {
+    if (searchTerm === '') {
+      setIsFocused(false);
+    }
+  };
+
   (isLoading || isLoadUser) && <Loader />;
 
   return (
@@ -73,31 +80,42 @@ export const Header: FC<HeaderProps> = ({ onSearchClick }) => {
       <motion.form
         className={styles.searchForm}
         onSubmit={handleSearchSubmit}
-        {...formAnimation}
+        initial={{ justifyContent: 'start' }}
+        animate={
+          isFocused
+            ? { justifyContent: 'space-between', scale: 1.05 }
+            : { justifyContent: 'start' }
+        }
+        transition={{ duration: 0.5 }}
       >
-        <motion.button
-          type="submit"
-          className={styles.searchButton}
-          {...buttonHoverAnimation}
-        >
-          <img src={seachIcon} alt={seachIcon} />
-        </motion.button>
-        <motion.input
-          type="text"
-          className={styles.searchInput}
-          value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="Search"
-          {...inputFocusAnimation}
-        />
-        <motion.button
-          type="button"
-          onClick={clearSearch}
-          className={styles.clearButton}
-          {...buttonHoverAnimation}
-        >
-          <img src={closeIcon} alt="Clear" />
-        </motion.button>
+        <div className={styles.searchGroup}>
+          <motion.button
+            type="submit"
+            className={styles.searchButton}
+            {...buttonHoverAnimation}
+          >
+            <img src={seachIcon} alt={seachIcon} />
+          </motion.button>
+          <motion.input
+            type="text"
+            className={styles.searchInput}
+            value={searchTerm}
+            onChange={handleSearchChange}
+            placeholder="Search"
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          />
+        </div>
+        {isFocused && (
+          <motion.button
+            type="button"
+            onClick={clearSearch}
+            className={styles.clearButton}
+            {...buttonHoverAnimation}
+          >
+            <img src={clearIcon} alt="Clear" />
+          </motion.button>
+        )}
       </motion.form>
       <Dropdown menuItems={menuItems} user={user} />
       <AnimatePresence>

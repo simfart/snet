@@ -1,16 +1,9 @@
+@import 'variables';
+@import 'mixins';
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   text-align: center;
   width: 100%;
 }
-
-// body {
-//     margin: 0;
-//     font-family: Arial, sans-serif;
-//     color: $primary-color;
-//   }
-
-//   h1 {
-//     font-size: 2rem;
-//   }

@@ -14,7 +14,10 @@ export const HomePage: FC = () => {
     <section className={styles.homePage}>
       <Header onSearchClick={setSearchTerm} />
       <div className={styles.container}>
-        <Profile />
+        <div className={styles.profileWrapper}>
+          <Profile />
+        </div>
+
         <Posts
           selectedTagId={selectedTagId}
           onTagClick={setSelectedTagId}

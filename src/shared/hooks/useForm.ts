@@ -77,9 +77,7 @@ export const useForm = (initialValues: InitialValues) => {
     (callback: (formData: Record<string, string>) => void) =>
       (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         const { isValid, newErrors } = validateForm();
-
         if (isValid) {
           const filteredValues = Object.fromEntries(
             Object.entries(values).filter(([key, value]) => {
@@ -90,9 +88,10 @@ export const useForm = (initialValues: InitialValues) => {
           callback(filteredValues);
         } else {
           setErrors(newErrors);
+          console.log(errors);
         }
       },
-    [validateForm, values, initialValues],
+    [validateForm, values, initialValues, errors],
   );
 
   const getErrorClass = (fieldName: string) => {

@@ -1,11 +1,10 @@
 .createPostContainer {
   border: 1px solid rgba(156, 44, 158, 0.08);
   border-radius: 10px;
-  padding: 13px 0 14px;
   margin: 0 0 29px;
   box-sizing: border-box;
   padding: 13px 27px 21px;
-  width: 612px;
+  max-width: 612px;
 }
 
 .header {

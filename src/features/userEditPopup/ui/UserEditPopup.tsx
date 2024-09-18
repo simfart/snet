@@ -49,7 +49,10 @@ export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
     if (!user) return;
 
     const changedValues = Object.keys(values).reduce((acc, key) => {
-      if (values[key] !== user[key as keyof typeof user]) {
+      if (
+        values[key] !== user[key as keyof typeof user] &&
+        values[key] !== ''
+      ) {
         acc[key as keyof FormState] = values[key];
       }
       return acc;

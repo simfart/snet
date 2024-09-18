@@ -24,10 +24,14 @@ interface DropdownItem {
 interface DropdownProps {
   menuItems: DropdownItem[];
   user?: IUser;
-  variant?: 'post';
+  variant?: 'post' | 'burger' | 'header';
 }
 
-export const Dropdown: FC<DropdownProps> = ({ menuItems, user, variant }) => {
+export const Dropdown: FC<DropdownProps> = ({
+  menuItems,
+  user,
+  variant = 'header',
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 

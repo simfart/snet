@@ -1,9 +1,9 @@
 @import url('./shared/assets/fonts/fonts.module.css');
 @import 'normalize.css/normalize.css';
 
-/* * {
+* {
   outline: 1px solid #ff3300;
-} */
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

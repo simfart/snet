@@ -11,7 +11,7 @@ export const registerInputs = {
 
 export const editUserInputs = {
   name: { value: '', required: true, type: 'text' },
-  avatar: { value: '', required: true, type: 'url' },
+  avatar: { value: '', required: false, type: 'url' },
   about: { value: '', required: true, type: 'text' },
 };
 
