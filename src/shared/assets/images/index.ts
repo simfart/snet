@@ -15,7 +15,6 @@ import closeIcon from './close.svg';
 import dropDownPostIcon from './grey_dropdown.svg';
 import deleteIcon from './delete-o-svgrepo-com.svg';
 import clearIcon from './ClearButton2.svg';
-import burgerIcon from './Burger.svg';
 
 export {
   logoIcon,
@@ -35,5 +34,4 @@ export {
   dropDownPostIcon,
   deleteIcon,
   clearIcon,
-  burgerIcon,
 };

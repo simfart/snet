@@ -6,7 +6,7 @@ import {
 } from 'shared/assets/images';
 import { PostContent } from './post-content/PostContent';
 import { IPost } from '../model/PostModel';
-import { Dropdown } from 'shared/components/dropdown';
+import { Dropdown } from 'entities/dropdown';
 import { useDeletePost } from '../hooks/useDeletePost';
 import { useUser } from 'features/auth/useUser';
 import { likePostFn, removeLikePostFn } from '../api/postApi';

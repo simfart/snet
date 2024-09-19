@@ -7,7 +7,7 @@ import { Loader } from 'shared/ui';
 import { LogoItem } from 'shared/components';
 import { useUser } from 'features/auth/useUser';
 import { UserEditPopup } from 'features/userEditPopup';
-import { Dropdown } from 'shared/components/dropdown';
+import { Dropdown } from 'entities/dropdown';
 
 import styles from './Header.module.scss';
 
