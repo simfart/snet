@@ -4,31 +4,29 @@ import { IUser } from 'entities/user/model/userModel';
 import { dropDownIcon } from 'shared/assets/images';
 import { useOutsideClick } from 'shared/hooks/useOutsideClick';
 import {
-  dropdownVariants,
   iconVariants,
   itemVariants,
   overlayVariants,
 } from 'shared/animations/dropdownVariants';
 
 import styles from './Dropdown.module.scss';
-
-interface DropdownItem {
-  label: string;
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
-}
+import { useLogout } from 'features/auth/useLogout';
+import { Loader } from 'shared/ui';
+import { burgerAnimationConfig } from 'shared/animations/animationSettings';
 
 interface DropdownProps {
-  menuItems: DropdownItem[];
   user?: IUser;
   variant?: 'post' | 'header';
+  openPopup: (e?: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const Dropdown: FC<DropdownProps> = ({ user }) => {
+export const Dropdown: FC<DropdownProps> = ({ user, openPopup }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { mutate: logout, isLoading } = useLogout();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const toggleDropdown = (e: MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
+  const toggleDropdown = (e?: MouseEvent<HTMLDivElement>) => {
+    e?.stopPropagation();
     setIsOpen((prevState) => !prevState);
   };
 
@@ -40,37 +38,43 @@ export const Dropdown: FC<DropdownProps> = ({ user }) => {
     }
   });
 
-  const menuItems = [
+  const handleLogout = () => {
+    logout();
+  };
+
+  const handleSettings = () => {
+    toggleDropdown();
+    openPopup();
+  };
+  const dropDownItems = [
     {
       label: 'Settings',
-      // onClick: openPopup,
+      onClick: handleSettings,
     },
     {
       label: 'Log out',
-      // onClick: handleLogout,
+      onClick: handleLogout,
     },
   ];
 
+  isLoading && <Loader />;
+
   return (
-    <div className={styles.dropdown} onClick={toggleDropdown}>
+    <div className={styles.dropdownContainer} onClick={toggleDropdown}>
       <>
         <motion.div
           className={styles.burger}
-          initial={false}
-          animate={
-            isOpen
-              ? { scale: 0.8, backgroundColor: '#f0f0f0' }
-              : { scale: 1, backgroundColor: 'transparent' }
-          }
-          transition={{ duration: 0.3 }}
+          {...burgerAnimationConfig(isOpen)}
         >
           <motion.div
             initial={false}
-            animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+            animate={
+              isOpen ? { rotate: 45, y: 8, x: -5.5 } : { rotate: 0, y: 0 }
+            }
           />
           <motion.div
             initial={false}
-            animate={isOpen ? { rotate: -45 } : { rotate: 0 }}
+            animate={isOpen ? { rotate: -45, x: -5.5 } : { rotate: 0 }}
           />
           <motion.div
             initial={false}
@@ -90,17 +94,17 @@ export const Dropdown: FC<DropdownProps> = ({ user }) => {
       </>
       <motion.div
         ref={dropdownRef}
-        className={styles.popup}
+        className={styles.dropdown}
         initial={{ x: '100%' }}
         animate={isOpen ? { x: 0 } : { x: '100%' }}
         transition={{ type: 'tween', duration: 0.3 }}
         onClick={(e) => e.stopPropagation()}
       >
-        {menuItems.map((item, index) => (
+        {dropDownItems.map((item, index) => (
           <motion.button
             key={index}
             onClick={item.onClick}
-            className={styles.menuItem}
+            className={styles.dropDownItem}
             variants={itemVariants}
             whileHover="hover"
             whileTap="tap"

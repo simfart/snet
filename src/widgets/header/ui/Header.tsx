@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import { clearIcon, seachIcon } from 'shared/assets/images';
 import { AnimatePresence, motion } from 'framer-motion';
 import { buttonHoverAnimation } from 'shared/animations/animationSettings';
-import { useLogout } from 'features/auth/useLogout';
 import { Loader } from 'shared/ui';
 import { LogoItem } from 'shared/components';
 import { useUser } from 'features/auth/useUser';
@@ -21,8 +20,6 @@ export const Header: FC<HeaderProps> = ({ onSearchClick }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
-  const { mutate: logout, isLoading } = useLogout();
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
@@ -30,10 +27,6 @@ export const Header: FC<HeaderProps> = ({ onSearchClick }) => {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSearchClick(searchTerm);
-  };
-
-  const handleLogout = () => {
-    logout();
   };
 
   const openPopup = () => {
@@ -54,17 +47,6 @@ export const Header: FC<HeaderProps> = ({ onSearchClick }) => {
     }
   }, [searchTerm]);
 
-  const menuItems = [
-    {
-      label: 'Settings',
-      onClick: openPopup,
-    },
-    {
-      label: 'Log out',
-      onClick: handleLogout,
-    },
-  ];
-
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => {
     if (searchTerm === '') {
@@ -72,57 +54,60 @@ export const Header: FC<HeaderProps> = ({ onSearchClick }) => {
     }
   };
 
-  (isLoading || isLoadUser) && <Loader />;
+  isLoadUser && <Loader />;
 
   return (
     <header className={styles.header}>
-      <LogoItem />
-      <motion.form
-        className={styles.searchForm}
-        onSubmit={handleSearchSubmit}
-        initial={{ justifyContent: 'start' }}
-        animate={
-          isFocused
-            ? { justifyContent: 'space-between', scale: 1.05 }
-            : { justifyContent: 'start' }
-        }
-        transition={{ duration: 0.5 }}
-      >
-        <div className={styles.searchGroup}>
-          <motion.button
-            type="submit"
-            className={styles.searchButton}
-            {...buttonHoverAnimation}
-          >
-            <img src={seachIcon} alt={seachIcon} />
-          </motion.button>
-          <motion.input
-            type="text"
-            className={styles.searchInput}
-            value={searchTerm}
-            onChange={handleSearchChange}
-            placeholder="Search"
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-          />
-        </div>
-        {isFocused && (
-          <motion.button
-            type="button"
-            onClick={clearSearch}
-            className={styles.clearButton}
-            {...buttonHoverAnimation}
-          >
-            <img src={clearIcon} alt="Clear" />
-          </motion.button>
-        )}
-      </motion.form>
-      <Dropdown menuItems={menuItems} user={user} />
-      <AnimatePresence>
-        {isPopupOpen && (
-          <UserEditPopup isOpen={isPopupOpen} onClose={closePopup} />
-        )}
-      </AnimatePresence>
+      <div className={styles.headerContent}>
+        <LogoItem />
+        <motion.form
+          className={styles.searchForm}
+          onSubmit={handleSearchSubmit}
+          initial={{ justifyContent: 'start' }}
+          animate={
+            isFocused
+              ? { justifyContent: 'space-between', scale: 1.05 }
+              : { justifyContent: 'start' }
+          }
+          transition={{ duration: 0.5 }}
+        >
+          <div className={styles.searchGroup}>
+            <motion.button
+              type="submit"
+              className={styles.searchButton}
+              {...buttonHoverAnimation}
+            >
+              <img src={seachIcon} alt={seachIcon} />
+            </motion.button>
+            <motion.input
+              type="text"
+              className={styles.searchInput}
+              value={searchTerm}
+              onChange={handleSearchChange}
+              placeholder="Search"
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+          </div>
+          {isFocused && (
+            <motion.button
+              type="button"
+              onClick={clearSearch}
+              className={styles.clearButton}
+              {...buttonHoverAnimation}
+            >
+              <img src={clearIcon} alt="Clear" />
+            </motion.button>
+          )}
+        </motion.form>
+        <Dropdown user={user} openPopup={openPopup} />
+
+        <AnimatePresence>
+          {isPopupOpen && (
+            <UserEditPopup isOpen={isPopupOpen} onClose={closePopup} />
+          )}
+        </AnimatePresence>
+      </div>
     </header>
   );
 };

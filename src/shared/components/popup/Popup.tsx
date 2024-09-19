@@ -7,7 +7,7 @@ interface PopupProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
-  variant?: 'upload';
+  variant?: 'upload' | 'settings';
 }
 
 export const Popup: FC<PopupProps> = ({
@@ -20,7 +20,9 @@ export const Popup: FC<PopupProps> = ({
 
   return (
     <motion.div
-      className={styles.popupOverlay}
+      className={`${styles.popupOverlay} ${
+        variant === 'settings' && styles.popupSettings
+      }`}
       onClick={onClose}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

@@ -85,7 +85,7 @@ export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
   if (isLoading) return <Loader />;
 
   return (
-    <Popup isOpen={isOpen} onClose={onClose}>
+    <Popup isOpen={isOpen} onClose={onClose} variant="settings">
       <h2>Profile</h2>
       <span>
         All information that you will provide can be seen by the public.

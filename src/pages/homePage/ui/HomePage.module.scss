@@ -13,6 +13,7 @@
   display: flex;
   padding: 38px 20px 0;
   gap: 10px;
+  margin-top: 59px;
 
   @include respond-to(tablet) {
     flex-direction: column;
@@ -21,7 +22,9 @@
 }
 
 .profileWrapper {
-  display: block;
+  display: flex;
+  flex-grow: 1;
+  max-width: 309px;
 
   @include respond-to(tablet) {
     display: none;

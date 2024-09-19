@@ -1,7 +1,7 @@
 @import 'app/styles/mixins';
 @import 'app/styles/variables';
 
-.dropdown {
+.dropdownContainer {
   display: flex;
   align-items: center;
   position: relative;
@@ -64,18 +64,23 @@
   z-index: 100;
 }
 
-.popup {
+.dropdown {
   position: fixed;
-  top: 74px;
+  top: 59px;
   right: 0;
   width: 300px;
   background-color: #ffffff;
-  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.2);
+  box-shadow: -2px 0 15px rgba(121, 18, 49, 0.14);
   z-index: 200;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-radius: 10px;
+
+  @include respond-to(tablet) {
+    top: 77px;
+  }
 }
 
 .content {
@@ -91,7 +96,7 @@
   }
 }
 
-.menuItem {
+.dropDownItem {
   display: flex;
   align-items: center;
   width: 100%;
