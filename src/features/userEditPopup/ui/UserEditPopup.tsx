@@ -9,6 +9,8 @@ import { Loader } from 'shared/ui';
 import { Popup } from 'shared/components/popup';
 
 import styles from './UserEditPopup.module.scss';
+import { backIcon } from 'shared/assets/images';
+import { motion } from 'framer-motion';
 
 interface UserEditPopupProps {
   isOpen: boolean;
@@ -86,7 +88,21 @@ export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
 
   return (
     <Popup isOpen={isOpen} onClose={onClose} variant="settings">
-      <h2>Profile</h2>
+      <div className={styles.profile}>
+        <motion.button
+          className={styles.buttonBack}
+          onClick={onClose}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.8 }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.3 }}
+        >
+          <img src={backIcon} alt="Back Icon" />
+        </motion.button>
+        <h2>Profile</h2>
+      </div>
       <span>
         All information that you will provide can be seen by the public.
       </span>

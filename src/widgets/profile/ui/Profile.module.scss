@@ -1,4 +1,4 @@
-.profile {
+.profileContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,6 +6,7 @@
   box-sizing: border-box;
   border-radius: 10px;
   flex-grow: 1;
+  border: 1px solid rgba(156, 44, 158, 0.08);
 
   h1 {
     font-size: 14px;
@@ -22,14 +23,20 @@
   border-top-right-radius: 10px;
 }
 
+.profile {
+  padding: 0 14px;
+}
+
 .digit {
   max-width: 280px;
   padding: 37px 0 50px;
   display: flex;
+  justify-content: center;
 }
 
 .digitItem {
   margin-right: 78px;
+
   &:last-child {
     margin-right: 0;
   }
@@ -51,6 +58,7 @@
   padding: 0 14px;
   border-bottom: 1px solid #c4c4c4;
   box-sizing: border-box;
+  padding: 0 14px;
 }
 
 .social {

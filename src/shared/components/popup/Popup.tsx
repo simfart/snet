@@ -37,7 +37,13 @@ export const Popup: FC<PopupProps> = ({
         transition={{ duration: 0.4 }}
       >
         {children}
-        <button className={styles.buttonClose} onClick={onClose}>
+
+        <button
+          className={`${styles.buttonClose} ${
+            variant === 'settings' && styles.buttonVisible
+          }`}
+          onClick={onClose}
+        >
           <img src={closeIcon} alt="Close Icon" />
         </button>
       </motion.div>
