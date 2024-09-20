@@ -38,6 +38,7 @@ export const useCreatePost = () => {
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEY.posts]);
       queryClient.invalidateQueries([QUERY_KEY.tags]);
+      queryClient.invalidateQueries([QUERY_KEY.userPosts]);
     },
     onError: (err) => {
       console.error(err);

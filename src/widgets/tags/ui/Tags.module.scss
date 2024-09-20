@@ -1,13 +1,16 @@
+@import 'app/styles/mixins';
+@import 'app/styles/variables';
+
 .tagsContainer {
-  flex-grow: 1;
   padding: 23px 21px;
-  max-width: 309px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   text-align: left;
   border: 1px solid #9c2c9e14;
   border-radius: 10px;
   box-sizing: border-box;
+  align-self: flex-start;
 
   h2 {
     font-size: 14px;
@@ -15,8 +18,23 @@
     font-weight: 700;
     margin: 0 0 23px;
   }
+
+  @include respond-to(tablet) {
+    padding: 0;
+    border: none;
+  }
 }
 
+.tags {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+
+  @include respond-to(tablet) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
 .tagItem {
   font-size: 14px;
   line-height: 21px;
@@ -24,6 +42,14 @@
   color: #e25a99;
   margin-bottom: 15px;
   cursor: pointer;
+
+  @include respond-to(tablet) {
+    border-radius: 10px;
+    background-color: rgba(232, 77, 149, 0.08);
+    padding: 8px 14px 5px;
+    margin-right: 7px;
+    margin-bottom: 11px;
+  }
 }
 
 .selectedTag {

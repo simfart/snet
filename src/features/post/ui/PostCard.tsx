@@ -59,7 +59,6 @@ export const PostCard: FC<PostCardProps> = ({ post }) => {
               Like
             </button>
           )}
-
           <button className="commentButton">Comment</button>
           {isOwner && <button className="editButton">Edit</button>}
           {isOwner && (

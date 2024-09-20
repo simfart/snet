@@ -50,7 +50,9 @@ export const Posts: FC<PostsProps> = ({
 
   return (
     <div className={styles.postsContainer}>
-      <CreatePostForm user={user} />
+      <div className={styles.createPostFormWrapper}>
+        <CreatePostForm user={user} />
+      </div>
       <div className={styles.posts}>
         {(filteredPosts || foundPosts || posts)?.map((post: IPost) => (
           <Post key={post.objectId} post={post} onTagClick={onTagClick} />

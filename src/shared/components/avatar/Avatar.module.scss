@@ -24,3 +24,17 @@
   font-size: 24px;
   color: white;
 }
+
+.profilePage {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  top: 125px;
+  border-radius: 100px;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: white;
+}

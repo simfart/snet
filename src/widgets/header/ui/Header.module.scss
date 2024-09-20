@@ -18,7 +18,7 @@
   background-color: #fff;
 
   @include respond-to(tablet) {
-    padding: 19px 24px;
+    padding: 19px 17px 17px 23px;
   }
 }
 
@@ -38,77 +38,6 @@
     &_mark {
       color: #e25a99;
     }
-  }
-}
-
-.searchForm {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: rgba(232, 77, 149, 0.08);
-  max-width: 611px;
-  margin: 0 15px;
-  padding: 0 14px 0 8px;
-}
-
-.searchGroup {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-
-  input[type='text'] {
-    flex-grow: 1;
-    width: 100%;
-    border: none;
-    padding: 10px 0px 10px 14px;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 18px;
-    outline: none;
-    background: none;
-    width: 200px;
-    color: #555555;
-    &::placeholder {
-      color: #c4c4c4;
-    }
-  }
-}
-
-.searchButton {
-  width: 21px;
-  height: 22px;
-  background: none;
-  border: none;
-  padding: 8px 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &:focus {
-    outline: none;
-  }
-}
-
-.clearButton {
-  width: 21px;
-  height: 21px;
-  background-color: rgba(232, 77, 149, 0.093);
-  border: none;
-  padding: 8px 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 0 0 8px;
-  &:focus {
-    outline: none;
-  }
-
-  img {
-    width: 10px;
-    height: 10px;
   }
 }
 

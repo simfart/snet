@@ -6,45 +6,12 @@
   align-items: center;
   position: relative;
   cursor: pointer;
-  padding: 6px 20px;
-  border-radius: 10px;
-  background-color: rgba(232, 77, 149, 0.08);
-
-  span {
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 18px;
-    color: #e25a99;
-    margin-right: 25px;
-    white-space: nowrap;
-    max-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  img {
-    width: 15px;
-    height: 15px;
-  }
-
-  @include respond-to(tablet) {
-    background-color: transparent;
-    padding: 0;
-    background-image: url('../../assets/images/Burger.svg');
-    width: 29px;
-    height: 19px;
-    border-radius: 0;
-    span {
-      display: none;
-    }
-    img {
-      display: none;
-    }
-  }
-}
-
-.post {
   background-color: none;
-  padding: 0;
+
+  img {
+    width: 10px;
+    height: 10px;
+  }
 }
 
 .dropdownMenu {
@@ -96,23 +63,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.356);
   z-index: 999;
-}
-
-.burgerMenu {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-}
-
-.burgerLine {
-  width: 100%;
-  height: 3px;
-  background-color: #333;
-  border-radius: 2px;
-  transition: all 0.5s ease;
+  backdrop-filter: blur(2px);
 }

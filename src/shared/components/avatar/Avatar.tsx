@@ -6,7 +6,7 @@ import { getRandomColor } from 'shared/utils';
 
 interface AvatarProps {
   owner: IUser;
-  variant?: 'profileAvatar' | 'postAvatar';
+  variant?: 'profileAvatar' | 'postAvatar' | 'profilePage';
 }
 
 export const Avatar: FC<AvatarProps> = ({

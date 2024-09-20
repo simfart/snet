@@ -6,7 +6,6 @@ import {
 } from 'shared/assets/images';
 import { PostContent } from './post-content/PostContent';
 import { IPost } from '../model/PostModel';
-import { Dropdown } from 'entities/dropdown';
 import { useDeletePost } from '../hooks/useDeletePost';
 import { useUser } from 'features/auth/useUser';
 import { likePostFn, removeLikePostFn } from '../api/postApi';
@@ -15,6 +14,7 @@ import { formatTimestamp } from 'shared/utils';
 
 import styles from './Post.module.scss';
 import { Avatar } from 'shared/components';
+import { PostDropdown } from 'entities/dropdown/postDropdown/PostDropdown';
 
 interface Like {
   objectId: string;
@@ -60,13 +60,6 @@ export const Post: FC<PostProps> = ({ post, onTagClick }) => {
     }
   }, [toggleLike, postId, isLikeLoading]);
 
-  const postSettingsMenuItems = [
-    {
-      label: 'Delete Post',
-      onClick: handleDelete,
-    },
-  ];
-
   const toggleExpand = useCallback(() => {
     setIsExpanded((prev) => !prev);
   }, []);
@@ -85,9 +78,7 @@ export const Post: FC<PostProps> = ({ post, onTagClick }) => {
             <div className={styles.date}>{formatTimestamp(created)}</div>
           </div>
         </div>
-        {isOwner && (
-          <Dropdown menuItems={postSettingsMenuItems} variant="post" />
-        )}
+        {isOwner && <PostDropdown onDeleteClick={handleDelete} />}
       </div>
       <PostContent
         content={description}
@@ -107,10 +98,12 @@ export const Post: FC<PostProps> = ({ post, onTagClick }) => {
           </button>
           <p>{likes.length > 0 ? likes.length : ''}</p>
         </div>
-        <button className={styles.action}>
-          <img src={commentIcon} alt="Comment Icon" />
-          {/* <p>45</p> */}
-        </button>
+        <div className={styles.action}>
+          <button>
+            <img src={commentIcon} alt="Comment Icon" />
+          </button>
+          <p>45</p>
+        </div>
       </div>
     </div>
   );

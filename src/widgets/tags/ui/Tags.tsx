@@ -37,18 +37,20 @@ export const Tags: FC<TagsProps> = ({ selectedTagId, onTagClick }) => {
       ) : (
         <h2>Trending Topics</h2>
       )}
-      {tags?.map((tag: ITag) => (
-        <motion.div
-          key={tag.objectId}
-          className={`${styles.tagItem} ${
-            selectedTagId === tag.objectId ? styles.selectedTag : ''
-          }`}
-          onClick={() => handleTagClick(tag.objectId)}
-          {...linkAnimation}
-        >
-          {`#${tag.name}`}
-        </motion.div>
-      ))}
+      <div className={styles.tags}>
+        {tags?.map((tag: ITag) => (
+          <motion.div
+            key={tag.objectId}
+            className={`${styles.tagItem} ${
+              selectedTagId === tag.objectId ? styles.selectedTag : ''
+            }`}
+            onClick={() => handleTagClick(tag.objectId)}
+            {...linkAnimation}
+          >
+            {`#${tag.name}`}
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 };

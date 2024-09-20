@@ -1,9 +1,15 @@
+@import 'app/styles/variables.scss';
+@import 'app/styles/mixins';
+
 .contentWrapper {
   max-width: 100%;
   position: relative;
   display: flex;
   padding: 0 27px;
   margin-bottom: 17px;
+  @include respond-to(mobile) {
+    padding: 0 21px;
+  }
 }
 
 .content {
@@ -50,5 +56,9 @@
 
   &:focus {
     outline: none;
+  }
+
+  @include respond-to(mobile) {
+    bottom: -13px;
   }
 }

@@ -77,9 +77,7 @@ export const AuthForm = ({
     >
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <LogoItem />
-        <h1 className={`${mode === 'register' ? styles.registerMode : ''}`}>
-          {title}
-        </h1>
+        <h1>{title}</h1>
         {renderInputs()}
         <motion.button type="submit" {...buttonAuthAnimation}>
           {buttonText}

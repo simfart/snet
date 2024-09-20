@@ -17,7 +17,16 @@ interface Like {
 
 export const getPostFn = async (): Promise<IPost[]> => {
   const response = await api.get(
-    `/data/Posts?sortBy=created desc&loadRelations=user,likes,tags`,
+    `/data/Posts?sortBy=created desc&loadRelations=user,likes,tags&pageSize=100`,
+  );
+  return response.data;
+};
+
+export const getUserPostsFn = async (userId: string): Promise<IPost[]> => {
+  const response = await api.get(
+    `/data/Posts?where=ownerId%3D'${encodeURIComponent(
+      userId,
+    )}'&loadRelations=user,likes,tags&sortBy=created desc&pageSize=100`,
   );
   return response.data;
 };
@@ -26,7 +35,8 @@ export const searchPosts = async (searchTerm: string) => {
   try {
     const encodedSearchTerm = encodeURIComponent(`%${searchTerm}%`);
     const response = await api.get(
-      `/data/posts?where=description%20LIKE%20'${encodedSearchTerm}'&loadRelations=user,likes,tags&sortBy=created%20desc`,
+      `/data/posts?where=description%20LIKE%20'${encodedSearchTerm}'&loadRelations=user,likes,tags&sortBy=created%20DESC
+`,
     );
     return response.data;
   } catch (error) {

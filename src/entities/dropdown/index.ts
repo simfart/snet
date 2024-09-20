@@ -1,1 +1,1 @@
-export { Dropdown } from './Dropdown';
+export { HeaderDropdown } from './headerDropdown/HeaderDropdown';

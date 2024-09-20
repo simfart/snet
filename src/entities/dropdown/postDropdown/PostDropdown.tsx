@@ -1,11 +1,6 @@
 import { FC, useState, useRef, MouseEvent } from 'react';
 import { motion } from 'framer-motion';
-import { IUser } from 'entities/user/model/userModel';
-import {
-  deleteIcon,
-  dropDownIcon,
-  dropDownPostIcon,
-} from 'shared/assets/images';
+import { deleteIcon, dropDownPostIcon } from 'shared/assets/images';
 import { useOutsideClick } from 'shared/hooks/useOutsideClick';
 import {
   dropdownVariants,
@@ -14,24 +9,13 @@ import {
   overlayVariants,
 } from 'shared/animations/dropdownVariants';
 
-import styles from './Dropdown.module.scss';
+import styles from './PostDropdown.module.scss';
 
-interface DropdownItem {
-  label: string;
-  onClick: (e: MouseEvent<HTMLButtonElement>) => void;
+interface PostDropdownProps {
+  onDeleteClick: () => void;
 }
 
-interface DropdownProps {
-  menuItems: DropdownItem[];
-  user?: IUser;
-  variant?: 'post' | 'burger' | 'header';
-}
-
-export const Dropdown: FC<DropdownProps> = ({
-  menuItems,
-  user,
-  variant = 'header',
-}) => {
+export const PostDropdown: FC<PostDropdownProps> = ({ onDeleteClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -48,16 +32,17 @@ export const Dropdown: FC<DropdownProps> = ({
     }
   });
 
+  const postSettingsMenuItems = [
+    {
+      label: 'Delete Post',
+      onClick: onDeleteClick,
+    },
+  ];
+
   return (
-    <div
-      className={`${styles.dropdown} ${
-        variant && styles[variant] ? styles[variant] : ''
-      }`}
-      onClick={toggleDropdown}
-    >
-      {user && <span>{user.name}</span>}
+    <div className={styles.dropdown} onClick={toggleDropdown}>
       <motion.img
-        src={variant === 'post' ? dropDownPostIcon : dropDownIcon}
+        src={dropDownPostIcon}
         alt="Dropdown Icon"
         animate={isOpen ? 'open' : 'closed'}
         variants={iconVariants}
@@ -78,7 +63,7 @@ export const Dropdown: FC<DropdownProps> = ({
         animate={isOpen ? 'open' : 'closed'}
         variants={dropdownVariants}
       >
-        {menuItems.map((item, index) => (
+        {postSettingsMenuItems.map((item, index) => (
           <motion.button
             key={index}
             onClick={item.onClick}
@@ -88,11 +73,7 @@ export const Dropdown: FC<DropdownProps> = ({
             whileTap="tap"
           >
             {item.label}
-            {variant === 'post' ? (
-              <img src={deleteIcon} alt="Delete icon" />
-            ) : (
-              <div>&gt;</div>
-            )}
+            <img src={deleteIcon} alt="Delete icon" />
           </motion.button>
         ))}
       </motion.div>

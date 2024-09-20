@@ -8,22 +8,23 @@ import {
   itemVariants,
   overlayVariants,
 } from 'shared/animations/dropdownVariants';
-
-import styles from './Dropdown.module.scss';
 import { useLogout } from 'features/auth/useLogout';
 import { Loader } from 'shared/ui';
 import { burgerAnimationConfig } from 'shared/animations/animationSettings';
 
+import styles from './HeaderDropdown.module.scss';
+import { useNavigate } from 'react-router-dom';
+
 interface DropdownProps {
   user?: IUser;
-  variant?: 'post' | 'header';
   openPopup: (e?: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const Dropdown: FC<DropdownProps> = ({ user, openPopup }) => {
+export const HeaderDropdown: FC<DropdownProps> = ({ user, openPopup }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { mutate: logout, isLoading } = useLogout();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const toggleDropdown = (e?: MouseEvent<HTMLDivElement>) => {
     e?.stopPropagation();
@@ -46,7 +47,16 @@ export const Dropdown: FC<DropdownProps> = ({ user, openPopup }) => {
     toggleDropdown();
     openPopup();
   };
+
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
+
   const dropDownItems = [
+    {
+      label: 'Profile',
+      onClick: handleProfileClick,
+    },
     {
       label: 'Settings',
       onClick: handleSettings,
@@ -95,8 +105,8 @@ export const Dropdown: FC<DropdownProps> = ({ user, openPopup }) => {
       <motion.div
         ref={dropdownRef}
         className={styles.dropdown}
-        initial={{ x: '100%' }}
-        animate={isOpen ? { x: 0 } : { x: '100%' }}
+        initial={{ x: '101%' }}
+        animate={isOpen ? { x: 0 } : { x: '101%' }}
         transition={{ type: 'tween', duration: 0.3 }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -114,7 +124,6 @@ export const Dropdown: FC<DropdownProps> = ({ user, openPopup }) => {
           </motion.button>
         ))}
       </motion.div>
-
       {isOpen && (
         <motion.div
           className={styles.overlay}
