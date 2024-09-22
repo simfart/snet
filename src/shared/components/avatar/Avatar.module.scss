@@ -1,3 +1,6 @@
+@import 'app/styles/mixins';
+@import 'app/styles/variables';
+
 .profileAvatar {
   width: 100px;
   height: 100px;
@@ -29,7 +32,7 @@
   position: absolute;
   width: 150px;
   height: 150px;
-  top: 125px;
+  top: 325px;
   border-radius: 100px;
   object-fit: cover;
   display: flex;
@@ -37,4 +40,9 @@
   justify-content: center;
   font-size: 48px;
   color: white;
+  @include respond-to(tablet) {
+    top: 218.5px;
+    width: 118px;
+    height: 115px;
+  }
 }

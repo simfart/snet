@@ -13,9 +13,10 @@ import { IUser } from 'entities/user/model/userModel';
 
 interface Props {
   user: IUser;
+  variant?: 'profilePage';
 }
 
-export const CreatePostForm: React.FC<Props> = ({ user }) => {
+export const CreatePostForm: React.FC<Props> = ({ user, variant }) => {
   const [value, setValue] = useState<string>('');
   const [image, setImage] = useState<string>('');
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
@@ -80,7 +81,9 @@ export const CreatePostForm: React.FC<Props> = ({ user }) => {
       <form
         onSubmit={handleSubmit}
         noValidate
-        className={styles.createPostContainer}
+        className={`${styles.createPostContainer} ${
+          variant === 'profilePage' && styles.profilePage
+        }`}
       >
         <div className={styles.header}>
           <Avatar owner={user} variant="postAvatar" />

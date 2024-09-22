@@ -5,6 +5,7 @@
   position: fixed;
   z-index: 10;
   width: 100%;
+  max-width: 1336px;
 }
 
 .headerContent {
@@ -18,7 +19,7 @@
   background-color: #fff;
 
   @include respond-to(tablet) {
-    padding: 19px 17px 17px 23px;
+    padding: 19px 24px 17px 25px;
   }
 }
 

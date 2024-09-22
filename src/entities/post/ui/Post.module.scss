@@ -68,7 +68,10 @@
 
 .image {
   max-width: 100%;
+  width: 100%;
   margin-bottom: 10px;
+  max-height: 400px;
+  object-fit: cover;
   @include respond-to(mobile) {
     height: auto;
   }
