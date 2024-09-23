@@ -9,74 +9,53 @@ import {
 
 import styles from './Profile.module.scss';
 import { Loader } from 'shared/ui';
-import { Avatar } from 'shared/components';
+import { ProfileHeader } from 'entities/profileHeader';
 
 export const Profile: FC = () => {
   const { user, isLoading } = useUser();
   isLoading && <Loader />;
+  const socialLinks = [
+    {
+      href: 'https://www.facebook.com/YourProfile',
+      alt: 'Facebook Icon',
+      icon: facebookIcon,
+      label: 'Facebook',
+    },
+    {
+      href: 'https://www.twitter.com/YourProfile',
+      alt: 'Twitter Icon',
+      icon: twitterIcon,
+      label: 'Twitter',
+    },
+    {
+      href: 'https://www.instagram.com/YourProfile',
+      alt: 'Instagram Icon',
+      icon: instagramIcon,
+      label: 'Instagram',
+    },
+    {
+      href: 'https://youtube.com/YourProfile',
+      alt: 'YouTube Icon',
+      icon: youtubeIcon,
+      label: 'YouTube',
+    },
+  ];
+
   return (
     <div className={styles.profileContainer}>
-      <div className={styles.backdrop}></div>
-      <Avatar owner={user} />
-      <div className={styles.profile}>
-        <h1>{user?.name}</h1>
-        <span>{user?.about}</span>
-        <div className={styles.digit}>
-          <div className={styles.digitItem}>
-            <div> 1,289</div>
-            <span>Followers</span>
-          </div>
-          <div className={styles.digitItem}>
-            <div> 500</div>
-            <span>Friends</span>
-          </div>
-        </div>
-        <div className={styles.line}></div>
-        <div className={styles.social}>
-          <h2>Social Media Accounts</h2>
-          <ul>
-            <li>
-              <a
-                href="https://www.facebook.com/YourProfile"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className={styles.srOnly}>Facebook</span>
-                <img src={facebookIcon} alt="Facebook Icon" />
+      <ProfileHeader user={user} variant="widget" />
+      <div className={styles.social}>
+        <h2>Social Media Accounts</h2>
+        <ul>
+          {socialLinks.map((link, index) => (
+            <li key={index}>
+              <a href={link.href} target="_blank" rel="noopener noreferrer">
+                <span className={styles.srOnly}>{link.label}</span>
+                <img src={link.icon} alt={link.alt} />
               </a>
             </li>
-            <li>
-              <a
-                href="https://www.twitter.com/YourProfile"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className={styles.srOnly}>Twitter</span>
-                <img src={twitterIcon} alt="Twitter Icon" />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.instagram.com/YourProfile"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className={styles.srOnly}>Instagram</span>
-                <img src={instagramIcon} alt="Instagram Icon" />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://youtube.com/YourProfile"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className={styles.srOnly}>YouTube</span>
-                <img src={youtubeIcon} alt="Youtube Icon" />
-              </a>
-            </li>
-          </ul>
-        </div>
+          ))}
+        </ul>
       </div>
     </div>
   );

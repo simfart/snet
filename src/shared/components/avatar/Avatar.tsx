@@ -6,12 +6,12 @@ import { getRandomColor } from 'shared/utils';
 
 interface AvatarProps {
   owner: IUser;
-  variant?: 'profileAvatar' | 'postAvatar' | 'profilePage';
+  variant?: 'profileWidget' | 'postAvatar' | 'profilePage';
 }
 
 export const Avatar: FC<AvatarProps> = ({
   owner,
-  variant = 'profileAvatar',
+  variant = 'profileWidget',
 }) => {
   const initial = owner?.name ? owner.name.charAt(0).toUpperCase() : '?';
   const randomBackgroundColor = useMemo(() => getRandomColor(), []);

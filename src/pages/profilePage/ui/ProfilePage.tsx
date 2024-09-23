@@ -11,16 +11,35 @@ import { IPost } from 'entities/post/model/PostModel';
 import { Post } from 'entities/post';
 import { Loader } from 'shared/ui';
 import { motion } from 'framer-motion';
+import { UserPosts } from 'widgets/userPosts';
+import { Album } from 'widgets/album/ui/Album';
+import { ProfileHeader } from 'entities/profileHeader';
 
 export const ProfilePage: FC = () => {
   const { user } = useUser();
   const { isLoading, posts, postsWithImages } = useUserPosts(user?.objectId);
   const onTagClick = () => {};
 
+  // // Мемоизация постов
+  // const memoizedPosts = useMemo(() => posts, [posts]);
+
+  // // Мемоизация постов с изображениями
+  // const memoizedPostsWithImages = useMemo(() => postsWithImages, [postsWithImages]);
+
+  console.log(posts);
   const [activeTab, setActiveTab] = useState<'posts' | 'album'>('posts');
 
-  const handleTabClick = (tab: 'posts' | 'album') => {
-    setActiveTab(tab);
+  const handleTabClick = (tab: 'posts' | 'album') => setActiveTab(tab);
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'posts':
+        return <UserPosts posts={posts} onTagClick={onTagClick} user={user} />;
+      case 'album':
+        return <Album postsWithImages={postsWithImages} />;
+      default:
+        return null;
+    }
   };
 
   const buttonVariants = {
@@ -42,26 +61,12 @@ export const ProfilePage: FC = () => {
     <>
       <Header />
       <section className={styles.profilePage}>
-        <div className={styles.profileHeader}>
-          <div className={styles.backdrop}></div>
-          <Avatar owner={user} variant="profilePage" />
-          <div className={styles.profileInfo}>
-            <h1>{user?.name}</h1>
-            <span>{user?.about}</span>
-          </div>
-          <div className={styles.stat}>
-            <div className={styles.statItem}>
-              <div> 1,289</div>
-              <span>Followers</span>
-            </div>
-            <div className={styles.statItem}>
-              <div> 500</div>
-              <span>Friends</span>
-            </div>
-          </div>
-          <div className={styles.line}></div>
+        <ProfileHeader user={user} variant="page" />
+        <div className={`${styles.profileContent} ${styles.fullScreen}`}>
+          <Album postsWithImages={postsWithImages} />
+          <UserPosts onTagClick={onTagClick} posts={posts} user={user} />
         </div>
-        <div className={styles.profileContent}>
+        <div className={`${styles.profileContent} ${styles.minimized}`}>
           <div className={styles.toggleButtons}>
             <motion.button
               className={activeTab === 'posts' ? styles.active : ''}
@@ -84,56 +89,7 @@ export const ProfilePage: FC = () => {
               Album
             </motion.button>
           </div>
-          <div
-            className={`content-container ${
-              activeTab === 'posts' ? 'active' : ''
-            }`}
-          ></div>
-          <div
-            className={`${styles.contentContainer} ${
-              activeTab === 'album' ? styles.active : ''
-            }`}
-          >
-            <div className={styles.albumContainer}>
-              <h2>Album</h2>
-              <div className={styles.album}>
-                {postsWithImages?.map((post: IPost, index: number) => (
-                  <div
-                    key={post.objectId}
-                    className={`${styles[`post${index + 1}`]} ${
-                      styles.albumItem
-                    }`}
-                  >
-                    <img
-                      className={styles.albumImage}
-                      src={post.image}
-                      alt={post.objectId}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div
-            className={`${styles.contentContainer} ${
-              activeTab === 'posts' ? styles.active : ''
-            }`}
-          >
-            <div className={styles.profilePostContainer}>
-              <h2>Create New Post</h2>
-              <CreatePostForm user={user} variant="profilePage" />
-              <div className={styles.profilePosts}>
-                <h2>My Posts</h2>
-                {posts?.map((post: IPost) => (
-                  <Post
-                    key={post.objectId}
-                    post={post}
-                    onTagClick={onTagClick}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
+          {renderContent()}
         </div>
       </section>
     </>

@@ -8,58 +8,6 @@
   flex-grow: 1;
   border: 1px solid rgba(156, 44, 158, 0.08);
   align-self: flex-start;
-
-  h1 {
-    font-size: 14px;
-    line-height: 21px;
-    margin: 92px 0 0;
-  }
-}
-
-.backdrop {
-  width: 100%;
-  height: 154px;
-  background: rgba(232, 77, 149, 0.08);
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.profile {
-  padding: 0 14px;
-}
-
-.digit {
-  max-width: 280px;
-  padding: 37px 0 50px;
-  display: flex;
-  justify-content: center;
-}
-
-.digitItem {
-  margin-right: 78px;
-
-  &:last-child {
-    margin-right: 0;
-  }
-  div {
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 36px;
-  }
-  p {
-    font-size: 14px;
-    line-height: 21px;
-    color: #c4c4c4;
-  }
-}
-
-.line {
-  width: 100%;
-  height: 0px;
-  padding: 0 14px;
-  border-bottom: 1px solid #c4c4c4;
-  box-sizing: border-box;
-  padding: 0 14px;
 }
 
 .social {
@@ -67,7 +15,7 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 21px;
-    margin: 41px 0 38px;
+    margin: 0 0 38px;
   }
   span {
     line-height: 18px;
@@ -80,6 +28,7 @@
     display: flex;
     justify-content: center;
     gap: 26px;
+    margin: 0 0 74px;
   }
   li {
     display: inline-block;

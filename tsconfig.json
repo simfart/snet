@@ -19,8 +19,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": "src",
+    "baseUrl": "src"
   },
-  "include": ["src", "src/shared/api/auth/.ts"],
+  "include": [
+    "src",
+    "src/shared/api/auth/.ts",
+    "src/widgets/userPosts/ui/.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
