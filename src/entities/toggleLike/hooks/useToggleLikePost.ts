@@ -12,6 +12,7 @@ export const useToggleLikePost = (
       queryClient.invalidateQueries([QUERY_KEY.posts]);
       queryClient.invalidateQueries([QUERY_KEY.filteredPosts]);
       queryClient.invalidateQueries([QUERY_KEY.userPosts]);
+      queryClient.invalidateQueries([QUERY_KEY.post]);
     },
     onError: (err) => {
       console.log(err);

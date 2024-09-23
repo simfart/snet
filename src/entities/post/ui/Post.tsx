@@ -9,7 +9,7 @@ import { IPost } from '../model/PostModel';
 import { useDeletePost } from '../hooks/useDeletePost';
 import { useUser } from 'features/auth/useUser';
 import { likePostFn, removeLikePostFn } from '../api/postApi';
-import { useToggleLikePost } from '../hooks/useToggleLikePost';
+import { useToggleLikePost } from '../../toggleLike/hooks/useToggleLikePost';
 import { formatTimestamp } from 'shared/utils';
 
 import styles from './Post.module.scss';
@@ -23,9 +23,10 @@ interface Like {
 interface PostProps {
   post: IPost;
   onTagClick: (tagId: string) => void;
+  onPostClick: (post: string) => void;
 }
 
-export const Post: FC<PostProps> = ({ post, onTagClick }) => {
+export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const currentUser = useUser();
   const owner = post.user[0];
@@ -44,6 +45,7 @@ export const Post: FC<PostProps> = ({ post, onTagClick }) => {
     (like: Like) => like.objectId === currentUser.user?.objectId,
   );
   const { mutate: deletePost } = useDeletePost();
+
   const { mutate: toggleLike, isLoading: isLikeLoading } = useToggleLikePost(
     isLiked ? removeLikePostFn : likePostFn,
   );
@@ -67,6 +69,10 @@ export const Post: FC<PostProps> = ({ post, onTagClick }) => {
   const handleTagClick = (tagId: string) => {
     onTagClick(tagId);
   };
+  const handleClick = () => {
+    console.log(postId);
+    onPostClick(postId); // Убедитесь, что вы вызываете onPostClick с postId
+  };
 
   return (
     <div className={styles.postContainer}>
@@ -87,7 +93,14 @@ export const Post: FC<PostProps> = ({ post, onTagClick }) => {
         tags={tags}
         onTagClick={handleTagClick}
       />
-      {image && <img className={styles.image} src={image} alt="Post" />}
+      {image && (
+        <img
+          className={styles.image}
+          src={image}
+          alt="Post"
+          onClick={handleClick}
+        />
+      )}
       <div className={styles.footer}>
         <div className={styles.action}>
           <button className={styles.like} onClick={handleToggleLike}>

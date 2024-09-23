@@ -1,0 +1,41 @@
+@import 'app/styles/mixins';
+@import 'app/styles/variables';
+
+.toggleButtons {
+  display: none;
+  margin-bottom: 41px;
+  width: 100%;
+
+  @include respond-to(tablet) {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  @include respond-to(mobile) {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  button {
+    box-sizing: border-box;
+    width: 175px;
+    height: 34px;
+    border: 1px solid rgba(156, 44, 158, 0.08);
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+    background-color: #fff;
+    color: #e25a99;
+    transition: all 0.5s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &.active {
+      background-color: rgba(232, 77, 149, 0.08);
+      border: none;
+      transform: scale(1);
+    }
+  }
+}

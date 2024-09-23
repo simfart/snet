@@ -1,0 +1,13 @@
+@import 'app/styles/mixins';
+@import 'app/styles/variables';
+
+.profilePostContainer {
+  width: 100%;
+  max-width: 612px;
+}
+
+.titleCreate {
+  @include respond-to(tablet) {
+    display: none;
+  }
+}

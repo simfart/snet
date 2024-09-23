@@ -15,9 +15,9 @@ interface userPostsProps {
 
 export const UserPosts: FC<userPostsProps> = ({ posts, onTagClick, user }) => (
   <div className={styles.profilePostContainer}>
-    <h2>Create New Post</h2>
+    <h2 className={styles.titleCreate}>Create New Post</h2>
     <CreatePostForm user={user} variant="profilePage" />
-    <div className={styles.profilePosts}>
+    <div>
       <h2>My Posts</h2>
       {posts?.map((post: IPost) => (
         <Post key={post.objectId} post={post} onTagClick={onTagClick} />

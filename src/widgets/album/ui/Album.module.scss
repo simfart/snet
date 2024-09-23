@@ -1,0 +1,78 @@
+.albumContainer {
+  width: 100%;
+  margin-right: 38px;
+  max-width: 422px;
+}
+
+.album {
+  width: 100%;
+  display: grid;
+  grid-template-areas:
+    'post1 post1 post2 post3'
+    'post1 post1 post4 post5'
+    'post6 post6 post6 post6'
+    'post6 post6 post6 post6'
+    'post7 post8 post9 post9'
+    'post10 post11 post9 post9';
+  grid-auto-rows: 100px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+}
+
+.post1 {
+  grid-area: post1;
+}
+.post2 {
+  grid-area: post2;
+}
+.post3 {
+  grid-area: post3;
+}
+.post4 {
+  grid-area: post4;
+}
+.post5 {
+  grid-area: post5;
+}
+.post6 {
+  grid-area: post6;
+}
+.post7 {
+  grid-area: post7;
+}
+.post8 {
+  grid-area: post8;
+}
+.post9 {
+  grid-area: post9;
+}
+.post10 {
+  grid-area: post10;
+}
+.post11 {
+  grid-area: post11;
+}
+
+.album div:nth-child(n + 12) {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.albumItem {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}

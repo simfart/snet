@@ -8,7 +8,8 @@ import { CreatePostForm } from 'features/сreatePostForm/ui/CreatePostForm';
 import styles from './HomePage.module.scss';
 import { useUser } from 'features/auth/useUser';
 import { useSearchStore } from 'features/searchForm/model/useSearchStore';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { IPost } from 'entities/post/model/PostModel';
 
 export const HomePage: FC = () => {
   const [selectedTagId, setSelectedTagId] = useState<string | null>(null);
@@ -16,8 +17,15 @@ export const HomePage: FC = () => {
   const { user } = useUser();
 
   const location = useLocation();
+
   const searchParams = new URLSearchParams(location.search);
   const searchTermFromUrl = searchParams.get('search');
+  const navigate = useNavigate();
+
+  const handlePostClick = (postId: string) => {
+    console.log(postId);
+    navigate('/post', { state: { selectedPost: postId } });
+  };
 
   useEffect(() => {
     if (searchTermFromUrl) {
@@ -40,6 +48,7 @@ export const HomePage: FC = () => {
             selectedTagId={selectedTagId}
             onTagClick={setSelectedTagId}
             searchTerm={searchTerm}
+            onPostClick={handlePostClick}
           />
         </div>
         <div className={styles.tagsWrapper}>

@@ -1,4 +1,4 @@
-import { getPostFn } from 'entities/post/api/postApi';
+import { getPostsFn } from 'entities/post/api/postApi';
 import { useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
@@ -9,7 +9,7 @@ export const usePosts = () => {
     isLoading,
     error,
     isFetching,
-  } = useQuery(QUERY_KEY.posts, getPostFn);
+  } = useQuery(QUERY_KEY.posts, getPostsFn);
 
   return useMemo(
     () => ({ posts, isLoading, error, isFetching }),

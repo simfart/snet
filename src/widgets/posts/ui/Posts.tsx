@@ -16,37 +16,26 @@ interface PostsProps {
   selectedTagId: string | null;
   searchTerm: string | null;
   onTagClick: (tagId: string) => void;
+  onPostClick: (post: string) => void;
 }
 
 export const Posts: FC<PostsProps> = ({
   selectedTagId,
   onTagClick,
   searchTerm,
+  onPostClick,
 }) => {
-  const { posts, isLoading, error, isFetching } = usePosts();
+  const { posts, isLoading, isFetching } = usePosts();
   const { user } = useUser();
 
-  const { filteredPosts, filteredPostsError, isFilteredPostsLoading } =
+  const { filteredPosts, isFilteredPostsLoading } =
     useTagFilteredPosts(selectedTagId);
 
-  const { foundPosts, isfoundPostsLoading, foundPostsError } =
+  const { foundPosts, isfoundPostsLoading } =
     useSearchFilteredPosts(searchTerm);
 
   if (isLoading || isFetching || isFilteredPostsLoading || isfoundPostsLoading)
     return <Loader />;
-  if (error || filteredPostsError)
-    return (
-      <div>
-        Error:{' '}
-        {
-          (
-            (error as Error) ||
-            (filteredPostsError as Error) ||
-            (foundPostsError as Error)
-          )?.message
-        }
-      </div>
-    );
 
   return (
     <div className={styles.postsContainer}>
@@ -55,7 +44,12 @@ export const Posts: FC<PostsProps> = ({
       </div>
       <div className={styles.posts}>
         {(filteredPosts || foundPosts || posts)?.map((post: IPost) => (
-          <Post key={post.objectId} post={post} onTagClick={onTagClick} />
+          <Post
+            key={post.objectId}
+            post={post}
+            onTagClick={onTagClick}
+            onPostClick={onPostClick}
+          />
         ))}
       </div>
     </div>

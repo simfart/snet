@@ -15,7 +15,7 @@ interface Like {
   userId: string;
 }
 
-export const getPostFn = async (): Promise<IPost[]> => {
+export const getPostsFn = async (): Promise<IPost[]> => {
   const response = await api.get(
     `/data/Posts?sortBy=created desc&loadRelations=user,likes,tags&pageSize=100`,
   );
@@ -103,4 +103,12 @@ export const removeLikePostFn = async (objectId: string) => {
   await api.delete(`/data/Posts/${objectId}/likes`, {
     data: userId,
   });
+};
+
+export const getPostFn = async (postId: string) => {
+  console.log('postId', postId);
+  const response = await api.get(
+    `/data/posts/${postId}?loadRelations=user,likes,comments`,
+  );
+  return response.data;
 };

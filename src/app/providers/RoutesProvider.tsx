@@ -12,7 +12,7 @@ export const RoutesProvider: FC = () => {
     <Routes>
       <Route path="/" element={<ProtectedRoute children={<HomePage />} />} />
       <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/posts" element={<PostPage />} />
+      <Route path="/post" element={<PostPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="*" element={<PageNotFound />} />
