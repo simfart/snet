@@ -25,7 +25,7 @@ export const Posts: FC<PostsProps> = ({
   searchTerm,
   onPostClick,
 }) => {
-  const { posts, isLoading, isFetching } = usePosts();
+  const { posts, isLoading } = usePosts();
   const { user } = useUser();
 
   const { filteredPosts, isFilteredPostsLoading } =
@@ -34,7 +34,7 @@ export const Posts: FC<PostsProps> = ({
   const { foundPosts, isfoundPostsLoading } =
     useSearchFilteredPosts(searchTerm);
 
-  if (isLoading || isFetching || isFilteredPostsLoading || isfoundPostsLoading)
+  if (isLoading || isFilteredPostsLoading || isfoundPostsLoading)
     return <Loader />;
 
   return (
