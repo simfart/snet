@@ -10,6 +10,7 @@ interface ContentWithToggleProps {
   isExpanded: boolean;
   onToggle: () => void;
   onTagClick: (tagId: string) => void;
+  onPostClick: () => void;
 }
 
 export const PostContent: FC<ContentWithToggleProps> = ({
@@ -18,6 +19,7 @@ export const PostContent: FC<ContentWithToggleProps> = ({
   onToggle,
   tags,
   onTagClick,
+  onPostClick,
 }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [shouldShowMore, setShouldShowMore] = useState(false);
@@ -36,6 +38,7 @@ export const PostContent: FC<ContentWithToggleProps> = ({
       <div
         ref={contentRef}
         className={`${styles.content} ${isExpanded ? styles.expanded : ''}`}
+        onClick={onPostClick}
       >
         {content}
         <div className={styles.tags}>

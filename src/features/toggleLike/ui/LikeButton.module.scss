@@ -1,0 +1,26 @@
+.like {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 3px 0;
+
+  p {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0 0 0 6px;
+  }
+
+  button {
+    padding: 0;
+    border: none;
+    background-color: #ffffff;
+    img {
+      height: 16px;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}

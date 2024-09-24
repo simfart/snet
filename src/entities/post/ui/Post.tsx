@@ -1,24 +1,15 @@
 import { FC, useCallback, useState } from 'react';
-import {
-  commentIcon,
-  heartIcon,
-  heartOutlinedIcon,
-} from 'shared/assets/images';
+import { commentIcon } from 'shared/assets/images';
 import { PostContent } from './post-content/PostContent';
 import { IPost } from '../model/PostModel';
 import { useDeletePost } from '../hooks/useDeletePost';
 import { useUser } from 'features/auth/useUser';
-import { likePostFn, removeLikePostFn } from '../api/postApi';
-import { useToggleLikePost } from '../../toggleLike/hooks/useToggleLikePost';
 import { formatTimestamp } from 'shared/utils';
 
 import styles from './Post.module.scss';
 import { Avatar } from 'shared/components';
 import { PostDropdown } from 'entities/dropdown/postDropdown/PostDropdown';
-
-interface Like {
-  objectId: string;
-}
+import { LikeButton } from 'features/toggleLike';
 
 interface PostProps {
   post: IPost;
@@ -32,35 +23,15 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
   const owner = post.user[0];
   const isOwner = post.ownerId === currentUser.user?.objectId;
 
-  const {
-    objectId: postId,
-    likes = [],
-    description,
-    image,
-    created,
-    tags = [],
-  } = post;
+  const { objectId: postId, description, image, created, tags = [] } = post;
 
-  const isLiked = likes.some(
-    (like: Like) => like.objectId === currentUser.user?.objectId,
-  );
   const { mutate: deletePost } = useDeletePost();
-
-  const { mutate: toggleLike, isLoading: isLikeLoading } = useToggleLikePost(
-    isLiked ? removeLikePostFn : likePostFn,
-  );
 
   const handleDelete = useCallback(() => {
     if (isOwner) {
       deletePost(postId);
     }
   }, [deletePost, isOwner, postId]);
-
-  const handleToggleLike = useCallback(() => {
-    if (!isLikeLoading) {
-      toggleLike(postId);
-    }
-  }, [toggleLike, postId, isLikeLoading]);
 
   const toggleExpand = useCallback(() => {
     setIsExpanded((prev) => !prev);
@@ -70,8 +41,7 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
     onTagClick(tagId);
   };
   const handleClick = () => {
-    console.log(postId);
-    onPostClick(postId); // Убедитесь, что вы вызываете onPostClick с postId
+    onPostClick(postId);
   };
 
   return (
@@ -92,6 +62,7 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
         onToggle={toggleExpand}
         tags={tags}
         onTagClick={handleTagClick}
+        onPostClick={handleClick}
       />
       {image && (
         <img
@@ -102,15 +73,7 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
         />
       )}
       <div className={styles.footer}>
-        <div className={styles.action}>
-          <button className={styles.like} onClick={handleToggleLike}>
-            <img
-              src={isLiked ? heartIcon : heartOutlinedIcon}
-              alt={isLiked ? 'Unlike' : 'Like'}
-            />
-          </button>
-          <p>{likes.length > 0 ? likes.length : ''}</p>
-        </div>
+        <LikeButton currentUser={currentUser.user} post={post} />
         <div className={styles.action}>
           <button>
             <img src={commentIcon} alt="Comment Icon" />

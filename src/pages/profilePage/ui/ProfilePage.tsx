@@ -10,24 +10,36 @@ import { Loader } from 'shared/ui';
 import { UserPosts } from 'widgets/userPosts';
 import { Album } from 'widgets/album/ui/Album';
 import { ProfileHeader } from 'entities/profileHeader';
+import { useNavigate } from 'react-router-dom';
 
 export const ProfilePage: FC = () => {
   const { user } = useUser();
   const { isLoading, posts, postsWithImages } = useUserPosts(user?.objectId);
   const onTagClick = () => {};
+  const navigate = useNavigate();
+  const handlePostClick = (postId: string) => {
+    navigate('/post', { state: { selectedPost: postId } });
+  };
 
   const [activeTab, setActiveTab] = useState<'posts' | 'album'>('posts');
 
   const renderContent = useMemo(() => {
     switch (activeTab) {
       case 'posts':
-        return <UserPosts posts={posts} onTagClick={onTagClick} user={user} />;
+        return (
+          <UserPosts
+            posts={posts}
+            user={user}
+            onTagClick={onTagClick}
+            onPostClick={handlePostClick}
+          />
+        );
       case 'album':
         return <Album postsWithImages={postsWithImages} />;
       default:
         return null;
     }
-  }, [activeTab, posts, postsWithImages, user]);
+  }, [activeTab, handlePostClick, posts, postsWithImages, user]);
 
   if (isLoading) {
     return <Loader />;
@@ -40,7 +52,12 @@ export const ProfilePage: FC = () => {
         <ProfileHeader user={user} variant="page" />
         <div className={`${styles.profileContent} ${styles.fullScreen}`}>
           <Album postsWithImages={postsWithImages} />
-          <UserPosts onTagClick={onTagClick} posts={posts} user={user} />
+          <UserPosts
+            onTagClick={onTagClick}
+            posts={posts}
+            user={user}
+            onPostClick={handlePostClick}
+          />
         </div>
         <div className={`${styles.profileContent} ${styles.minimized}`}>
           <TabButtons activeTab={activeTab} setActiveTab={setActiveTab} />

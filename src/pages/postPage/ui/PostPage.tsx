@@ -6,7 +6,7 @@ import { Header } from 'widgets/header';
 import { useUser } from 'features/auth/useUser';
 import { Avatar } from 'shared/components';
 import { formatTimestamp } from 'shared/utils';
-import { LikeButton } from 'entities/toggleLike';
+import { LikeButton } from 'features/toggleLike';
 import { usePost } from 'entities/post/hooks/usePost';
 import { Loader } from 'shared/ui';
 
