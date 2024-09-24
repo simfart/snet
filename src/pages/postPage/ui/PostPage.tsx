@@ -8,26 +8,20 @@ import { Avatar } from 'shared/components';
 import { formatTimestamp } from 'shared/utils';
 import { LikeButton } from 'entities/toggleLike';
 import { usePost } from 'entities/post/hooks/usePost';
+import { Loader } from 'shared/ui';
 
 export const PostPage: FC = () => {
   const location = useLocation();
-  const { selectedPost } = location.state || {}; // Получаем postId из состояния
-  const { post, isLoading, error } = usePost(selectedPost); // Получаем данные поста
+  const { selectedPost } = location.state || {};
+  const { post, isLoading } = usePost(selectedPost);
   const owner = post?.user[0];
   const { user: currentUser } = useUser();
 
   console.log('selectedPost', selectedPost);
   console.log('post', post);
   console.log('owner', owner);
-  const {
-    objectId: postId,
-    likes = [],
-    description,
-    image,
-    created,
-    tags = [],
-  } = post;
 
+  if (isLoading) return <Loader />;
   return (
     <>
       <Header />
@@ -38,13 +32,15 @@ export const PostPage: FC = () => {
               <Avatar owner={owner} variant="postAvatar" />
               <div className={styles.authorDetails}>
                 <div className={styles.author}>{owner?.name}</div>
-                <div className={styles.date}>{formatTimestamp(created)}</div>
+                <div className={styles.date}>
+                  {formatTimestamp(post?.created)}
+                </div>
               </div>
             </div>
             <LikeButton currentUser={currentUser} post={post} />
           </div>
-          {description && <p>{description}</p>}
-          {image && <img src={image} alt="Post image" />}
+          {post.description && <p>{post.description}</p>}
+          {post.image && <img src={post.image} alt="Post image" />}
         </div>
         <div className={styles.comments}></div>
       </section>

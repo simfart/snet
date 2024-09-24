@@ -33,13 +33,17 @@ export const LikeButton: FC<ILikeButton> = ({ post, currentUser }) => {
 
   return (
     <>
-      <button className={styles.like} onClick={handleToggleLike}>
+      <button
+        className={styles.like}
+        onClick={handleToggleLike}
+        disabled={isLikeLoading}
+      >
         <img
           src={isLiked ? heartIcon : heartOutlinedIcon}
           alt={isLiked ? 'Unlike' : 'Like'}
         />
       </button>
-      <p>{likes.length > 0 ? likes.length : ''}</p>
+      {likes.length > 0 && <p>{likes.length}</p>}
     </>
   );
 };

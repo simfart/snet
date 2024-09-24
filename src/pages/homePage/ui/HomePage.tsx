@@ -9,7 +9,6 @@ import styles from './HomePage.module.scss';
 import { useUser } from 'features/auth/useUser';
 import { useSearchStore } from 'features/searchForm/model/useSearchStore';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { IPost } from 'entities/post/model/PostModel';
 
 export const HomePage: FC = () => {
   const [selectedTagId, setSelectedTagId] = useState<string | null>(null);
@@ -23,7 +22,6 @@ export const HomePage: FC = () => {
   const navigate = useNavigate();
 
   const handlePostClick = (postId: string) => {
-    console.log(postId);
     navigate('/post', { state: { selectedPost: postId } });
   };
 

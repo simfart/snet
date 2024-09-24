@@ -9,8 +9,7 @@ export const usePost = (postId: string) => {
     isLoading,
     error,
     isFetching,
-  } = useQuery([QUERY_KEY.post, postId], () => getPostFn(postId)); // Передаем postId как ключ
-
+  } = useQuery([QUERY_KEY.post, postId], () => getPostFn(postId));
   return useMemo(
     () => ({ post, isLoading, error, isFetching }),
     [post, error, isFetching, isLoading],
