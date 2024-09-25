@@ -1,8 +1,9 @@
 import { useRef, useEffect, useState, FC } from 'react';
-import styles from './PostContent.module.scss';
 import { ITag } from 'entities/tag/model/TagModel';
 import { motion } from 'framer-motion';
 import { linkAnimation } from 'shared/animations/animationSettings';
+
+import styles from './PostDescription.module.scss';
 
 interface ContentWithToggleProps {
   content: string;
@@ -13,7 +14,7 @@ interface ContentWithToggleProps {
   onPostClick: () => void;
 }
 
-export const PostContent: FC<ContentWithToggleProps> = ({
+export const PostDescription: FC<ContentWithToggleProps> = ({
   content,
   isExpanded,
   onToggle,
@@ -38,9 +39,8 @@ export const PostContent: FC<ContentWithToggleProps> = ({
       <div
         ref={contentRef}
         className={`${styles.content} ${isExpanded ? styles.expanded : ''}`}
-        onClick={onPostClick}
       >
-        {content}
+        <div onClick={onPostClick}>{content}</div>
         <div className={styles.tags}>
           {' '}
           {tags?.map((tag: ITag) => (
@@ -55,6 +55,7 @@ export const PostContent: FC<ContentWithToggleProps> = ({
           ))}
         </div>
       </div>
+
       {shouldShowMore && (
         <button onClick={onToggle} className={styles.showMoreButton}>
           {isExpanded ? '‹' : '›'}
