@@ -9,7 +9,9 @@ import styles from './Header.module.scss';
 import { HeaderDropdown } from 'entities/dropdown';
 import { SearchForm } from 'features/searchForm';
 
-export const Header: FC = () => {
+export const Header: FC<{ clearSelectedTag?: () => void }> = ({
+  clearSelectedTag,
+}) => {
   const { user, isLoading: isLoadUser } = useUser();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -27,7 +29,7 @@ export const Header: FC = () => {
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <LogoItem />
-        <SearchForm />
+        <SearchForm clearSelectedTag={clearSelectedTag} />
         <HeaderDropdown user={user} openPopup={openPopup} />
         <AnimatePresence>
           {isPopupOpen && (

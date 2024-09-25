@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback } from 'react';
 import { commentIcon } from 'shared/assets/images';
 
 import { IPost } from '../model/PostModel';
@@ -14,12 +14,11 @@ import { PostDescription } from 'entities/postDescription';
 
 interface PostProps {
   post: IPost;
-  onTagClick: (tagId: string) => void;
+  onTagClick: (tagId: string, tagName: string) => void;
   onPostClick: (post: string) => void;
 }
 
 export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const currentUser = useUser();
   const owner = post.user[0];
   const isOwner = post.ownerId === currentUser.user?.objectId;
@@ -34,12 +33,8 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
     }
   }, [deletePost, isOwner, postId]);
 
-  const toggleExpand = useCallback(() => {
-    setIsExpanded((prev) => !prev);
-  }, []);
-
-  const handleTagClick = (tagId: string) => {
-    onTagClick(tagId);
+  const handleTagClick = (tagId: string, tagName: string) => {
+    onTagClick(tagId, tagName);
   };
   const handleClick = () => {
     onPostClick(postId);
@@ -59,8 +54,6 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
       </div>
       <PostDescription
         content={description}
-        isExpanded={isExpanded}
-        onToggle={toggleExpand}
         tags={tags}
         onTagClick={handleTagClick}
         onPostClick={handleClick}

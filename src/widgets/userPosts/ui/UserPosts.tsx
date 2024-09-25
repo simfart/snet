@@ -9,7 +9,7 @@ import styles from './UserPosts.module.scss';
 
 interface userPostsProps {
   posts: IPost[] | undefined;
-  onTagClick: () => void;
+  onTagClick: (tagId: string, tagName: string) => void;
   onPostClick: (post: string) => void;
   user: IUser;
 }

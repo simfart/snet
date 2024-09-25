@@ -11,19 +11,28 @@ import { useSearchStore } from 'features/searchForm/model/useSearchStore';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export const HomePage: FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [selectedTagId, setSelectedTagId] = useState<string | null>(null);
   const { searchTerm, setSearchTerm } = useSearchStore();
   const { user } = useUser();
 
-  const location = useLocation();
-
   const searchParams = new URLSearchParams(location.search);
   const searchTermFromUrl = searchParams.get('search');
-  const navigate = useNavigate();
+  const tagIdFromUrl = searchParams.get('tag');
+  const tagNameFromUrl = searchParams.get('tagName');
 
   const handlePostClick = (postId: string) => {
     navigate('/post', { state: { selectedPost: postId } });
   };
+
+  useEffect(() => {
+    if (tagIdFromUrl && tagNameFromUrl) {
+      setSelectedTagId(tagIdFromUrl);
+      setSearchTerm(`#${tagNameFromUrl}`);
+    }
+  }, [setSearchTerm, tagIdFromUrl, tagNameFromUrl]);
 
   useEffect(() => {
     if (searchTermFromUrl) {
@@ -31,9 +40,19 @@ export const HomePage: FC = () => {
     }
   }, [searchTermFromUrl, setSearchTerm]);
 
+  const handleTagClick = (tagId: string, tagName: string) => {
+    setSelectedTagId(tagId);
+    setSearchTerm(`#${tagName}`);
+    navigate(`/?tag=${tagId}`);
+  };
+
+  const clearSelectedTag = () => {
+    setSelectedTagId(null);
+  };
+
   return (
     <section className={styles.homePage}>
-      <Header />
+      <Header clearSelectedTag={clearSelectedTag} />
       <div className={styles.container}>
         <div className={styles.profileWrapper}>
           <Profile />
@@ -44,13 +63,13 @@ export const HomePage: FC = () => {
         <div className={styles.postsWrapper}>
           <Posts
             selectedTagId={selectedTagId}
-            onTagClick={setSelectedTagId}
+            onTagClick={handleTagClick}
             searchTerm={searchTerm}
             onPostClick={handlePostClick}
           />
         </div>
         <div className={styles.tagsWrapper}>
-          <Tags selectedTagId={selectedTagId} onTagClick={setSelectedTagId} />
+          <Tags selectedTagId={selectedTagId} onTagClick={handleTagClick} />
         </div>
       </div>
     </section>

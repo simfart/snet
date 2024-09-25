@@ -72,6 +72,7 @@
   margin-bottom: 10px;
   max-height: 400px;
   object-fit: cover;
+  cursor: pointer;
   @include respond-to(mobile) {
     height: auto;
   }

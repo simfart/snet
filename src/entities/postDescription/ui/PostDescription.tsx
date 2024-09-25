@@ -8,22 +8,25 @@ import styles from './PostDescription.module.scss';
 interface ContentWithToggleProps {
   content: string;
   tags?: ITag[];
-  isExpanded: boolean;
-  onToggle: () => void;
-  onTagClick: (tagId: string) => void;
+  onTagClick: (tagId: string, tagName: string) => void;
   onPostClick?: () => void;
+  variant?: 'postPage';
 }
 
 export const PostDescription: FC<ContentWithToggleProps> = ({
   content,
-  isExpanded,
-  onToggle,
   tags,
   onTagClick,
   onPostClick,
+  variant,
 }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [shouldShowMore, setShouldShowMore] = useState(false);
+
+  const [isExpanded, setIsExpanded] = useState(false);
+  const toggleExpand = useCallback(() => {
+    setIsExpanded((prev) => !prev);
+  }, []);
 
   useEffect(() => {
     const element = contentRef.current;
@@ -38,7 +41,9 @@ export const PostDescription: FC<ContentWithToggleProps> = ({
     <div className={styles.contentWrapper}>
       <div
         ref={contentRef}
-        className={`${styles.content} ${isExpanded ? styles.expanded : ''}`}
+        className={`${styles.content} ${isExpanded ? styles.expanded : ''} ${
+          variant === 'postPage' && styles.postPage
+        }`}
       >
         <div onClick={onPostClick}>{content}</div>
         <div className={styles.tags}>
@@ -47,7 +52,7 @@ export const PostDescription: FC<ContentWithToggleProps> = ({
             <motion.div
               key={tag.objectId}
               className={styles.tag}
-              onClick={() => onTagClick(tag.objectId)}
+              onClick={() => onTagClick(tag.objectId, tag.name)}
               {...linkAnimation}
             >
               {`#${tag.name}`}
@@ -57,7 +62,7 @@ export const PostDescription: FC<ContentWithToggleProps> = ({
       </div>
 
       {shouldShowMore && (
-        <button onClick={onToggle} className={styles.showMoreButton}>
+        <button onClick={toggleExpand} className={styles.showMoreButton}>
           {isExpanded ? '‹' : '›'}
         </button>
       )}

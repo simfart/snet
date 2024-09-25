@@ -107,7 +107,7 @@ export const removeLikePostFn = async (objectId: string) => {
 
 export const getPostFn = async (postId: string) => {
   const response = await api.get(
-    `/data/posts/${postId}?loadRelations=user,likes,comments`,
+    `/data/posts/${postId}?loadRelations=user,likes,comments,tags`,
   );
   return response.data;
 };

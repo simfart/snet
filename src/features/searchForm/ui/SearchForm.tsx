@@ -7,18 +7,33 @@ import { useSearchStore } from '../model/useSearchStore';
 import styles from './SearchForm.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export const SearchForm: FC = () => {
+interface ISearchForm {
+  initialSearch?: string;
+  clearSelectedTag?: () => void;
+}
+export const SearchForm: FC<ISearchForm> = ({
+  initialSearch = '',
+  clearSelectedTag,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isFocused, setIsFocused] = useState(false);
 
-  const { setSearchTerm } = useSearchStore();
+  const { searchTerm, setSearchTerm } = useSearchStore();
 
-  const [localSearchTerm, setLocalSearchTerm] = useState('');
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalSearchTerm(e.target.value);
   };
+
+  useEffect(() => {
+    setLocalSearchTerm(searchTerm);
+  }, [searchTerm]);
+
+  useEffect(() => {
+    setLocalSearchTerm(initialSearch);
+  }, [initialSearch]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +54,9 @@ export const SearchForm: FC = () => {
   const clearSearch = () => {
     setLocalSearchTerm('');
     setSearchTerm('');
+    if (clearSelectedTag) {
+      clearSelectedTag();
+    }
   };
 
   useEffect(() => {
@@ -77,7 +95,7 @@ export const SearchForm: FC = () => {
           onBlur={handleBlur}
         />
       </div>
-      {isFocused && (
+      {localSearchTerm && (
         <motion.button
           type="button"
           onClick={clearSearch}

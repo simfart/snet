@@ -1,7 +1,7 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 
 import styles from './PostPage.module.scss';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Header } from 'widgets/header';
 import { useUser } from 'features/auth/useUser';
 import { Avatar } from 'shared/components';
@@ -13,14 +13,20 @@ import { PostDescription } from 'entities/postDescription';
 
 export const PostPage: FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const { selectedPost } = location.state || {};
   const { post, isLoading } = usePost(selectedPost);
-  const owner = post?.user[0];
   const { user: currentUser } = useUser();
 
-  console.log('selectedPost', selectedPost);
-  console.log('post', post);
-  console.log('owner', owner);
+  const owner = post?.user[0];
+
+  const handleTagClick = useCallback(
+    (tagId: string, tagName: string) => {
+      navigate(`/?tag=${tagId}&tagName=${encodeURIComponent(tagName)}`);
+    },
+    [navigate],
+  );
 
   if (isLoading) return <Loader />;
   return (
@@ -42,15 +48,12 @@ export const PostPage: FC = () => {
           </div>
           {post?.description && (
             <PostDescription
-              content={description}
-              isExpanded={isExpanded}
-              onToggle={toggleExpand}
-              tags={tags}
+              content={post?.description}
+              tags={post?.tags}
               onTagClick={handleTagClick}
-              onPostClick={handleClick}
+              variant="postPage"
             />
           )}
-
           {post?.image && <img src={post.image} alt="Post image" />}
         </div>
         <div className={styles.comments}></div>

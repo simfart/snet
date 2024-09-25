@@ -3,7 +3,6 @@ import { FC } from 'react';
 import { Loader } from 'shared/ui';
 import { usePosts } from 'features/post/hooks/usePosts';
 import { IPost } from 'entities/post/model/PostModel';
-// import { PostCard } from 'features/post';
 
 import styles from './Posts.module.scss';
 import { Post } from 'entities/post';
@@ -15,7 +14,7 @@ import { useSearchFilteredPosts } from 'features/post/hooks/useSearchFilteredPos
 interface PostsProps {
   selectedTagId: string | null;
   searchTerm: string | null;
-  onTagClick: (tagId: string) => void;
+  onTagClick: (tagId: string, tagName: string) => void;
   onPostClick: (post: string) => void;
 }
 
