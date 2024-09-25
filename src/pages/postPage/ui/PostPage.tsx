@@ -9,6 +9,7 @@ import { formatTimestamp } from 'shared/utils';
 import { LikeButton } from 'features/toggleLike';
 import { usePost } from 'entities/post/hooks/usePost';
 import { Loader } from 'shared/ui';
+import { PostDescription } from 'entities/postDescription';
 
 export const PostPage: FC = () => {
   const location = useLocation();
@@ -39,8 +40,18 @@ export const PostPage: FC = () => {
             </div>
             <LikeButton currentUser={currentUser} post={post} />
           </div>
-          {post.description && <p>{post.description}</p>}
-          {post.image && <img src={post.image} alt="Post image" />}
+          {post?.description && (
+            <PostDescription
+              content={description}
+              isExpanded={isExpanded}
+              onToggle={toggleExpand}
+              tags={tags}
+              onTagClick={handleTagClick}
+              onPostClick={handleClick}
+            />
+          )}
+
+          {post?.image && <img src={post.image} alt="Post image" />}
         </div>
         <div className={styles.comments}></div>
       </section>

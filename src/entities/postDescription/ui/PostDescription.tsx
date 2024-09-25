@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, FC } from 'react';
+import { useRef, useEffect, useState, FC, useCallback } from 'react';
 import { ITag } from 'entities/tag/model/TagModel';
 import { motion } from 'framer-motion';
 import { linkAnimation } from 'shared/animations/animationSettings';
@@ -11,7 +11,7 @@ interface ContentWithToggleProps {
   isExpanded: boolean;
   onToggle: () => void;
   onTagClick: (tagId: string) => void;
-  onPostClick: () => void;
+  onPostClick?: () => void;
 }
 
 export const PostDescription: FC<ContentWithToggleProps> = ({

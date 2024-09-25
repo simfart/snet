@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from 'react';
 import { commentIcon } from 'shared/assets/images';
-import { PostContent } from './post-content/PostContent';
+
 import { IPost } from '../model/PostModel';
 import { useDeletePost } from '../hooks/useDeletePost';
 import { useUser } from 'features/auth/useUser';
@@ -10,6 +10,7 @@ import styles from './Post.module.scss';
 import { Avatar } from 'shared/components';
 import { PostDropdown } from 'entities/dropdown/postDropdown/PostDropdown';
 import { LikeButton } from 'features/toggleLike';
+import { PostDescription } from 'entities/postDescription';
 
 interface PostProps {
   post: IPost;
@@ -56,7 +57,7 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
         </div>
         {isOwner && <PostDropdown onDeleteClick={handleDelete} />}
       </div>
-      <PostContent
+      <PostDescription
         content={description}
         isExpanded={isExpanded}
         onToggle={toggleExpand}
