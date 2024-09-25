@@ -55,20 +55,3 @@
 .selectedTag {
   font-weight: 700;
 }
-
-.reset {
-  background: none;
-  border: none;
-  font-size: 14px;
-  line-height: 21px;
-  font-weight: 700;
-  cursor: 'pointer';
-  color: #555555;
-  margin: 0 0 23px;
-  padding: 0;
-  text-align: start;
-
-  &:focus {
-    outline: none;
-  }
-}
