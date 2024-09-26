@@ -105,9 +105,22 @@ export const removeLikePostFn = async (objectId: string) => {
   });
 };
 
+// export const getPostFn = async (postId: string) => {
+//   const response = await api.get(
+//     `/data/posts/${postId}?loadRelations=user,likes,comments,tags`,
+//   );
+//   return response.data;
+// };
+
 export const getPostFn = async (postId: string) => {
-  const response = await api.get(
-    `/data/posts/${postId}?loadRelations=user,likes,comments,tags`,
-  );
-  return response.data;
+  try {
+    const response = await api.get(`/data/Posts/${postId}`, {
+      params: {
+        loadRelations: 'comments,comments.user,user,likes,comments,tags', // Загружаем комментарии и пользователей
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error getting post:', error);
+  }
 };

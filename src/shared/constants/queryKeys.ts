@@ -6,4 +6,5 @@ export const QUERY_KEY = {
   filteredPosts: 'filteredPosts',
   userPosts: 'userPosts',
   post: 'post',
+  comments: 'comments',
 };

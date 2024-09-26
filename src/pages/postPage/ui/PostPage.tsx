@@ -10,6 +10,9 @@ import { LikeButton } from 'features/toggleLike';
 import { usePost } from 'entities/post/hooks/usePost';
 import { Loader } from 'shared/ui';
 import { PostDescription } from 'entities/postDescription';
+import { InputPanel } from 'features/сreatePostForm/ui/InputPanel';
+import { useCreateComment } from 'features/comment/hooks/useCreateComment';
+import { IComment } from 'features/comment/model';
 
 export const PostPage: FC = () => {
   const location = useLocation();
@@ -18,8 +21,9 @@ export const PostPage: FC = () => {
   const { selectedPost } = location.state || {};
   const { post, isLoading } = usePost(selectedPost);
   const { user: currentUser } = useUser();
-
   const owner = post?.user[0];
+
+  const { mutate } = useCreateComment();
 
   const handleTagClick = useCallback(
     (tagId: string, tagName: string) => {
@@ -27,6 +31,12 @@ export const PostPage: FC = () => {
     },
     [navigate],
   );
+
+  const handleSubmit = (content: string) => {
+    const userId = currentUser.objectId;
+    const postId = post.objectId;
+    mutate({ userId, postId, content });
+  };
 
   if (isLoading) return <Loader />;
   return (
@@ -56,7 +66,13 @@ export const PostPage: FC = () => {
           )}
           {post?.image && <img src={post.image} alt="Post image" />}
         </div>
-        <div className={styles.comments}></div>
+        <div className={styles.comments}>
+          <InputPanel
+            user={currentUser}
+            onSubmit={handleSubmit}
+            selectedPost={post}
+          />
+        </div>
       </section>
     </>
   );
