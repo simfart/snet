@@ -4,5 +4,5 @@ import { IUser } from 'entities/user/model/userModel';
 export type IComment = {
   user: IUser;
   post: IPost;
-  content: string;
+  text: string;
 };

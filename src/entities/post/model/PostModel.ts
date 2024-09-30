@@ -11,6 +11,6 @@ export type IPost = {
   likesCount?: number;
   comments?: number;
   likes: IUser[];
-  user: IUser[];
+  user: IUser;
   tags?: ITag[];
 };

@@ -13,6 +13,7 @@ import { PostDescription } from 'entities/postDescription';
 import { InputPanel } from 'features/сreatePostForm/ui/InputPanel';
 import { useCreateComment } from 'features/comment/hooks/useCreateComment';
 import { IComment } from 'features/comment/model';
+import { getCommentsForPostFn } from 'features/comment/api';
 
 export const PostPage: FC = () => {
   const location = useLocation();
@@ -21,7 +22,7 @@ export const PostPage: FC = () => {
   const { selectedPost } = location.state || {};
   const { post, isLoading } = usePost(selectedPost);
   const { user: currentUser } = useUser();
-  const owner = post?.user[0];
+  const owner = post?.user;
 
   const { mutate } = useCreateComment();
 
@@ -32,10 +33,9 @@ export const PostPage: FC = () => {
     [navigate],
   );
 
-  const handleSubmit = (content: string) => {
-    const userId = currentUser.objectId;
+  const handleSubmit = (text: string) => {
     const postId = post.objectId;
-    mutate({ userId, postId, content });
+    mutate({ text, postId });
   };
 
   if (isLoading) return <Loader />;

@@ -20,7 +20,7 @@ interface PostProps {
 
 export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
   const currentUser = useUser();
-  const owner = post.user[0];
+  const owner = post.user;
   const isOwner = post.ownerId === currentUser.user?.objectId;
 
   const { objectId: postId, description, image, created, tags = [] } = post;
@@ -70,7 +70,7 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
         <LikeButton currentUser={currentUser.user} post={post} />
         <div className={styles.action}>
           <button>
-            <img src={commentIcon} alt="Comment Icon" />
+            <img src={commentIcon} alt="Comment Icon" onClick={handleClick} />
           </button>
           <p>45</p>
         </div>

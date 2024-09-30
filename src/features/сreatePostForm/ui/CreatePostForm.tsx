@@ -64,6 +64,7 @@ export const CreatePostForm: React.FC<Props> = ({ user, variant }) => {
 
     onSubmit({ description, image, tags });
     setValue('');
+    setImage('');
   };
 
   const openPopup = () => {
