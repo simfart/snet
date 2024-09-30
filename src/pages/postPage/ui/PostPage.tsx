@@ -13,7 +13,7 @@ import { PostDescription } from 'entities/postDescription';
 import { InputPanel } from 'features/сreatePostForm/ui/InputPanel';
 import { useCreateComment } from 'features/comment/hooks/useCreateComment';
 import { IComment } from 'features/comment/model';
-import { getCommentsForPostFn } from 'features/comment/api';
+import { getCommentsForPostFn } from 'entities/post/api/postApi';
 
 export const PostPage: FC = () => {
   const location = useLocation();
@@ -37,6 +37,8 @@ export const PostPage: FC = () => {
     const postId = post.objectId;
     mutate({ text, postId });
   };
+
+  // console.log(getCommentsForPostFn(post?.objectId));
 
   if (isLoading) return <Loader />;
   return (
@@ -73,6 +75,8 @@ export const PostPage: FC = () => {
             selectedPost={post}
           />
         </div>
+        {post.comme && post}
+        <div></div>
       </section>
     </>
   );

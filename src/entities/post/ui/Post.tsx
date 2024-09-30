@@ -72,7 +72,7 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
           <button>
             <img src={commentIcon} alt="Comment Icon" onClick={handleClick} />
           </button>
-          <p>45</p>
+          <p>{post?.commentsCount}</p>
         </div>
       </div>
     </div>

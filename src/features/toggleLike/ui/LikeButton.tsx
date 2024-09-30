@@ -31,6 +31,10 @@ export const LikeButton: FC<ILikeButton> = ({ post, currentUser }) => {
     }
   }, [toggleLike, postId, isLikeLoading]);
 
+  if (!post) {
+    return null;
+  }
+
   return (
     <div className={styles.like}>
       <button onClick={handleToggleLike} disabled={isLikeLoading}>

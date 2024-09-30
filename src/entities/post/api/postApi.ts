@@ -22,11 +22,23 @@ interface Like {
 //   return response.data;
 // };
 
+// export const getPostsFn = async (): Promise<IPost[]> => {
+//   const response = await api.get(
+//     `/data/Posts?sortBy=created desc&loadRelations=user,likes,tags&pageSize=100&props=*,count(comments)`,
+//   );
+//   return response.data;
+// };
+
 export const getPostsFn = async (): Promise<IPost[]> => {
-  const response = await api.get(
-    `/data/Posts?sortBy=created desc&loadRelations=user,likes,tags&pageSize=100&props=*,count(comments)`,
-  );
-  return response.data;
+  try {
+    const response = await api.get(
+      `/data/Posts?sortBy=created desc&loadRelations=user,likes,tags&props=*,commentsCount&pageSize=100`,
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error getting posts:', error);
+    throw error;
+  }
 };
 
 export const getUserPostsFn = async (userId: string): Promise<IPost[]> => {
@@ -110,16 +122,30 @@ export const removeLikePostFn = async (objectId: string) => {
   });
 };
 
+// export const getPostFn = async (postId: string) => {
+//   try {
+//     const response = await api.get(`/data/Posts/${postId}`, {
+//       params: {
+//         loadRelations: 'comments,comments.user,user,likes,comments,tags',
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error getting post:', error);
+//   }
+// };
+
 export const getPostFn = async (postId: string) => {
   try {
     const response = await api.get(`/data/Posts/${postId}`, {
       params: {
-        loadRelations: 'comments,comments.user,user,likes,comments,tags',
+        loadRelations: 'user,likes,tags,comments', // Загружаем комментарии и пользователей комментариев
       },
     });
     return response.data;
   } catch (error) {
     console.error('Error getting post:', error);
+    throw error; // Рекомендуется бросить ошибку дальше, чтобы обработать её на уровне компонента
   }
 };
 
@@ -131,5 +157,17 @@ export const getCommentsCountForPost = async (postId: string) => {
     return response.data[0].totalCount;
   } catch (error) {
     console.error('Error getting comments count:', error);
+  }
+};
+
+export const getCommentsForPostFn = async (postId: string) => {
+  try {
+    const response = await api.get(
+      `/data/Comments?where=post.objectId%3D'${postId}'&loadRelations=user`,
+    );
+    return response.data; // Проверь, что комментарии загружаются
+  } catch (error) {
+    console.error('Error getting comments:', error);
+    throw error;
   }
 };
