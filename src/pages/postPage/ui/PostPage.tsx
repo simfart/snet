@@ -13,18 +13,17 @@ import { PostDescription } from 'entities/postDescription';
 import { InputPanel } from 'features/сreatePostForm/ui/InputPanel';
 import { useCreateComment } from 'features/comment/hooks/useCreateComment';
 import { IComment } from 'features/comment/model';
-import { getCommentsForPostFn } from 'entities/post/api/postApi';
 
 export const PostPage: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const { selectedPost } = location.state || {};
-  const { post, isLoading } = usePost(selectedPost);
+  const { post, isLoading, setPostData } = usePost(selectedPost);
   const { user: currentUser } = useUser();
   const owner = post?.user;
 
-  const { mutate } = useCreateComment();
+  const { mutate } = useCreateComment(post, setPostData);
 
   const handleTagClick = useCallback(
     (tagId: string, tagName: string) => {
@@ -37,8 +36,6 @@ export const PostPage: FC = () => {
     const postId = post.objectId;
     mutate({ text, postId });
   };
-
-  // console.log(getCommentsForPostFn(post?.objectId));
 
   if (isLoading) return <Loader />;
   return (
@@ -74,9 +71,11 @@ export const PostPage: FC = () => {
             onSubmit={handleSubmit}
             selectedPost={post}
           />
+          {post?.comments &&
+            post.comments.map((comment: IComment) => (
+              <div key={comment.objectId}>{comment.text}</div>
+            ))}
         </div>
-        {post.comme && post}
-        <div></div>
       </section>
     </>
   );

@@ -15,25 +15,16 @@ interface Like {
   userId: string;
 }
 
-// export const getPostsFn = async (): Promise<IPost[]> => {
-//   const response = await api.get(
-//     `/data/Posts?sortBy=created desc&loadRelations=user,likes,tags&pageSize=100`,
-//   );
-//   return response.data;
-// };
-
-// export const getPostsFn = async (): Promise<IPost[]> => {
-//   const response = await api.get(
-//     `/data/Posts?sortBy=created desc&loadRelations=user,likes,tags&pageSize=100&props=*,count(comments)`,
-//   );
-//   return response.data;
-// };
-
 export const getPostsFn = async (): Promise<IPost[]> => {
   try {
-    const response = await api.get(
-      `/data/Posts?sortBy=created desc&loadRelations=user,likes,tags&props=*,commentsCount&pageSize=100`,
-    );
+    const response = await api.get(`/data/Posts`, {
+      params: {
+        sortBy: 'created desc',
+        loadRelations: 'user,likes,tags,comments',
+        pageSize: 100,
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error('Error getting posts:', error);
@@ -42,12 +33,21 @@ export const getPostsFn = async (): Promise<IPost[]> => {
 };
 
 export const getUserPostsFn = async (userId: string): Promise<IPost[]> => {
-  const response = await api.get(
-    `/data/Posts?where=ownerId%3D'${encodeURIComponent(
-      userId,
-    )}'&loadRelations=user,likes,tags&sortBy=created desc&pageSize=100`,
-  );
-  return response.data;
+  try {
+    const response = await api.get(`/data/Posts`, {
+      params: {
+        where: `ownerId='${encodeURIComponent(userId)}'`,
+        loadRelations: 'user,likes,tags,comments',
+        sortBy: 'created desc',
+        pageSize: 100,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error getting user posts:', error);
+    throw error;
+  }
 };
 
 export const searchPosts = async (searchTerm: string) => {
@@ -139,26 +139,26 @@ export const getPostFn = async (postId: string) => {
   try {
     const response = await api.get(`/data/Posts/${postId}`, {
       params: {
-        loadRelations: 'user,likes,tags,comments', // Загружаем комментарии и пользователей комментариев
+        loadRelations: 'comments,comments.user,likes,tags',
       },
     });
     return response.data;
   } catch (error) {
     console.error('Error getting post:', error);
-    throw error; // Рекомендуется бросить ошибку дальше, чтобы обработать её на уровне компонента
+    throw error;
   }
 };
 
-export const getCommentsCountForPost = async (postId: string) => {
-  try {
-    const response = await api.get(
-      `/data/Comments?where=post.objectId%3D'${postId}'&property=count(*) as totalCount`,
-    );
-    return response.data[0].totalCount;
-  } catch (error) {
-    console.error('Error getting comments count:', error);
-  }
-};
+// export const getCommentsCountForPost = async (postId: string) => {
+//   try {
+//     const response = await api.get(
+//       `/data/Comments?where=post.objectId%3D'${postId}'&property=count(*) as totalCount`,
+//     );
+//     return response.data[0].totalCount;
+//   } catch (error) {
+//     console.error('Error getting comments count:', error);
+//   }
+// };
 
 export const getCommentsForPostFn = async (postId: string) => {
   try {

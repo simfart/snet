@@ -1,5 +1,6 @@
 import { ITag } from 'entities/tag/model/TagModel';
 import { IUser } from 'entities/user/model/userModel';
+import { IComment } from 'features/comment/model';
 
 export type IPost = {
   created: number;
@@ -9,9 +10,8 @@ export type IPost = {
   ownerId?: number;
   updated?: number;
   likesCount?: number;
-  comments?: number;
+  comments: IComment[];
   likes: IUser[];
   user: IUser;
   tags?: ITag[];
-  commentsCount?: number;
 };

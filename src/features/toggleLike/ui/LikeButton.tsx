@@ -17,19 +17,19 @@ interface ILikeButton {
 }
 
 export const LikeButton: FC<ILikeButton> = ({ post, currentUser }) => {
-  const { objectId: postId, likes = [] } = post;
-  const isLiked = likes.some(
+  const isLiked = post?.likes?.some(
     (like: ILike) => like.objectId === currentUser?.objectId,
   );
+
   const { mutate: toggleLike, isLoading: isLikeLoading } = useToggleLikePost(
     isLiked ? removeLikePostFn : likePostFn,
   );
 
   const handleToggleLike = useCallback(() => {
-    if (!isLikeLoading) {
-      toggleLike(postId);
+    if (!isLikeLoading && post) {
+      toggleLike(post.objectId);
     }
-  }, [toggleLike, postId, isLikeLoading]);
+  }, [isLikeLoading, toggleLike, post]);
 
   if (!post) {
     return null;
@@ -43,7 +43,7 @@ export const LikeButton: FC<ILikeButton> = ({ post, currentUser }) => {
           alt={isLiked ? 'Unlike' : 'Like'}
         />
       </button>
-      {likes.length > 0 && <p>{likes.length}</p>}
+      {post.likes.length > 0 && <p>{post.likes.length}</p>}
     </div>
   );
 };

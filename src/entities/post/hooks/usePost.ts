@@ -1,13 +1,25 @@
 import { useQuery } from 'react-query';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { getPostFn } from '../api/postApi';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
+import { IPost } from '../model/PostModel';
 
 export const usePost = (postId: string) => {
+  const [postData, setPostData] = useState<IPost | null>(null);
   const {
-    data: post,
+    data: postFromServer,
     isLoading,
     error,
-  } = useQuery([QUERY_KEY.post, postId], () => getPostFn(postId));
-  return useMemo(() => ({ post, isLoading, error }), [post, error, isLoading]);
+  } = useQuery([QUERY_KEY.post, postId], () => getPostFn(postId), {
+    onSuccess: (data) => {
+      setPostData(data);
+    },
+  });
+
+  const post = postData || postFromServer;
+
+  return useMemo(
+    () => ({ post, isLoading, error, setPostData }),
+    [post, error, isLoading],
+  );
 };

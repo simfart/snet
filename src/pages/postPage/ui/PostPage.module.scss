@@ -75,4 +75,6 @@
 .comments {
   width: 100%;
   max-width: 513px;
+  display: flex;
+  flex-direction: column;
 }

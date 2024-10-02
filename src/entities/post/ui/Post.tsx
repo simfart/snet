@@ -1,11 +1,9 @@
 import { FC, useCallback } from 'react';
 import { commentIcon } from 'shared/assets/images';
-
 import { IPost } from '../model/PostModel';
 import { useDeletePost } from '../hooks/useDeletePost';
 import { useUser } from 'features/auth/useUser';
 import { formatTimestamp } from 'shared/utils';
-
 import styles from './Post.module.scss';
 import { Avatar } from 'shared/components';
 import { PostDropdown } from 'entities/dropdown/postDropdown/PostDropdown';
@@ -72,7 +70,7 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
           <button>
             <img src={commentIcon} alt="Comment Icon" onClick={handleClick} />
           </button>
-          <p>{post?.commentsCount}</p>
+          {post?.comments?.length > 0 && <p>{post.comments.length}</p>}
         </div>
       </div>
     </div>

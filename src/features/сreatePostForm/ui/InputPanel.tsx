@@ -5,7 +5,6 @@ import styles from './CreatePostForm.module.scss';
 import React, { useState } from 'react';
 import { IUser } from 'entities/user/model/userModel';
 import { Avatar, Button } from 'shared/components';
-import { IComment } from 'features/comment/model';
 import { IPost } from 'entities/post/model/PostModel';
 
 interface Props {
