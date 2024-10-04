@@ -33,6 +33,10 @@ export const PostPage: FC = () => {
   );
 
   const handleSubmit = (text: string) => {
+    if (!post) {
+      console.error('Post is undefined');
+      return;
+    }
     const postId = post.objectId;
     mutate({ text, postId });
   };
