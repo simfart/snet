@@ -4,11 +4,11 @@ import { Header } from 'widgets/header';
 import { Posts } from 'widgets/posts';
 import { Tags } from 'widgets/tags';
 import { CreatePostForm } from 'features/сreatePostForm/ui/CreatePostForm';
-
-import styles from './HomePage.module.scss';
-import { useUser } from 'features/auth/useUser';
 import { useSearchStore } from 'features/searchForm/model/useSearchStore';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import styles from './HomePage.module.scss';
+import { useCurrentUser } from 'features/auth/useCurrentUser';
 
 export const HomePage: FC = () => {
   const location = useLocation();
@@ -16,29 +16,22 @@ export const HomePage: FC = () => {
 
   const [selectedTagId, setSelectedTagId] = useState<string | null>(null);
   const { searchTerm, setSearchTerm } = useSearchStore();
-  const { user } = useUser();
-
-  const searchParams = new URLSearchParams(location.search);
-  const searchTermFromUrl = searchParams.get('search');
-  const tagIdFromUrl = searchParams.get('tag');
-  const tagNameFromUrl = searchParams.get('tagName');
+  const { user } = useCurrentUser();
 
   const handlePostClick = (postId: string) => {
     navigate('/post', { state: { selectedPost: postId } });
   };
 
   useEffect(() => {
-    if (tagIdFromUrl && tagNameFromUrl) {
-      setSelectedTagId(tagIdFromUrl);
-      setSearchTerm(`#${tagNameFromUrl}`);
-    }
-  }, [setSearchTerm, tagIdFromUrl, tagNameFromUrl]);
+    const searchParams = new URLSearchParams(location.search);
+    const tagIdFromUrl = searchParams.get('tag');
+    const searchTermFromUrl = searchParams.get('search');
 
-  useEffect(() => {
-    if (searchTermFromUrl) {
-      setSearchTerm(searchTermFromUrl);
+    if (!tagIdFromUrl && !searchTermFromUrl) {
+      setSearchTerm('');
+      setSelectedTagId(null);
     }
-  }, [searchTermFromUrl, setSearchTerm]);
+  }, [location, setSearchTerm]);
 
   const handleTagClick = (tagId: string, tagName: string) => {
     setSelectedTagId(tagId);

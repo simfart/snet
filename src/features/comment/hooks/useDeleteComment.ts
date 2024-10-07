@@ -1,23 +1,22 @@
+import { IPost } from 'entities/post/model/PostModel';
 import { useMutation, useQueryClient } from 'react-query';
-import { createCommentFn } from '../api';
+import { deleteCommentFn } from '../api';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
 import { useMemo } from 'react';
-import { IPost } from 'entities/post/model/PostModel';
-import { IComment } from '../model';
 import { useCurrentUser } from 'features/auth/useCurrentUser';
 
-interface CreateCommentInput {
+interface DeleteCommentInput {
+  commentId: string;
   postId: string;
-  text: string;
 }
 
-interface CreateCommentContext {
+interface DeleteCommentContext {
   previousPosts?: IPost[];
   previousPost?: IPost;
   previousUserPosts?: IPost[];
 }
 
-export const useCreateComment = (
+export const useDeleteComment = (
   post: IPost,
   setPostData: (data: IPost) => void,
 ) => {
@@ -25,17 +24,18 @@ export const useCreateComment = (
   const currentUser = useCurrentUser().user;
 
   const mutation = useMutation({
-    mutationFn: async ({ postId, text }: CreateCommentInput) => {
-      const newComment = await createCommentFn(postId, text);
-      return newComment;
+    mutationFn: async ({ commentId, postId }: DeleteCommentInput) => {
+      await deleteCommentFn(commentId, postId);
+      return commentId;
     },
-    onMutate: async ({ text }) => {
+    onMutate: async ({ commentId }) => {
       await queryClient.cancelQueries([QUERY_KEY.posts]);
       await queryClient.cancelQueries([QUERY_KEY.post, post.objectId]);
       await queryClient.cancelQueries([
         QUERY_KEY.userPosts,
         currentUser.objectId,
       ]);
+
       const previousUserPosts = queryClient.getQueryData<IPost[]>([
         QUERY_KEY.userPosts,
         currentUser.objectId,
@@ -48,33 +48,31 @@ export const useCreateComment = (
         post.objectId,
       ]);
 
-      const newComment: IComment = {
-        objectId: `temp-${Date.now()}`,
-        text,
-        user: currentUser,
-        created: Date.now(),
-      };
+      const updatedComments = post.comments.filter(
+        (comment) => comment.objectId !== commentId,
+      );
 
       setPostData({
         ...post,
-        comments: [newComment, ...post.comments],
+        comments: updatedComments,
       });
 
       queryClient.setQueryData<IPost[]>([QUERY_KEY.posts], (oldPosts) => {
         if (!oldPosts) return [];
         return oldPosts.map((oldPost) =>
           oldPost.objectId === post.objectId
-            ? { ...oldPost, comments: [...oldPost.comments, newComment] }
+            ? { ...oldPost, comments: updatedComments }
             : oldPost,
         );
       });
+
       queryClient.setQueryData<IPost[]>(
         [QUERY_KEY.userPosts, currentUser.objectId],
         (oldPosts) => {
           if (!oldPosts) return [];
           return oldPosts.map((oldPost) =>
             oldPost.objectId === post.objectId
-              ? { ...oldPost, comments: [...oldPost.comments, newComment] }
+              ? { ...oldPost, comments: updatedComments }
               : oldPost,
           );
         },
@@ -84,10 +82,10 @@ export const useCreateComment = (
         previousPosts,
         previousPost,
         previousUserPosts,
-      } as CreateCommentContext;
+      } as DeleteCommentContext;
     },
     onError: (error, variables, context) => {
-      const ctx = context as CreateCommentContext;
+      const ctx = context as DeleteCommentContext;
 
       if (ctx?.previousPosts) {
         queryClient.setQueryData([QUERY_KEY.posts], ctx.previousPosts);
@@ -98,10 +96,13 @@ export const useCreateComment = (
       }
 
       if (ctx?.previousUserPosts) {
-        queryClient.setQueryData([QUERY_KEY.user], ctx.previousUserPosts);
+        queryClient.setQueryData(
+          [QUERY_KEY.userPosts, currentUser.objectId],
+          ctx.previousUserPosts,
+        );
       }
 
-      console.error(error);
+      console.error('Error deleting comment:', error);
     },
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEY.posts]);

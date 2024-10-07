@@ -13,6 +13,7 @@
   justify-content: center;
   font-size: 48px;
   color: white;
+  cursor: pointer;
 }
 
 .postAvatar {
@@ -26,6 +27,7 @@
   justify-content: center;
   font-size: 24px;
   color: white;
+  cursor: pointer;
 }
 
 .profilePage {
@@ -40,6 +42,7 @@
   justify-content: center;
   font-size: 48px;
   color: white;
+  cursor: pointer;
   @include respond-to(tablet) {
     top: 218.5px;
     width: 118px;

@@ -4,17 +4,18 @@ import { FC, useCallback, useMemo, useState } from 'react';
 import styles from './ProfilePage.module.scss';
 import { Header } from 'widgets/header';
 import { TabButtons } from 'shared/components';
-import { useUser } from 'features/auth/useUser';
 import { useUserPosts } from 'entities/post/hooks/useUserPosts';
 import { Loader } from 'shared/ui';
 import { UserPosts } from 'widgets/userPosts';
 import { Album } from 'widgets/album/ui/Album';
 import { ProfileHeader } from 'entities/profileHeader';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCurrentUser } from 'features/auth/useCurrentUser';
 
 export const ProfilePage: FC = () => {
-  const { user } = useUser();
-  const { isLoading, posts, postsWithImages } = useUserPosts(user?.objectId);
+  const { user } = useCurrentUser();
+  const { objectId } = useParams<{ objectId: string }>();
+  const { isLoading, posts, postsWithImages } = useUserPosts(objectId);
   const onTagClick = () => {};
   const navigate = useNavigate();
   const handlePostClick = useCallback(

@@ -6,6 +6,7 @@ import { IPost } from 'entities/post/model/PostModel';
 import { IUser } from 'entities/user/model/userModel';
 
 import styles from './UserPosts.module.scss';
+import { nothingPic } from 'shared/assets/images';
 
 interface userPostsProps {
   posts: IPost[] | undefined;
@@ -25,14 +26,23 @@ export const UserPosts: FC<userPostsProps> = ({
     <CreatePostForm user={user} variant="profilePage" />
     <div>
       <h2>My Posts</h2>
-      {posts?.map((post: IPost) => (
-        <Post
-          key={post.objectId}
-          post={post}
-          onTagClick={onTagClick}
-          onPostClick={onPostClick}
+      {posts && posts.length > 0 ? (
+        posts.map((post: IPost) => (
+          <Post
+            key={post.objectId}
+            post={post}
+            onTagClick={onTagClick}
+            onPostClick={onPostClick}
+            variant="profilePage"
+          />
+        ))
+      ) : (
+        <img
+          className={styles.image}
+          src={nothingPic}
+          alt="No posts available"
         />
-      ))}
+      )}
     </div>
   </div>
 );

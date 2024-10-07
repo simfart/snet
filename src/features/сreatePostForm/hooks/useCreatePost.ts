@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { createPost } from 'entities/post/api/postApi';
 import { createTag, linkTagsToPost } from 'entities/tag/api/tagsApi';
 import { IPost } from 'entities/post/model/PostModel';
-import { useUser } from 'features/auth/useUser';
+import { useCurrentUser } from 'features/auth/useCurrentUser';
 
 interface CreatePostContext {
   previousPosts?: IPost[];
@@ -12,7 +12,7 @@ interface CreatePostContext {
 }
 
 export const useCreatePost = () => {
-  const currentUser = useUser().user;
+  const currentUser = useCurrentUser().user;
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
@@ -49,7 +49,6 @@ export const useCreatePost = () => {
         QUERY_KEY.userPosts,
         currentUser.objectId,
       ]);
-
       const previousUserPosts = queryClient.getQueryData<IPost[]>([
         QUERY_KEY.userPosts,
         currentUser.objectId,

@@ -1,0 +1,116 @@
+@import 'app/styles/variables.scss';
+@import 'app/styles/mixins';
+
+.postContainer {
+  border: 1px solid rgba(156, 44, 158, 0.08);
+  border-radius: 10px;
+  padding: 13px 0 14px;
+  margin-bottom: 27px;
+  box-sizing: border-box;
+}
+
+.header {
+  padding: 0 27px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  justify-content: space-between;
+
+  @include respond-to(mobile) {
+    padding: 0 21px;
+  }
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+.authorImage {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+  @include respond-to(mobile) {
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+}
+
+.textAvatar {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+}
+
+.authorDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  font-weight: 500;
+  line-height: 18px;
+
+  @include respond-to(mobile) {
+    align-items: flex-start;
+  }
+}
+
+.date {
+  margin-top: 4px;
+  color: #c4c4c4;
+}
+
+.image {
+  max-width: 100%;
+  width: 100%;
+  margin-bottom: 10px;
+  max-height: 400px;
+  object-fit: cover;
+  cursor: pointer;
+  @include respond-to(mobile) {
+    height: auto;
+  }
+}
+
+.footer {
+  padding: 0 27px;
+  display: flex;
+  justify-content: space-between;
+
+  @include respond-to(mobile) {
+    padding: 0 21px;
+  }
+}
+
+.action {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 3px 0;
+
+  p {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0 0 0 6px;
+  }
+
+  button {
+    padding: 0;
+    border: none;
+    background-color: #ffffff;
+    img {
+      height: 16px;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}

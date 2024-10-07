@@ -1,14 +1,21 @@
-import React from 'react';
-import { Comment } from 'features/Comment/ui/Comment';
-import { useComments } from 'features/Comment/model/useComments';
+import { FC } from 'react';
+import { IComment } from '../model';
+import { Comment } from './Comment';
 
-export const CommentList = ({ postId }) => {
-  const { comments } = useComments(postId);
+export const CommentList: FC<{
+  comments: IComment[];
+  deleteComment: (commentId: string) => void;
+}> = ({ comments, deleteComment }) => {
   return (
     <div>
-      {comments.map((comment) => (
-        <Comment key={comment.id} comment={comment} />
-      ))}
+      {comments &&
+        comments.map((comment) => (
+          <Comment
+            key={comment.objectId}
+            comment={comment}
+            deleteComment={deleteComment}
+          />
+        ))}
     </div>
   );
 };

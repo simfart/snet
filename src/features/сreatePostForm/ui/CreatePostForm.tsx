@@ -1,26 +1,24 @@
-import { Loader } from 'shared/ui';
+import { FC, FormEvent, useState } from 'react';
 import { Avatar, Button } from 'shared/components';
 import { useCreatePost } from '../hooks/useCreatePost';
 import { UploadPopup } from 'features/uploadPopup';
 import { AnimatePresence, motion } from 'framer-motion';
 import { uploadButtonAuthAnimation } from 'shared/animations/animationSettings';
 import { cameraIcon } from 'shared/assets/images';
+import { IUser } from 'entities/user/model/userModel';
 
 import styles from './CreatePostForm.module.scss';
-
-import React, { useState } from 'react';
-import { IUser } from 'entities/user/model/userModel';
 
 interface Props {
   user: IUser;
   variant?: 'profilePage';
 }
 
-export const CreatePostForm: React.FC<Props> = ({ user, variant }) => {
+export const CreatePostForm: FC<Props> = ({ user, variant }) => {
   const [value, setValue] = useState<string>('');
   const [image, setImage] = useState<string>('');
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-  const { mutate, isLoading } = useCreatePost();
+  const { mutate } = useCreatePost();
 
   const onSubmit = (formData: {
     description: string;
@@ -52,7 +50,7 @@ export const CreatePostForm: React.FC<Props> = ({ user, variant }) => {
     return tags;
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (value.trim() === '') {
       alert('Please fill out the required field.');
@@ -74,8 +72,6 @@ export const CreatePostForm: React.FC<Props> = ({ user, variant }) => {
   const closePopup = () => {
     setIsPopupOpen(false);
   };
-
-  if (isLoading) return <Loader />;
 
   return (
     <>

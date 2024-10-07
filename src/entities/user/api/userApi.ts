@@ -1,3 +1,4 @@
+import { strict } from 'assert';
 import { api } from 'shared/api';
 
 export const registerUserFn = async (user: {
@@ -46,8 +47,18 @@ export const logoutUserFn = async () => {
   return response.data;
 };
 
-export const getUserFn = async () => {
+export const getCurrentUserFn = async () => {
   const ownerId = localStorage.getItem('ownerId');
+  const response = await api.get(`/data/Users/${ownerId}`, {
+    headers: {
+      isTokenNeed: true,
+    },
+  });
+
+  return response.data;
+};
+
+export const getUserFn = async (ownerId: string) => {
   const response = await api.get(`/data/Users/${ownerId}`, {
     headers: {
       isTokenNeed: true,

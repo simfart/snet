@@ -3,12 +3,18 @@ import { useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
 
-export const useUserPosts = (userId: string) => {
+export const useUserPosts = (userId: string | undefined) => {
   const {
-    data: posts,
+    data: posts = [],
     isLoading,
     error,
-  } = useQuery([QUERY_KEY.userPosts, userId], () => getUserPostsFn(userId));
+  } = useQuery(
+    [QUERY_KEY.userPosts, userId],
+    () => getUserPostsFn(userId as string),
+    {
+      enabled: !!userId,
+    },
+  );
 
   const postsWithImages = useMemo(
     () => posts?.filter((post) => post.image && post.image !== ''),

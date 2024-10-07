@@ -16,6 +16,7 @@ import dropDownPostIcon from './grey_dropdown.svg';
 import deleteIcon from './delete-o-svgrepo-com.svg';
 import clearIcon from './ClearButton2.svg';
 import backIcon from './back.svg';
+import nothingPic from './giphy1.gif';
 
 export {
   logoIcon,
@@ -36,4 +37,5 @@ export {
   deleteIcon,
   clearIcon,
   backIcon,
+  nothingPic,
 };

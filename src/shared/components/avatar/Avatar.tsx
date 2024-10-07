@@ -1,8 +1,8 @@
 import { FC, useMemo } from 'react';
 import { IUser } from 'entities/user/model/userModel';
-
 import styles from './Avatar.module.scss';
 import { getRandomColor } from 'shared/utils';
+import { useNavigate } from 'react-router-dom';
 
 interface AvatarProps {
   owner: IUser;
@@ -15,6 +15,12 @@ export const Avatar: FC<AvatarProps> = ({
 }) => {
   const initial = owner?.name ? owner.name.charAt(0).toUpperCase() : '?';
   const randomBackgroundColor = useMemo(() => getRandomColor(), []);
+  const navigate = useNavigate();
+
+  const handleAvatarClick = () => {
+    navigate(`/profile/${owner.objectId}`);
+    // navigate(`/profile`);
+  };
 
   return (
     <>
@@ -23,12 +29,14 @@ export const Avatar: FC<AvatarProps> = ({
         <img
           className={`${variant && styles[variant]}`}
           src={owner.avatar}
+          onClick={handleAvatarClick}
           alt="Author"
         />
       ) : (
         <div
           className={`${variant && styles[variant]}`}
           style={{ backgroundColor: randomBackgroundColor }}
+          onClick={handleAvatarClick}
         >
           {initial}
         </div>

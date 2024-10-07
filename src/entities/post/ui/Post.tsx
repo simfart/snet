@@ -2,22 +2,28 @@ import { FC, useCallback } from 'react';
 import { commentIcon } from 'shared/assets/images';
 import { IPost } from '../model/PostModel';
 import { useDeletePost } from '../hooks/useDeletePost';
-import { useUser } from 'features/auth/useUser';
 import { formatTimestamp } from 'shared/utils';
-import styles from './Post.module.scss';
 import { Avatar } from 'shared/components';
 import { PostDropdown } from 'entities/dropdown/postDropdown/PostDropdown';
 import { LikeButton } from 'features/toggleLike';
 import { PostDescription } from 'entities/postDescription';
+import styles from './Post.module.scss';
+import { useCurrentUser } from 'features/auth/useCurrentUser';
 
 interface PostProps {
   post: IPost;
   onTagClick: (tagId: string, tagName: string) => void;
   onPostClick: (post: string) => void;
+  variant?: 'profilePage';
 }
 
-export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
-  const currentUser = useUser();
+export const Post: FC<PostProps> = ({
+  post,
+  onTagClick,
+  onPostClick,
+  variant,
+}) => {
+  const currentUser = useCurrentUser();
   const owner = post.user;
   const isOwner = post.ownerId === currentUser.user?.objectId;
 
@@ -38,6 +44,8 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
     onPostClick(postId);
   };
 
+  console.log(owner, currentUser.user?.objectId);
+
   return (
     <div className={styles.postContainer}>
       <div className={styles.header}>
@@ -48,7 +56,9 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
             <div className={styles.date}>{formatTimestamp(created)}</div>
           </div>
         </div>
-        {isOwner && <PostDropdown onDeleteClick={handleDelete} />}
+        {(isOwner || variant === 'profilePage') && (
+          <PostDropdown onDeleteClick={handleDelete} />
+        )}
       </div>
       <PostDescription
         content={description}

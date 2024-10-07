@@ -27,3 +27,21 @@ export const createCommentFn = async (postId: string, comment: string) => {
     throw error;
   }
 };
+
+export const deleteCommentFn = async (commentId: string, postId: string) => {
+  try {
+    await api.delete(`/data/Comments/${commentId}`);
+
+    await api.put(`/data/Posts/${postId}`, {
+      comments: {
+        __op: 'RemoveRelation',
+        objectIds: [commentId],
+      },
+    });
+
+    return { success: true, commentId };
+  } catch (error) {
+    console.error('Error deleting comment:', error);
+    throw error;
+  }
+};

@@ -1,7 +1,6 @@
 import { FC, useEffect } from 'react';
 import { editUserInputs } from 'shared/inputs/formInputs';
 import { useForm } from 'shared/hooks/useForm';
-import { useUser } from 'features/auth/useUser';
 import { IUser } from 'entities/user/model/userModel';
 import { useEditUser } from '../hooks/useEditUser';
 import { Button, Input } from 'shared/components';
@@ -11,6 +10,7 @@ import { Popup } from 'shared/components/popup';
 import styles from './UserEditPopup.module.scss';
 import { backIcon } from 'shared/assets/images';
 import { motion } from 'framer-motion';
+import { useCurrentUser } from 'features/auth/useCurrentUser';
 
 interface UserEditPopupProps {
   isOpen: boolean;
@@ -31,7 +31,7 @@ export const UserEditPopup: FC<UserEditPopupProps> = ({ isOpen, onClose }) => {
     updateValues,
   } = useForm(editUserInputs);
 
-  const { user, isLoading: isLoadingUser } = useUser();
+  const { user, isLoading: isLoadingUser } = useCurrentUser();
   const { mutate, isLoading } = useEditUser();
 
   useEffect(() => {

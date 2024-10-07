@@ -6,10 +6,10 @@ import { IPost } from 'entities/post/model/PostModel';
 
 import styles from './Posts.module.scss';
 import { Post } from 'entities/post';
-import { useUser } from 'features/auth/useUser';
 import { CreatePostForm } from 'features/сreatePostForm/ui/CreatePostForm';
 import { useTagFilteredPosts } from 'features/post/hooks/useTagFilteredPosts';
 import { useSearchFilteredPosts } from 'features/post/hooks/useSearchFilteredPosts';
+import { useCurrentUser } from 'features/auth/useCurrentUser';
 
 interface PostsProps {
   selectedTagId: string | null;
@@ -25,7 +25,7 @@ export const Posts: FC<PostsProps> = ({
   onPostClick,
 }) => {
   const { posts, isLoading } = usePosts();
-  const { user } = useUser();
+  const { user } = useCurrentUser();
 
   const { filteredPosts, isFilteredPostsLoading } =
     useTagFilteredPosts(selectedTagId);

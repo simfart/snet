@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
 import { IPost } from 'entities/post/model/PostModel';
-import { useUser } from 'features/auth/useUser';
 import { IUser } from 'entities/user/model/userModel';
+import { useCurrentUser } from 'features/auth/useCurrentUser';
 
 interface ToggleLikePostContext {
   previousPosts?: IPost[];
@@ -28,7 +28,7 @@ export const useToggleLikePost = (
   mutationFn: (postId: string) => Promise<void>,
 ) => {
   const queryClient = useQueryClient();
-  const { user: currentUser } = useUser();
+  const { user: currentUser } = useCurrentUser();
 
   const mutation = useMutation<void, unknown, string>(
     async (postId: string) => {

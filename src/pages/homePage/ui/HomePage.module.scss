@@ -51,12 +51,13 @@
   display: flex;
   flex-grow: 1;
   justify-content: center;
+  max-width: 100%;
+  width: 100%;
 }
 
 @include respond-to(tablet) {
   .createPostFormWrapper {
     display: flex;
-    width: 100%;
   }
   .tagsWrapper {
     order: 1;
