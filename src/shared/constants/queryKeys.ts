@@ -1,5 +1,6 @@
 export const QUERY_KEY = {
   accessToken: 'accessToken',
+  currentUser: 'currentUser',
   user: 'user',
   posts: 'posts',
   tags: 'tags',

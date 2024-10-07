@@ -1,7 +1,6 @@
 import { FC, useCallback, useMemo, useState } from 'react';
 
 // import UserList from 'entities/user/components/UserList';
-import styles from './ProfilePage.module.scss';
 import { Header } from 'widgets/header';
 import { TabButtons } from 'shared/components';
 import { useUserPosts } from 'entities/post/hooks/useUserPosts';
@@ -12,10 +11,18 @@ import { ProfileHeader } from 'entities/profileHeader';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCurrentUser } from 'features/auth/useCurrentUser';
 
+import styles from './ProfilePage.module.scss';
+import { useUser } from 'features/auth/useUser';
+
 export const ProfilePage: FC = () => {
-  const { user } = useCurrentUser();
   const { objectId } = useParams<{ objectId: string }>();
+  const { user } = useUser(objectId!);
+  const { user: currentUser } = useCurrentUser();
   const { isLoading, posts, postsWithImages } = useUserPosts(objectId);
+
+  const isOwner =
+    currentUser && user ? currentUser.objectId === user.objectId : false;
+
   const onTagClick = () => {};
   const navigate = useNavigate();
   const handlePostClick = useCallback(
@@ -33,7 +40,7 @@ export const ProfilePage: FC = () => {
         return (
           <UserPosts
             posts={posts}
-            user={user}
+            user={currentUser}
             onTagClick={onTagClick}
             onPostClick={handlePostClick}
           />
@@ -43,7 +50,7 @@ export const ProfilePage: FC = () => {
       default:
         return null;
     }
-  }, [activeTab, handlePostClick, posts, postsWithImages, user]);
+  }, [activeTab, handlePostClick, posts, postsWithImages, currentUser]);
 
   if (isLoading) {
     return <Loader />;
@@ -59,8 +66,9 @@ export const ProfilePage: FC = () => {
           <UserPosts
             onTagClick={onTagClick}
             posts={posts}
-            user={user}
+            user={currentUser}
             onPostClick={handlePostClick}
+            isOwner={isOwner}
           />
         </div>
         <div className={`${styles.profileContent} ${styles.minimized}`}>

@@ -13,6 +13,7 @@ interface userPostsProps {
   onTagClick: (tagId: string, tagName: string) => void;
   onPostClick: (post: string) => void;
   user: IUser;
+  isOwner?: boolean;
 }
 
 export const UserPosts: FC<userPostsProps> = ({
@@ -20,12 +21,17 @@ export const UserPosts: FC<userPostsProps> = ({
   user,
   onTagClick,
   onPostClick,
+  isOwner,
 }) => (
   <div className={styles.profilePostContainer}>
-    <h2 className={styles.titleCreate}>Create New Post</h2>
-    <CreatePostForm user={user} variant="profilePage" />
+    {isOwner && (
+      <>
+        <h2 className={styles.titleCreate}>Create New Post</h2>
+        <CreatePostForm user={user} variant="profilePage" />{' '}
+      </>
+    )}
     <div>
-      <h2>My Posts</h2>
+      <h2>{isOwner ? 'My Posts' : 'Posts'}</h2>
       {posts && posts.length > 0 ? (
         posts.map((post: IPost) => (
           <Post

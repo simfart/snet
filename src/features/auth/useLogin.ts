@@ -16,7 +16,7 @@ export const useLogin = () => {
       window.localStorage.setItem('token', data['user-token']);
       window.localStorage.setItem('ownerId', data.ownerId);
 
-      queryClient.setQueryData([QUERY_KEY.user], data);
+      queryClient.setQueryData([QUERY_KEY.currentUser], data);
       queryClient.removeQueries([QUERY_KEY.accessToken], { inactive: true });
 
       navigate('/', { replace: true });

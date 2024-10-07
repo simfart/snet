@@ -16,7 +16,7 @@ import styles from './HeaderDropdown.module.scss';
 import { useNavigate } from 'react-router-dom';
 
 interface DropdownProps {
-  user?: IUser;
+  user: IUser;
   openPopup: (e?: MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -49,7 +49,7 @@ export const HeaderDropdown: FC<DropdownProps> = ({ user, openPopup }) => {
   };
 
   const handleProfileClick = () => {
-    navigate('/profile');
+    navigate(`/profile/${user.objectId}`);
   };
 
   const dropDownItems = [

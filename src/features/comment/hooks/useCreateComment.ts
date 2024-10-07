@@ -98,7 +98,7 @@ export const useCreateComment = (
       }
 
       if (ctx?.previousUserPosts) {
-        queryClient.setQueryData([QUERY_KEY.user], ctx.previousUserPosts);
+        queryClient.setQueryData([QUERY_KEY.userPosts], ctx.previousUserPosts);
       }
 
       console.error(error);

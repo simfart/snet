@@ -1,4 +1,3 @@
-import { strict } from 'assert';
 import { api } from 'shared/api';
 
 export const registerUserFn = async (user: {
@@ -58,8 +57,8 @@ export const getCurrentUserFn = async () => {
   return response.data;
 };
 
-export const getUserFn = async (ownerId: string) => {
-  const response = await api.get(`/data/Users/${ownerId}`, {
+export const getUserFn = async (userId: string) => {
+  const response = await api.get(`/data/Users/${userId}`, {
     headers: {
       isTokenNeed: true,
     },

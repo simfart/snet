@@ -11,7 +11,7 @@ export const RoutesProvider: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<ProtectedRoute children={<HomePage />} />} />
-      <Route path="/profile" element={<ProfilePage />} />
+      {/* <Route path="/profile" element={<ProfilePage />} /> */}
       <Route path="/profile/:objectId" element={<ProfilePage />} />
       <Route path="/post" element={<PostPage />} />
       <Route path="/register" element={<RegisterPage />} />

@@ -44,8 +44,6 @@ export const Post: FC<PostProps> = ({
     onPostClick(postId);
   };
 
-  console.log(owner, currentUser.user?.objectId);
-
   return (
     <div className={styles.postContainer}>
       <div className={styles.header}>

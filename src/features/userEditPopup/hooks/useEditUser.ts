@@ -12,7 +12,7 @@ export const useEditUser = () => {
     mutationKey: ['mutateUser'],
     mutationFn: uptateUserFn,
     onSuccess: () => {
-      queryClient.invalidateQueries([QUERY_KEY.user]);
+      queryClient.invalidateQueries([QUERY_KEY.currentUser]);
       navigate('/', { replace: true });
     },
   });

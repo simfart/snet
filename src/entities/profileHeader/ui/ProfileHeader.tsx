@@ -8,9 +8,14 @@ import { IUser } from 'entities/user/model/userModel';
 interface IProfileHeader {
   user: IUser;
   variant: 'widget' | 'page';
+  isOwner?: boolean;
 }
 
-export const ProfileHeader: FC<IProfileHeader> = ({ user, variant }) => {
+export const ProfileHeader: FC<IProfileHeader> = ({
+  user,
+  variant,
+  isOwner,
+}) => {
   return (
     <div className={`${styles.profileHeader} ${styles[variant]}`}>
       <div className={styles.backdrop}></div>
