@@ -12,7 +12,8 @@ export const useUserPosts = (userId: string | undefined) => {
     [QUERY_KEY.userPosts, userId],
     () => getUserPostsFn(userId as string),
     {
-      enabled: !!userId,
+      staleTime: 0,
+      cacheTime: 0,
     },
   );
 

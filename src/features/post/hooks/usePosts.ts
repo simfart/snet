@@ -8,7 +8,10 @@ export const usePosts = () => {
     data: posts,
     isLoading,
     error,
-  } = useQuery(QUERY_KEY.posts, getPostsFn);
+  } = useQuery(QUERY_KEY.posts, getPostsFn, {
+    staleTime: 0,
+    cacheTime: 0,
+  });
 
   return useMemo(
     () => ({ posts, isLoading, error }),
