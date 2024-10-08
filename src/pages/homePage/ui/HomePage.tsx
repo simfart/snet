@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import styles from './HomePage.module.scss';
 import { useCurrentUser } from 'features/auth/useCurrentUser';
+import { QUERY_KEY } from 'shared/constants/queryKeys';
 
 export const HomePage: FC = () => {
   const location = useLocation();
@@ -51,7 +52,7 @@ export const HomePage: FC = () => {
           <Profile />
         </div>
         <div className={styles.createPostFormWrapper}>
-          <CreatePostForm user={user} />
+          <CreatePostForm user={user} invalidateKeys={[QUERY_KEY.posts]} />
         </div>
         <div className={styles.postsWrapper}>
           <Posts

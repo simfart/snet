@@ -7,6 +7,8 @@ import { IUser } from 'entities/user/model/userModel';
 
 import styles from './UserPosts.module.scss';
 import { nothingPic } from 'shared/assets/images';
+import { QUERY_KEY } from 'shared/constants/queryKeys';
+import { useCurrentUser } from 'features/auth/useCurrentUser';
 
 interface userPostsProps {
   posts: IPost[] | undefined;
@@ -22,33 +24,41 @@ export const UserPosts: FC<userPostsProps> = ({
   onTagClick,
   onPostClick,
   isOwner,
-}) => (
-  <div className={styles.profilePostContainer}>
-    {isOwner && (
-      <>
-        <h2 className={styles.titleCreate}>Create New Post</h2>
-        <CreatePostForm user={user} variant="profilePage" />{' '}
-      </>
-    )}
-    <div>
-      <h2>{isOwner ? 'My Posts' : 'Posts'}</h2>
-      {posts && posts.length > 0 ? (
-        posts.map((post: IPost) => (
-          <Post
-            key={post.objectId}
-            post={post}
-            onTagClick={onTagClick}
-            onPostClick={onPostClick}
+}) => {
+  const currentUser = useCurrentUser().user;
+  return (
+    <div className={styles.profilePostContainer}>
+      {isOwner && (
+        <>
+          <h2 className={styles.titleCreate}>Create New Post</h2>
+          <CreatePostForm
+            user={user}
             variant="profilePage"
-          />
-        ))
-      ) : (
-        <img
-          className={styles.image}
-          src={nothingPic}
-          alt="No posts available"
-        />
+            invalidateKeys={[[QUERY_KEY.userPosts, currentUser.objectId]]}
+          />{' '}
+        </>
       )}
+      <div>
+        <h2>{isOwner ? 'My Posts' : 'Posts'}</h2>
+        {posts && posts.length > 0 ? (
+          posts.map((post: IPost) => (
+            <Post
+              key={post.objectId}
+              post={post}
+              onTagClick={onTagClick}
+              onPostClick={onPostClick}
+              variant="profilePage"
+              invalidateKeys={[[QUERY_KEY.userPosts, currentUser.objectId]]}
+            />
+          ))
+        ) : (
+          <img
+            className={styles.image}
+            src={nothingPic}
+            alt="No posts available"
+          />
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};

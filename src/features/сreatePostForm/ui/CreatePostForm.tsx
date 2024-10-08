@@ -12,13 +12,18 @@ import styles from './CreatePostForm.module.scss';
 interface Props {
   user: IUser;
   variant?: 'profilePage';
+  invalidateKeys: (string | string[])[];
 }
 
-export const CreatePostForm: FC<Props> = ({ user, variant }) => {
+export const CreatePostForm: FC<Props> = ({
+  user,
+  variant,
+  invalidateKeys,
+}) => {
   const [value, setValue] = useState<string>('');
   const [image, setImage] = useState<string>('');
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
-  const { mutate } = useCreatePost();
+  const { mutate } = useCreatePost(invalidateKeys);
 
   const onSubmit = (formData: {
     description: string;

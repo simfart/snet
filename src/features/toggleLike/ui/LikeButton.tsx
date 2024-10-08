@@ -43,7 +43,7 @@ export const LikeButton: FC<ILikeButton> = ({ post, currentUser }) => {
           alt={isLiked ? 'Unlike' : 'Like'}
         />
       </button>
-      {post.likes.length > 0 && <p>{post.likes.length}</p>}
+      {post?.likes?.length > 0 && <p>{post.likes.length}</p>}
     </div>
   );
 };

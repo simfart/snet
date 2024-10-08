@@ -10,6 +10,7 @@ import { CreatePostForm } from 'features/сreatePostForm/ui/CreatePostForm';
 import { useTagFilteredPosts } from 'features/post/hooks/useTagFilteredPosts';
 import { useSearchFilteredPosts } from 'features/post/hooks/useSearchFilteredPosts';
 import { useCurrentUser } from 'features/auth/useCurrentUser';
+import { QUERY_KEY } from 'shared/constants/queryKeys';
 
 interface PostsProps {
   selectedTagId: string | null;
@@ -39,7 +40,7 @@ export const Posts: FC<PostsProps> = ({
   return (
     <div className={styles.postsContainer}>
       <div className={styles.createPostFormWrapper}>
-        <CreatePostForm user={user} />
+        <CreatePostForm user={user} invalidateKeys={[QUERY_KEY.posts]} />
       </div>
       <div className={styles.posts}>
         {(filteredPosts || foundPosts || posts)?.map((post: IPost) => (
@@ -48,6 +49,7 @@ export const Posts: FC<PostsProps> = ({
             post={post}
             onTagClick={onTagClick}
             onPostClick={onPostClick}
+            invalidateKeys={[QUERY_KEY.posts]}
           />
         ))}
       </div>

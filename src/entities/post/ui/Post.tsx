@@ -15,6 +15,7 @@ interface PostProps {
   onTagClick: (tagId: string, tagName: string) => void;
   onPostClick: (post: string) => void;
   variant?: 'profilePage';
+  invalidateKeys: (string | string[])[];
 }
 
 export const Post: FC<PostProps> = ({
@@ -22,6 +23,7 @@ export const Post: FC<PostProps> = ({
   onTagClick,
   onPostClick,
   variant,
+  invalidateKeys,
 }) => {
   const currentUser = useCurrentUser();
   const owner = post.user;
@@ -29,7 +31,7 @@ export const Post: FC<PostProps> = ({
 
   const { objectId: postId, description, image, created, tags = [] } = post;
 
-  const { mutate: deletePost } = useDeletePost();
+  const { mutate: deletePost } = useDeletePost(invalidateKeys);
 
   const handleDelete = useCallback(() => {
     if (isOwner) {
