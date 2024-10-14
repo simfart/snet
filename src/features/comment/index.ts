@@ -1,1 +1,1 @@
-export { CommentList } from './ui/CommentList';
+export { CommentList } from './ui/СommentList';

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { IComment } from '../model';
-import { Comment } from './Comment';
+import { Comment } from './Сomment';
 
 export const CommentList: FC<{
   comments: IComment[];
