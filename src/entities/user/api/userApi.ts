@@ -56,3 +56,14 @@ export const getUserFn = async () => {
 
   return response.data;
 };
+
+export const getCurrentUserFn = async () => {
+  const ownerId = localStorage.getItem('ownerId');
+  const response = await api.get(`/data/Users/${ownerId}`, {
+    headers: {
+      isTokenNeed: true,
+    },
+  });
+
+  return response.data;
+};

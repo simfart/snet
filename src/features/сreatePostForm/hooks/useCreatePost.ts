@@ -3,9 +3,11 @@ import { QUERY_KEY } from 'shared/constants/queryKeys';
 import { useMemo } from 'react';
 import { createPost } from 'entities/post/api/postApi';
 import { createTag, linkTagsToPost } from 'entities/tag/api/tagsApi';
+import { useUser } from 'features/auth/useUser';
 
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
+  const currentUser = useUser().user;
 
   const mutation = useMutation({
     mutationFn: async ({
@@ -38,7 +40,19 @@ export const useCreatePost = () => {
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEY.posts]);
       queryClient.invalidateQueries([QUERY_KEY.tags]);
-      queryClient.invalidateQueries([QUERY_KEY.userPosts]);
+      queryClient.invalidateQueries([
+        QUERY_KEY.userPosts,
+        currentUser.objectId,
+      ]);
+      queryClient.refetchQueries([QUERY_KEY.posts]);
+      queryClient.refetchQueries([QUERY_KEY.userPosts, currentUser.objectId]);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries([QUERY_KEY.posts]);
+      queryClient.invalidateQueries([
+        QUERY_KEY.userPosts,
+        currentUser.objectId,
+      ]);
     },
     onError: (err) => {
       console.error(err);

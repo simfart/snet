@@ -24,7 +24,7 @@ export const Post: FC<PostProps> = ({ post, onTagClick, onPostClick }) => {
   const { objectId: postId, description, image, created, tags = [] } = post;
 
   const { mutate: deletePost } = useDeletePost();
-
+  console.log(post);
   const handleDelete = useCallback(() => {
     if (isOwner) {
       deletePost(postId);

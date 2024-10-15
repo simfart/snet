@@ -3,7 +3,6 @@ import { FC, useCallback } from 'react';
 import styles from './PostPage.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Header } from 'widgets/header';
-import { useUser } from 'features/auth/useUser';
 import { Avatar } from 'shared/components';
 import { formatTimestamp } from 'shared/utils';
 import { LikeButton } from 'features/toggleLike';
@@ -12,7 +11,11 @@ import { Loader } from 'shared/ui';
 import { PostDescription } from 'entities/postDescription';
 import { InputPanel } from 'features/сreatePostForm/ui/InputPanel';
 import { useCreateComment } from 'features/comment/hooks/useCreateComment';
-import { IComment } from 'features/comment/model';
+
+// import { useDeleteComment } from 'features/comment/hooks/useDeleteComment';
+
+import { CommentList } from 'features/comment';
+import { useCurrentUser } from 'features/auth';
 
 export const PostPage: FC = () => {
   const location = useLocation();
@@ -20,7 +23,7 @@ export const PostPage: FC = () => {
 
   const { selectedPost } = location.state || {};
   const { post, isLoading, setPostData } = usePost(selectedPost);
-  const { user: currentUser } = useUser();
+  const { user: currentUser } = useCurrentUser();
   const owner = post?.user;
 
   const { mutate } = useCreateComment(post, setPostData);
@@ -33,8 +36,17 @@ export const PostPage: FC = () => {
   );
 
   const handleSubmit = (text: string) => {
+    if (!post) {
+      console.error('Post is undefined');
+      return;
+    }
     const postId = post.objectId;
     mutate({ text, postId });
+  };
+  // const { mutate: commentDelete } = useDeleteComment(post, setPostData);
+
+  const deleteComment = (commentId: string) => {
+    console.log(commentId);
   };
 
   if (isLoading) return <Loader />;
@@ -71,10 +83,12 @@ export const PostPage: FC = () => {
             onSubmit={handleSubmit}
             selectedPost={post}
           />
-          {post?.comments &&
-            post.comments.map((comment: IComment) => (
-              <div key={comment.objectId}>{comment.text}</div>
-            ))}
+          {post?.comments && (
+            <CommentList
+              comments={post.comments}
+              deleteComment={deleteComment}
+            />
+          )}
         </div>
       </section>
     </>
