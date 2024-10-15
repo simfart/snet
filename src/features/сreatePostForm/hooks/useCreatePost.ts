@@ -57,11 +57,11 @@ export const useCreatePost = (invalidateKeys: (string | string[])[]) => {
             likes: [],
             user: currentUser,
           };
+          console.log(optimisticPost);
 
           return [optimisticPost, ...oldPosts];
         });
       });
-
       return { previousData };
     },
 
@@ -84,6 +84,8 @@ export const useCreatePost = (invalidateKeys: (string | string[])[]) => {
     },
 
     onSettled: () => {
+      queryClient.refetchQueries([QUERY_KEY.posts]);
+      queryClient.refetchQueries([QUERY_KEY.userPosts, currentUser.objectId]);
       invalidateKeys.forEach((key) => queryClient.invalidateQueries(key));
     },
   });

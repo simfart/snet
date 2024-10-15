@@ -18,6 +18,7 @@ export const ProfilePage: FC = () => {
   const { objectId } = useParams<{ objectId: string }>();
   const { user } = useUser(objectId!);
   const { user: currentUser } = useCurrentUser();
+
   const { isLoading, posts, postsWithImages } = useUserPosts(objectId);
 
   const isOwner =

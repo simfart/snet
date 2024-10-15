@@ -10,6 +10,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './HomePage.module.scss';
 import { useCurrentUser } from 'features/auth/useCurrentUser';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
+import { usePosts } from 'entities/post/hooks/usePosts';
+import { Loader } from 'shared/ui';
 
 export const HomePage: FC = () => {
   const location = useLocation();
@@ -18,6 +20,7 @@ export const HomePage: FC = () => {
   const [selectedTagId, setSelectedTagId] = useState<string | null>(null);
   const { searchTerm, setSearchTerm } = useSearchStore();
   const { user } = useCurrentUser();
+  const { posts, isLoading } = usePosts();
 
   const handlePostClick = (postId: string) => {
     navigate('/post', { state: { selectedPost: postId } });
@@ -28,7 +31,9 @@ export const HomePage: FC = () => {
     const tagIdFromUrl = searchParams.get('tag');
     const searchTermFromUrl = searchParams.get('search');
 
-    if (!tagIdFromUrl && !searchTermFromUrl) {
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    } else if (!tagIdFromUrl && !searchTermFromUrl) {
       setSearchTerm('');
       setSelectedTagId(null);
     }
@@ -43,7 +48,7 @@ export const HomePage: FC = () => {
   const clearSelectedTag = () => {
     setSelectedTagId(null);
   };
-
+  if (isLoading) return <Loader />;
   return (
     <section className={styles.homePage}>
       <Header clearSelectedTag={clearSelectedTag} />
@@ -60,6 +65,7 @@ export const HomePage: FC = () => {
             onTagClick={handleTagClick}
             searchTerm={searchTerm}
             onPostClick={handlePostClick}
+            posts={posts}
           />
         </div>
         <div className={styles.tagsWrapper}>

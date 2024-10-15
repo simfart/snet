@@ -34,7 +34,7 @@ export const UserPosts: FC<userPostsProps> = ({
           <CreatePostForm
             user={user}
             variant="profilePage"
-            invalidateKeys={[[QUERY_KEY.userPosts, currentUser.objectId]]}
+            invalidateKeys={[[QUERY_KEY.userPosts, currentUser?.objectId]]}
           />{' '}
         </>
       )}
@@ -48,7 +48,7 @@ export const UserPosts: FC<userPostsProps> = ({
               onTagClick={onTagClick}
               onPostClick={onPostClick}
               variant="profilePage"
-              invalidateKeys={[[QUERY_KEY.userPosts, currentUser.objectId]]}
+              invalidateKeys={[[QUERY_KEY.userPosts, currentUser?.objectId]]}
             />
           ))
         ) : (

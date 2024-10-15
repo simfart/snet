@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
 import { Loader } from 'shared/ui';
-import { usePosts } from 'features/post/hooks/usePosts';
 import { IPost } from 'entities/post/model/PostModel';
 
 import styles from './Posts.module.scss';
@@ -17,6 +16,7 @@ interface PostsProps {
   searchTerm: string | null;
   onTagClick: (tagId: string, tagName: string) => void;
   onPostClick: (post: string) => void;
+  posts?: IPost[];
 }
 
 export const Posts: FC<PostsProps> = ({
@@ -24,8 +24,8 @@ export const Posts: FC<PostsProps> = ({
   onTagClick,
   searchTerm,
   onPostClick,
+  posts,
 }) => {
-  const { posts, isLoading } = usePosts();
   const { user } = useCurrentUser();
 
   const { filteredPosts, isFilteredPostsLoading } =
@@ -34,8 +34,7 @@ export const Posts: FC<PostsProps> = ({
   const { foundPosts, isfoundPostsLoading } =
     useSearchFilteredPosts(searchTerm);
 
-  if (isLoading || isFilteredPostsLoading || isfoundPostsLoading)
-    return <Loader />;
+  if (isFilteredPostsLoading || isfoundPostsLoading) return <Loader />;
 
   return (
     <div className={styles.postsContainer}>
