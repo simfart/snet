@@ -13,33 +13,35 @@ interface Props {
   user: IUser;
   variant?: 'profilePage';
   invalidateKeys: (string | string[])[];
+  // setIsCreatingPost: (isCreating: boolean) => void;
 }
 
 export const CreatePostForm: FC<Props> = ({
   user,
   variant,
   invalidateKeys,
+  // setIsCreatingPost,
 }) => {
   const [value, setValue] = useState<string>('');
   const [image, setImage] = useState<string>('');
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const { mutate } = useCreatePost(invalidateKeys);
 
-  const onSubmit = (formData: {
-    description: string;
-    image: string;
-    tags: string[];
-  }) => {
-    try {
-      mutate({
-        description: formData.description,
-        image: formData.image,
-        tags: formData.tags,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const onSubmit = (formData: {
+  //   description: string;
+  //   image: string;
+  //   tags: string[];
+  // }) => {
+  //   try {
+  //     mutate({
+  //       description: formData.description,
+  //       image: formData.image,
+  //       tags: formData.tags,
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
@@ -54,7 +56,6 @@ export const CreatePostForm: FC<Props> = ({
     }
     return tags;
   };
-
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (value.trim() === '') {
@@ -62,10 +63,18 @@ export const CreatePostForm: FC<Props> = ({
       return;
     }
 
+    // setIsCreatingPost(true);
+
     const tags = extractHashtags(value);
     const description = value.replace(/#\w+/g, '').trim();
 
-    onSubmit({ description, image, tags });
+    mutate(
+      { description, image, tags },
+      // {
+      //   onSuccess: () => setIsCreatingPost(false),
+      //   onError: () => setIsCreatingPost(false),
+      // },
+    );
     setValue('');
     setImage('');
   };

@@ -12,15 +12,24 @@ import { useCurrentUser } from 'features/auth/useCurrentUser';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
 import { usePosts } from 'entities/post/hooks/usePosts';
 import { Loader } from 'shared/ui';
+import { useTagFilteredPosts } from 'features/post/hooks/useTagFilteredPosts';
+import { useSearchFilteredPosts } from 'features/post/hooks/useSearchFilteredPosts';
+import { IPost } from 'entities/post/model/PostModel';
 
 export const HomePage: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
   const [selectedTagId, setSelectedTagId] = useState<string | null>(null);
   const { searchTerm, setSearchTerm } = useSearchStore();
   const { user } = useCurrentUser();
-  const { posts, isLoading } = usePosts();
+  const { posts, isLoading: isPostsLoading } = usePosts();
+
+  const { filteredPosts, isFilteredPostsLoading } =
+    useTagFilteredPosts(selectedTagId);
+  const { foundPosts, isfoundPostsLoading } =
+    useSearchFilteredPosts(searchTerm);
+
+  const [displayedPosts, setDisplayedPosts] = useState<IPost[]>(posts || []);
 
   const handlePostClick = (postId: string) => {
     navigate('/post', { state: { selectedPost: postId } });
@@ -33,11 +42,18 @@ export const HomePage: FC = () => {
 
     if (searchTermFromUrl) {
       setSearchTerm(searchTermFromUrl);
-    } else if (!tagIdFromUrl && !searchTermFromUrl) {
+      setDisplayedPosts(foundPosts || []);
+    } else if (tagIdFromUrl) {
+      setSelectedTagId(tagIdFromUrl);
+      setDisplayedPosts(filteredPosts || []);
+    } else {
       setSearchTerm('');
       setSelectedTagId(null);
+      setDisplayedPosts(posts || []);
     }
-  }, [location, setSearchTerm]);
+  }, [location, foundPosts, filteredPosts, posts, setSearchTerm]);
+
+  console.log(foundPosts);
 
   const handleTagClick = (tagId: string, tagName: string) => {
     setSelectedTagId(tagId);
@@ -48,7 +64,11 @@ export const HomePage: FC = () => {
   const clearSelectedTag = () => {
     setSelectedTagId(null);
   };
-  if (isLoading) return <Loader />;
+
+  if (isPostsLoading || isFilteredPostsLoading || isfoundPostsLoading) {
+    return <Loader />;
+  }
+
   return (
     <section className={styles.homePage}>
       <Header clearSelectedTag={clearSelectedTag} />
@@ -65,7 +85,7 @@ export const HomePage: FC = () => {
             onTagClick={handleTagClick}
             searchTerm={searchTerm}
             onPostClick={handlePostClick}
-            posts={posts}
+            posts={displayedPosts}
           />
         </div>
         <div className={styles.tagsWrapper}>

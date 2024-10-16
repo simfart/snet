@@ -57,9 +57,8 @@ export const useCreatePost = (invalidateKeys: (string | string[])[]) => {
             likes: [],
             user: currentUser,
           };
-          console.log(optimisticPost);
-
-          return [optimisticPost, ...oldPosts];
+          const updatedPosts = [optimisticPost, ...oldPosts];
+          return updatedPosts;
         });
       });
       return { previousData };
