@@ -5,11 +5,11 @@ import { QUERY_KEY } from 'shared/constants/queryKeys';
 
 export const useTagFilteredPosts = (selectedTagId: string | null) => {
   const {
-    data: filteredPosts,
-    isLoading: isFilteredPostsLoading,
-    error: filteredPostsError,
+    data: tagFilterPosts,
+    isLoading: isTagFilterPostsLoading,
+    error: tagfilterPostsError,
   } = useQuery(
-    [QUERY_KEY.filteredPosts, selectedTagId],
+    [QUERY_KEY.posts, selectedTagId],
     () => getPostsByTag(selectedTagId!),
     {
       enabled: !!selectedTagId,
@@ -17,7 +17,7 @@ export const useTagFilteredPosts = (selectedTagId: string | null) => {
   );
 
   return useMemo(
-    () => ({ filteredPosts, isFilteredPostsLoading, filteredPostsError }),
-    [filteredPosts, filteredPostsError, isFilteredPostsLoading],
+    () => ({ tagFilterPosts, isTagFilterPostsLoading, tagfilterPostsError }),
+    [tagFilterPosts, tagfilterPostsError, isTagFilterPostsLoading],
   );
 };

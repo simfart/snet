@@ -1,13 +1,11 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
-import { Loader } from 'shared/ui';
 import { IPost } from 'entities/post/model/PostModel';
 
 import styles from './Posts.module.scss';
 import { Post } from 'entities/post';
 import { CreatePostForm } from 'features/сreatePostForm/ui/CreatePostForm';
-import { useTagFilteredPosts } from 'features/post/hooks/useTagFilteredPosts';
-import { useSearchFilteredPosts } from 'features/post/hooks/useSearchFilteredPosts';
+
 import { useCurrentUser } from 'features/auth/useCurrentUser';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
 
@@ -19,37 +17,13 @@ interface PostsProps {
   posts?: IPost[];
 }
 
-export const Posts: FC<PostsProps> = ({
-  // selectedTagId,
-  onTagClick,
-  // searchTerm,
-  onPostClick,
-  posts,
-}) => {
+export const Posts: FC<PostsProps> = ({ onTagClick, onPostClick, posts }) => {
   const { user } = useCurrentUser();
-  const [isCreatingPost, setIsCreatingPost] = useState(false);
-  // const { filteredPosts, isFilteredPostsLoading } =
-  //   useTagFilteredPosts(selectedTagId);
-
-  // const { foundPosts, isfoundPostsLoading } =
-  //   useSearchFilteredPosts(searchTerm);
-
-  // const displayedPosts = foundPosts?.length
-  //   ? foundPosts
-  //   : filteredPosts?.length
-  //   ? filteredPosts
-  //   : posts;
-
-  // if (isFilteredPostsLoading || isfoundPostsLoading) return <Loader />;
 
   return (
     <div className={styles.postsContainer}>
       <div className={styles.createPostFormWrapper}>
-        <CreatePostForm
-          user={user}
-          invalidateKeys={[QUERY_KEY.posts]}
-          // setIsCreatingPost={setIsCreatingPost}
-        />
+        <CreatePostForm user={user} invalidateKeys={[QUERY_KEY.posts]} />
       </div>
       <div className={styles.posts}>
         {posts?.map((post: IPost) => (

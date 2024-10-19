@@ -6,12 +6,15 @@ import { UserEditPopup } from 'features/userEditPopup';
 
 import styles from './Header.module.scss';
 import { HeaderDropdown } from 'entities/dropdown';
-import { SearchForm } from 'features/searchForm';
+import { SearchForm } from 'features/searchForm/ui/SearchForm copy 2';
 import { useCurrentUser } from 'features/auth/useCurrentUser';
 
-export const Header: FC<{ clearSelectedTag?: () => void }> = ({
-  clearSelectedTag,
-}) => {
+interface HomeProps {
+  selectedTagName?: string | null;
+  searchTerm?: string | null;
+}
+
+export const Header: FC<HomeProps> = ({ selectedTagName, searchTerm }) => {
   const { user, isLoading: isLoadUser } = useCurrentUser();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -29,7 +32,7 @@ export const Header: FC<{ clearSelectedTag?: () => void }> = ({
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <LogoItem />
-        <SearchForm clearSelectedTag={clearSelectedTag} />
+        <SearchForm searchTerm={searchTerm} selectedTagName={selectedTagName} />
         <HeaderDropdown user={user} openPopup={openPopup} />
         <AnimatePresence>
           {isPopupOpen && (
