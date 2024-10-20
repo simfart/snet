@@ -2,68 +2,71 @@ import { FC, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { buttonHoverAnimation } from 'shared/animations/animationSettings';
 import { clearIcon, seachIcon } from 'shared/assets/images';
-import { useSearchStore } from '../model/useSearchStore';
 
 import styles from './SearchForm.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-interface ISearchForm {
-  initialSearch?: string;
-  clearSelectedTag?: () => void;
+interface SearchFormProps {
+  selectedTagName?: string | null;
+  searchTerm?: string | null;
 }
-export const SearchForm: FC<ISearchForm> = ({
-  initialSearch = '',
-  clearSelectedTag,
+
+export const SearchForm: FC<SearchFormProps> = ({
+  selectedTagName = '',
+  searchTerm = '',
 }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
   const [isFocused, setIsFocused] = useState(false);
-
-  const { searchTerm, setSearchTerm } = useSearchStore();
-
-  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalSearchTerm(e.target.value);
-  };
+  const [inputValue, setInputValue] = useState<string>(
+    searchTerm || selectedTagName || '',
+  );
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    setLocalSearchTerm(searchTerm);
+    if (selectedTagName) {
+      setInputValue(`#${selectedTagName}`);
+    } else if (selectedTagName === '') {
+      setInputValue('');
+    }
+  }, [selectedTagName]);
+
+  useEffect(() => {
+    if (searchTerm) {
+      setInputValue(searchTerm);
+    }
   }, [searchTerm]);
 
-  useEffect(() => {
-    setLocalSearchTerm(initialSearch);
-  }, [initialSearch]);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (inputValue.trim()) {
+      navigate(`/?search=${encodeURIComponent(inputValue.trim())}`, {
+        replace: true,
+      });
+    }
+  };
 
-    if (location.pathname !== '/') {
-      navigate(`/?search=${localSearchTerm}`);
-    } else {
-      setSearchTerm(localSearchTerm);
+  const handleClear = () => {
+    setInputValue('');
+    if (location.pathname === '/') {
+      navigate('/');
     }
   };
   const handleFocus = () => setIsFocused(true);
   const handleBlur = () => {
-    if (localSearchTerm === '') {
+    if (inputValue === '') {
       setIsFocused(false);
-    }
-  };
-
-  const clearSearch = () => {
-    setLocalSearchTerm('');
-    setSearchTerm('');
-    if (clearSelectedTag) {
-      clearSelectedTag();
     }
   };
 
   useEffect(() => {
-    if (localSearchTerm === '') {
+    if (inputValue === '') {
       setIsFocused(false);
     }
-  }, [localSearchTerm]);
+  }, [inputValue, searchTerm]);
 
   return (
     <motion.form
@@ -88,17 +91,17 @@ export const SearchForm: FC<ISearchForm> = ({
         <motion.input
           type="text"
           className={styles.searchInput}
-          value={localSearchTerm}
-          onChange={handleSearchChange}
-          placeholder="Search"
+          value={inputValue}
+          onChange={handleInputChange}
+          placeholder="Search..."
           onFocus={handleFocus}
           onBlur={handleBlur}
         />
       </div>
-      {localSearchTerm && (
+      {inputValue && (
         <motion.button
           type="button"
-          onClick={clearSearch}
+          onClick={handleClear}
           className={styles.clearButton}
           {...buttonHoverAnimation}
         >

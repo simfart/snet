@@ -6,8 +6,8 @@ import { UserEditPopup } from 'features/userEditPopup';
 
 import styles from './Header.module.scss';
 import { HeaderDropdown } from 'entities/dropdown';
-import { SearchForm } from 'features/searchForm/ui/SearchForm copy 2';
 import { useCurrentUser } from 'features/auth/useCurrentUser';
+import { SearchForm } from 'features/searchForm';
 
 interface HomeProps {
   selectedTagName?: string | null;

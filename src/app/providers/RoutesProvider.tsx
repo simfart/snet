@@ -2,10 +2,10 @@ import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { PageNotFound } from 'shared/ui';
 import { LoginPage, RegisterPage } from 'pages/auth';
-import { HomePage } from 'pages/homePage/ui/HomePage copy';
 import { ProfilePage } from 'pages/profilePage';
 import { PostPage } from 'pages/postPage';
 import { ProtectedRoute } from 'features/protectedRoute';
+import { HomePage } from 'pages/homePage';
 
 export const RoutesProvider: FC = () => {
   return (
