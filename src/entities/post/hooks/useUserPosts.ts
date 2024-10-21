@@ -5,7 +5,7 @@ import { QUERY_KEY } from 'shared/constants/queryKeys';
 
 export const useUserPosts = (userId: string | undefined) => {
   const {
-    data: posts = [],
+    data: posts,
     isLoading,
     error,
   } = useQuery(
@@ -15,7 +15,6 @@ export const useUserPosts = (userId: string | undefined) => {
       enabled: !!userId,
     },
   );
-
   const postsWithImages = useMemo(
     () => posts?.filter((post) => post.image && post.image !== ''),
     [posts],

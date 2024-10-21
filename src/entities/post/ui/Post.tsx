@@ -75,7 +75,11 @@ export const Post: FC<PostProps> = ({
         />
       )}
       <div className={styles.footer}>
-        <LikeButton currentUser={currentUser.user} post={post} />
+        <LikeButton
+          currentUser={currentUser.user}
+          post={post}
+          invalidateKeys={invalidateKeys}
+        />
         <div className={styles.action}>
           <button>
             <img src={commentIcon} alt="Comment Icon" onClick={handleClick} />

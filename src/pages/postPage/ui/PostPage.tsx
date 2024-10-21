@@ -14,6 +14,7 @@ import { useCreateComment } from 'features/comment/hooks/useCreateComment';
 import { CommentList } from 'features/comment';
 import { useDeleteComment } from 'features/comment/hooks/useDeleteComment';
 import { useCurrentUser } from 'features/auth/useCurrentUser';
+import { QUERY_KEY } from 'shared/constants/queryKeys';
 
 export const PostPage: FC = () => {
   const location = useLocation();
@@ -63,7 +64,11 @@ export const PostPage: FC = () => {
                 </div>
               </div>
             </div>
-            <LikeButton currentUser={currentUser} post={post} />
+            <LikeButton
+              currentUser={currentUser}
+              post={post}
+              invalidateKeys={[[QUERY_KEY.post, post?.objectId]]}
+            />
           </div>
           {post?.description && (
             <PostDescription

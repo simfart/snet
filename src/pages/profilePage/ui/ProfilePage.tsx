@@ -19,8 +19,7 @@ export const ProfilePage: FC = () => {
   const { user } = useUser(objectId!);
   const { user: currentUser } = useCurrentUser();
 
-  const { isLoading, posts, postsWithImages } = useUserPosts(objectId);
-
+  const { posts, isLoading, error, postsWithImages } = useUserPosts(objectId);
   const isOwner =
     currentUser && user ? currentUser.objectId === user.objectId : false;
 
@@ -44,6 +43,7 @@ export const ProfilePage: FC = () => {
             user={currentUser}
             onTagClick={onTagClick}
             onPostClick={handlePostClick}
+            isOwner={isOwner}
           />
         );
       case 'album':
@@ -51,7 +51,14 @@ export const ProfilePage: FC = () => {
       default:
         return null;
     }
-  }, [activeTab, handlePostClick, posts, postsWithImages, currentUser]);
+  }, [
+    activeTab,
+    posts,
+    currentUser,
+    handlePostClick,
+    isOwner,
+    postsWithImages,
+  ]);
 
   if (isLoading) {
     return <Loader />;

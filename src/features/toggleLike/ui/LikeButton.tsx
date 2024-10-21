@@ -14,15 +14,21 @@ interface ILike {
 interface ILikeButton {
   post: IPost;
   currentUser: IUser;
+  invalidateKeys: (string | string[])[];
 }
 
-export const LikeButton: FC<ILikeButton> = ({ post, currentUser }) => {
+export const LikeButton: FC<ILikeButton> = ({
+  post,
+  currentUser,
+  invalidateKeys,
+}) => {
   const isLiked = post?.likes?.some(
     (like: ILike) => like.objectId === currentUser?.objectId,
   );
 
   const { mutate: toggleLike, isLoading: isLikeLoading } = useToggleLikePost(
     isLiked ? removeLikePostFn : likePostFn,
+    invalidateKeys,
   );
 
   const handleToggleLike = useCallback(() => {
