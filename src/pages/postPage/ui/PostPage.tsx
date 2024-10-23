@@ -24,7 +24,7 @@ export const PostPage: FC = () => {
   const { post, isLoading, setPostData } = usePost(selectedPost);
   const { user: currentUser } = useCurrentUser();
   const owner = post?.user;
-
+  console.log(post);
   const { mutate } = useCreateComment(post, setPostData);
 
   const handleTagClick = useCallback(

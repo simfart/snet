@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { createCommentFn } from '../api';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
-import { useMemo } from 'react';
 import { IPost } from 'entities/post/model/PostModel';
 import { IComment } from '../model';
 import { useCurrentUser } from 'features/auth/useCurrentUser';
@@ -12,9 +11,7 @@ interface CreateCommentInput {
 }
 
 interface CreateCommentContext {
-  previousPosts?: IPost[];
   previousPost?: IPost;
-  previousUserPosts?: IPost[];
 }
 
 export const useCreateComment = (
@@ -30,20 +27,9 @@ export const useCreateComment = (
       return newComment;
     },
     onMutate: async ({ text }) => {
-      await queryClient.cancelQueries([QUERY_KEY.posts]);
       await queryClient.cancelQueries([QUERY_KEY.post, post.objectId]);
-      await queryClient.cancelQueries([
-        QUERY_KEY.userPosts,
-        currentUser.objectId,
-      ]);
-      const previousUserPosts = queryClient.getQueryData<IPost[]>([
-        QUERY_KEY.userPosts,
-        currentUser.objectId,
-      ]);
-      const previousPosts = queryClient.getQueryData<IPost[]>([
-        QUERY_KEY.posts,
-      ]);
-      const previousPost = queryClient.getQueryData<IPost>([
+
+      const previousPost = queryClient.getQueryData<IPost[]>([
         QUERY_KEY.post,
         post.objectId,
       ]);
@@ -60,61 +46,31 @@ export const useCreateComment = (
         comments: [newComment, ...post.comments],
       });
 
-      queryClient.setQueryData<IPost[]>([QUERY_KEY.posts], (oldPosts) => {
-        if (!oldPosts) return [];
-        return oldPosts.map((oldPost) =>
-          oldPost.objectId === post.objectId
-            ? { ...oldPost, comments: [...oldPost.comments, newComment] }
-            : oldPost,
-        );
-      });
-      queryClient.setQueryData<IPost[]>(
-        [QUERY_KEY.userPosts, currentUser.objectId],
-        (oldPosts) => {
-          if (!oldPosts) return [];
-          return oldPosts.map((oldPost) =>
-            oldPost.objectId === post.objectId
-              ? { ...oldPost, comments: [...oldPost.comments, newComment] }
-              : oldPost,
-          );
-        },
-      );
-
-      return {
-        previousPosts,
-        previousPost,
-        previousUserPosts,
-      } as CreateCommentContext;
+      return { previousPost } as CreateCommentContext;
     },
-    onError: (error, variables, context) => {
+    onError: (error, _, context) => {
       const ctx = context as CreateCommentContext;
-
-      if (ctx?.previousPosts) {
-        queryClient.setQueryData([QUERY_KEY.posts], ctx.previousPosts);
-      }
 
       if (ctx?.previousPost) {
         setPostData(ctx.previousPost);
       }
-
-      if (ctx?.previousUserPosts) {
-        queryClient.setQueryData([QUERY_KEY.userPosts], ctx.previousUserPosts);
-      }
-
-      console.error(error);
+      console.error('Error creating comment:', error);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([QUERY_KEY.posts]);
-      queryClient.invalidateQueries([QUERY_KEY.post, post.objectId]);
+      queryClient.invalidateQueries([
+        QUERY_KEY.userPosts,
+        currentUser.objectId,
+      ]);
     },
     onSettled: () => {
-      queryClient.invalidateQueries([QUERY_KEY.posts]);
+      queryClient.refetchQueries([QUERY_KEY.userPosts, currentUser.objectId]);
+      queryClient.refetchQueries([QUERY_KEY.posts]);
       queryClient.invalidateQueries([QUERY_KEY.post, post.objectId]);
     },
   });
 
-  return useMemo(
-    () => ({ mutate: mutation.mutate, isLoading: mutation.isLoading }),
-    [mutation.isLoading, mutation.mutate],
-  );
+  return {
+    mutate: mutation.mutate,
+    isLoading: mutation.isLoading,
+  };
 };
