@@ -35,7 +35,7 @@ export const linkTagsToPost = async (postId: string, tagIds: string[]) => {
   }
 };
 
-export const getAllTags = async () => {
+export const getAllTagsFn = async () => {
   try {
     const response = await api.get('/data/Tag');
     return response.data;

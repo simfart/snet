@@ -1,6 +1,5 @@
-import { Popup } from 'shared/components/popup';
 import { FC } from 'react';
-import { Button, Input } from 'shared/components';
+import { Button, Input, Popup } from 'shared/components';
 import { useForm } from 'shared/hooks/useForm';
 import { uploadInput } from 'shared/inputs/formInputs';
 

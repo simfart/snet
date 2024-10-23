@@ -1,7 +1,8 @@
 import { FC, ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import styles from './Popup.module.scss';
 import { closeIcon } from 'shared/assets/images';
+
+import styles from './Popup.module.scss';
 
 interface PopupProps {
   isOpen: boolean;

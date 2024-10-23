@@ -24,7 +24,7 @@
   "include": [
     "src",
     "src/shared/api/auth/.ts",
-    "src/widgets/userPosts/ui/.tsx"
+    "src/widgets/posts/userPostList/ui/.tsx"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

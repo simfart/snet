@@ -1,0 +1,1 @@
+export { СommentItem } from './СommentItem';

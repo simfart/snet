@@ -1,13 +1,12 @@
 import { FC, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { useCurrentUser } from 'entities/user/hooks';
 import { Loader } from 'shared/ui';
 import { LogoItem } from 'shared/components';
 import { UserEditPopup } from 'features/userEditPopup';
-
-import styles from './Header.module.scss';
 import { HeaderDropdown } from 'entities/dropdown';
-import { useCurrentUser } from 'features/auth/useCurrentUser';
 import { SearchForm } from 'features/searchForm';
+import styles from './Header.module.scss';
 
 interface HomeProps {
   selectedTagName?: string | null;

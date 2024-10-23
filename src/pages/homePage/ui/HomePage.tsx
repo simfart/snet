@@ -1,18 +1,19 @@
 import { FC, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Profile } from 'widgets/profile';
 import { Header } from 'widgets/header';
-import { Posts } from 'widgets/posts';
+import { PostList } from 'widgets/posts';
 import { Tags } from 'widgets/tags';
-import { CreatePostForm } from 'features/сreatePostForm/ui/CreatePostForm';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-import styles from './HomePage.module.scss';
-import { useCurrentUser } from 'features/auth/useCurrentUser';
+import { CreatePostForm } from 'features/сreatePostForm';
+import { useCurrentUser } from 'entities/user/hooks';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
-import { usePosts } from 'entities/post/hooks/usePosts';
 import { Loader } from 'shared/ui';
-import { useTagFilteredPosts } from 'features/post/hooks/useTagFilteredPosts';
-import { useSearchFilteredPosts } from 'features/post/hooks/useSearchFilteredPosts';
+import {
+  usePosts,
+  useSearchFilteredPosts,
+  useTagFilteredPosts,
+} from 'entities/post/hooks';
+import styles from './HomePage.module.scss';
 
 export const HomePage: FC = () => {
   const location = useLocation();
@@ -84,7 +85,7 @@ export const HomePage: FC = () => {
           <CreatePostForm user={user} invalidateKeys={[QUERY_KEY.posts]} />
         </div>
         <div className={styles.postsWrapper}>
-          <Posts
+          <PostList
             selectedTagId={selectedTagId}
             onTagClick={handleTagClick}
             searchTerm={searchTerm}

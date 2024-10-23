@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { IPost } from 'entities/post/model/PostModel';
-
 import styles from './Album.module.scss';
 
 interface PostsWithImagesProps {

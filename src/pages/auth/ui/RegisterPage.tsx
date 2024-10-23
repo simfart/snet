@@ -1,9 +1,9 @@
 import { FC } from 'react';
+import { useRegister } from 'entities/user/hooks';
+import { AuthForm } from 'widgets/authForm';
 import { registerInputs } from 'shared/inputs/formInputs';
-import { useRegister } from 'features/auth/useRegister';
 import { useForm } from 'shared/hooks/useForm';
 import { Loader } from 'shared/ui';
-import { AuthForm } from 'widgets/authForm';
 
 export const RegisterPage: FC = () => {
   const { mutate, isLoading } = useRegister();

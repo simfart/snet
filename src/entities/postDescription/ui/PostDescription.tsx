@@ -2,7 +2,6 @@ import { useRef, useEffect, useState, FC, useCallback } from 'react';
 import { ITag } from 'entities/tag/model/TagModel';
 import { motion } from 'framer-motion';
 import { linkAnimation } from 'shared/animations/animationSettings';
-
 import styles from './PostDescription.module.scss';
 
 interface ContentWithToggleProps {

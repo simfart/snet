@@ -1,16 +1,13 @@
 import { FC, useEffect } from 'react';
 import { editUserInputs } from 'shared/inputs/formInputs';
-import { useForm } from 'shared/hooks/useForm';
 import { IUser } from 'entities/user/model/userModel';
-import { useEditUser } from '../hooks/useEditUser';
-import { Button, Input } from 'shared/components';
+import { useCurrentUser, useEditUser } from 'entities/user/hooks';
+import { Button, Input, Popup } from 'shared/components';
 import { Loader } from 'shared/ui';
-import { Popup } from 'shared/components/popup';
-
-import styles from './UserEditPopup.module.scss';
 import { backIcon } from 'shared/assets/images';
 import { motion } from 'framer-motion';
-import { useCurrentUser } from 'features/auth/useCurrentUser';
+import { useForm } from 'shared/hooks';
+import styles from './UserEditPopup.module.scss';
 
 interface UserEditPopupProps {
   isOpen: boolean;

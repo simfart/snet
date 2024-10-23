@@ -3,7 +3,7 @@ import { ITag } from 'entities/tag/model/TagModel';
 import styles from './Tags.module.scss';
 import { motion } from 'framer-motion';
 import { linkAnimation } from 'shared/animations/animationSettings';
-import { useTags } from 'entities/tag/hooks/useTags';
+import { useTags } from 'entities/tag/hooks';
 
 interface TagsProps {
   onTagClick: (tagId: string, tagName: string) => void;

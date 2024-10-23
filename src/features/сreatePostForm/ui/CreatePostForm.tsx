@@ -1,47 +1,28 @@
 import { FC, FormEvent, useState } from 'react';
+import { IUser } from 'entities/user/model/userModel';
+import { useCreatePost } from 'entities/post/hooks';
 import { Avatar, Button } from 'shared/components';
-import { useCreatePost } from '../hooks/useCreatePost';
 import { UploadPopup } from 'features/uploadPopup';
-import { AnimatePresence, motion } from 'framer-motion';
 import { uploadButtonAuthAnimation } from 'shared/animations/animationSettings';
 import { cameraIcon } from 'shared/assets/images';
-import { IUser } from 'entities/user/model/userModel';
-
+import { AnimatePresence, motion } from 'framer-motion';
 import styles from './CreatePostForm.module.scss';
 
 interface Props {
   user: IUser;
   variant?: 'profilePage';
   invalidateKeys: (string | string[])[];
-  // setIsCreatingPost: (isCreating: boolean) => void;
 }
 
 export const CreatePostForm: FC<Props> = ({
   user,
   variant,
   invalidateKeys,
-  // setIsCreatingPost,
 }) => {
   const [value, setValue] = useState<string>('');
   const [image, setImage] = useState<string>('');
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const { mutate } = useCreatePost(invalidateKeys);
-
-  // const onSubmit = (formData: {
-  //   description: string;
-  //   image: string;
-  //   tags: string[];
-  // }) => {
-  //   try {
-  //     mutate({
-  //       description: formData.description,
-  //       image: formData.image,
-  //       tags: formData.tags,
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
@@ -63,18 +44,10 @@ export const CreatePostForm: FC<Props> = ({
       return;
     }
 
-    // setIsCreatingPost(true);
-
     const tags = extractHashtags(value);
     const description = value.replace(/#\w+/g, '').trim();
 
-    mutate(
-      { description, image, tags },
-      // {
-      //   onSuccess: () => setIsCreatingPost(false),
-      //   onError: () => setIsCreatingPost(false),
-      // },
-    );
+    mutate({ description, image, tags });
     setValue('');
     setImage('');
   };

@@ -1,14 +1,13 @@
 import { FC, useState, useRef, MouseEvent } from 'react';
 import { motion } from 'framer-motion';
+import { useOutsideClick } from 'shared/hooks';
 import { deleteIcon, dropDownPostIcon } from 'shared/assets/images';
-import { useOutsideClick } from 'shared/hooks/useOutsideClick';
 import {
   dropdownVariants,
   iconVariants,
   itemVariants,
   overlayVariants,
 } from 'shared/animations/dropdownVariants';
-
 import styles from './PostDropdown.module.scss';
 
 interface PostDropdownProps {

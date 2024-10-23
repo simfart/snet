@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { IPost } from 'entities/post/model/PostModel';
 import { IUser } from 'entities/user/model/userModel';
-import { useCurrentUser } from 'features/auth/useCurrentUser';
+import { useCurrentUser } from 'entities/user/hooks/useCurrentUser';
 import { useCallback } from 'react';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
 

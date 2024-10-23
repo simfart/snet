@@ -1,5 +1,4 @@
 import { FC } from 'react';
-
 import styles from './TabButtons.module.scss';
 
 export const TabButtons: FC<{

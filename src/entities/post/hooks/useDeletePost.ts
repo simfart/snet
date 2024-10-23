@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { deletePostFn } from 'entities/post/api/postApi';
 import { useMutation, useQueryClient } from 'react-query';
 import { IPost } from '../model/PostModel';
+import { deletePostFn } from '../api';
 
 interface DeletePostContext {
   previousData?: IPost[][];
@@ -22,7 +22,7 @@ export const useDeletePost = (invalidateKeys: (string | string[])[]) => {
         (key) => queryClient.getQueryData<IPost[]>(key) || [],
       );
 
-      invalidateKeys.forEach((key, index) => {
+      invalidateKeys.forEach((key) => {
         queryClient.setQueryData<IPost[]>(key, (oldPosts = []) =>
           oldPosts.filter((post) => post.objectId !== postId),
         );
@@ -37,7 +37,7 @@ export const useDeletePost = (invalidateKeys: (string | string[])[]) => {
       });
     },
 
-    onError: (error, postId, context) => {
+    onError: (error, __, context) => {
       const ctx = context as DeletePostContext;
 
       if (ctx?.previousData) {

@@ -1,7 +1,7 @@
-import { getPostsFn } from 'entities/post/api/postApi';
 import { useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
+import { getPostsFn } from '../api';
 
 export const usePosts = () => {
   const {

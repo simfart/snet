@@ -1,20 +1,18 @@
 import { FC, useCallback } from 'react';
-
-import styles from './PostPage.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Header } from 'widgets/header';
+import { CommentList } from 'widgets/comments';
+import { LikeButton } from 'features/toggleLike';
+import { usePost } from 'entities/post/hooks';
+import { useCreateComment, useDeleteComment } from 'entities/comment/hooks';
+import { useCurrentUser } from 'entities/user/hooks';
+import { PostDescription } from 'entities/postDescription';
+import { InputPanel } from 'entities/inputPanel';
 import { Avatar } from 'shared/components';
 import { formatTimestamp } from 'shared/utils';
-import { LikeButton } from 'features/toggleLike';
-import { usePost } from 'entities/post/hooks/usePost';
 import { Loader } from 'shared/ui';
-import { PostDescription } from 'entities/postDescription';
-import { InputPanel } from 'features/сreatePostForm/ui/InputPanel';
-import { useCreateComment } from 'features/comment/hooks/useCreateComment';
-import { CommentList } from 'features/comment';
-import { useDeleteComment } from 'features/comment/hooks/useDeleteComment';
-import { useCurrentUser } from 'features/auth/useCurrentUser';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
+import styles from './PostPage.module.scss';
 
 export const PostPage: FC = () => {
   const location = useLocation();

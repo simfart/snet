@@ -50,7 +50,7 @@ export const getUserPostsFn = async (userId: string): Promise<IPost[]> => {
   }
 };
 
-export const searchPosts = async (searchTerm: string) => {
+export const searchPostsFn = async (searchTerm: string) => {
   try {
     const encodedSearchTerm = encodeURIComponent(`%${searchTerm}%`);
     const response = await api.get(
@@ -63,7 +63,7 @@ export const searchPosts = async (searchTerm: string) => {
   }
 };
 
-export const getPostsByTag = async (tagId: string) => {
+export const getPostsByTagFn = async (tagId: string) => {
   try {
     const response = await api.get(
       `/data/posts?where=tags.objectId%3D'${tagId}'&loadRelations=user,likes,tags&sortBy=created%20desc`,
@@ -74,7 +74,7 @@ export const getPostsByTag = async (tagId: string) => {
   }
 };
 
-export const createPost = async ({ description, image }: PostArgs) => {
+export const createPostFn = async ({ description, image }: PostArgs) => {
   const userId = localStorage.getItem('ownerId');
   if (!userId) {
     throw new Error('User is not logged in');

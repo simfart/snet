@@ -1,8 +1,8 @@
 import { FC, useMemo } from 'react';
 import { IUser } from 'entities/user/model/userModel';
-import styles from './Avatar.module.scss';
 import { getRandomColor } from 'shared/utils';
 import { useNavigate } from 'react-router-dom';
+import styles from './Avatar.module.scss';
 
 interface AvatarProps {
   owner: IUser;
@@ -19,7 +19,6 @@ export const Avatar: FC<AvatarProps> = ({
 
   const handleAvatarClick = () => {
     navigate(`/profile/${owner.objectId}`);
-    // navigate(`/profile`);
   };
 
   return (

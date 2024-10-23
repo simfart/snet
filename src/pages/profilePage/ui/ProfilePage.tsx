@@ -1,18 +1,14 @@
 import { FC, useCallback, useMemo, useState } from 'react';
-
-// import UserList from 'entities/user/components/UserList';
-import { Header } from 'widgets/header';
-import { TabButtons } from 'shared/components';
-import { useUserPosts } from 'entities/post/hooks/useUserPosts';
-import { Loader } from 'shared/ui';
-import { UserPosts } from 'widgets/userPosts';
-import { Album } from 'widgets/album/ui/Album';
-import { ProfileHeader } from 'entities/profileHeader';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useCurrentUser } from 'features/auth/useCurrentUser';
-
+import { Header } from 'widgets/header';
+import { UserPostList } from 'widgets/posts';
+import { Album } from 'widgets/album';
+import { ProfileHeader } from 'entities/profileHeader';
+import { useCurrentUser, useUser } from 'entities/user/hooks';
+import { useUserPosts } from 'entities/post/hooks';
+import { TabButtons } from 'shared/components';
+import { Loader } from 'shared/ui';
 import styles from './ProfilePage.module.scss';
-import { useUser } from 'features/auth/useUser';
 
 export const ProfilePage: FC = () => {
   const { objectId } = useParams<{ objectId: string }>();
@@ -38,7 +34,7 @@ export const ProfilePage: FC = () => {
     switch (activeTab) {
       case 'posts':
         return (
-          <UserPosts
+          <UserPostList
             posts={posts}
             user={currentUser}
             onTagClick={onTagClick}
@@ -71,7 +67,7 @@ export const ProfilePage: FC = () => {
         <ProfileHeader user={user} variant="page" />
         <div className={`${styles.profileContent} ${styles.fullScreen}`}>
           <Album postsWithImages={postsWithImages} />
-          <UserPosts
+          <UserPostList
             onTagClick={onTagClick}
             posts={posts}
             user={currentUser}

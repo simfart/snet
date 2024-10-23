@@ -1,15 +1,14 @@
 import { FC } from 'react';
+import { useCurrentUser } from 'entities/user/hooks';
+import { Loader } from 'shared/ui';
+import { ProfileHeader } from 'entities/profileHeader';
 import {
   instagramIcon,
   facebookIcon,
   twitterIcon,
   youtubeIcon,
 } from 'shared/assets/images';
-
 import styles from './Profile.module.scss';
-import { Loader } from 'shared/ui';
-import { ProfileHeader } from 'entities/profileHeader';
-import { useCurrentUser } from 'features/auth/useCurrentUser';
 
 export const Profile: FC = () => {
   const { user, isLoading } = useCurrentUser();

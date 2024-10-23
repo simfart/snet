@@ -1,19 +1,18 @@
 import { FC, useState, useRef, MouseEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { IUser } from 'entities/user/model/userModel';
+import { useOutsideClick } from 'shared/hooks';
+import { useLogout } from 'entities/user/hooks';
+import { Loader } from 'shared/ui';
+import { burgerAnimationConfig } from 'shared/animations/animationSettings';
 import { dropDownIcon } from 'shared/assets/images';
-import { useOutsideClick } from 'shared/hooks/useOutsideClick';
 import {
   iconVariants,
   itemVariants,
   overlayVariants,
 } from 'shared/animations/dropdownVariants';
-import { useLogout } from 'features/auth/useLogout';
-import { Loader } from 'shared/ui';
-import { burgerAnimationConfig } from 'shared/animations/animationSettings';
-
 import styles from './HeaderDropdown.module.scss';
-import { useNavigate } from 'react-router-dom';
 
 interface DropdownProps {
   user: IUser;

@@ -1,21 +1,14 @@
 import { FC } from 'react';
-
 import { Avatar } from 'shared/components';
-
-import styles from './ProfileHeader.module.scss';
 import { IUser } from 'entities/user/model/userModel';
+import styles from './ProfileHeader.module.scss';
 
 interface IProfileHeader {
   user: IUser;
   variant: 'widget' | 'page';
-  isOwner?: boolean;
 }
 
-export const ProfileHeader: FC<IProfileHeader> = ({
-  user,
-  variant,
-  isOwner,
-}) => {
+export const ProfileHeader: FC<IProfileHeader> = ({ user, variant }) => {
   return (
     <div className={`${styles.profileHeader} ${styles[variant]}`}>
       <div className={styles.backdrop}></div>

@@ -1,7 +1,8 @@
 import { FC } from 'react';
-import styles from './Button.module.scss';
 import { motion } from 'framer-motion';
 import { buttonAuthAnimation } from 'shared/animations/animationSettings';
+
+import styles from './Button.module.scss';
 
 type ButtonProps = {
   label: string;
