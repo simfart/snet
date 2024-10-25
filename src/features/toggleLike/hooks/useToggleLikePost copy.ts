@@ -12,7 +12,6 @@ interface ToggleLikePostContext {
 export const useToggleLikePost = (
   mutationFn: (postId: string) => Promise<void>,
   invalidateKeys: (string | string[])[],
-  user: IUser,
 ) => {
   const queryClient = useQueryClient();
   const { user: currentUser } = useCurrentUser();
@@ -99,7 +98,7 @@ export const useToggleLikePost = (
           queryClient.invalidateQueries(key);
         });
         queryClient.refetchQueries([QUERY_KEY.posts]);
-        queryClient.refetchQueries([QUERY_KEY.userPosts, user.objectId]);
+        queryClient.refetchQueries([QUERY_KEY.userPosts, currentUser.objectId]);
         queryClient.refetchQueries([QUERY_KEY.post, postId]);
       },
     },

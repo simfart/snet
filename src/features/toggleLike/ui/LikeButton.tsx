@@ -29,6 +29,7 @@ export const LikeButton: FC<ILikeButton> = ({
   const { mutate: toggleLike, isLoading: isLikeLoading } = useToggleLikePost(
     isLiked ? removeLikePostFn : likePostFn,
     invalidateKeys,
+    post.user,
   );
 
   const handleToggleLike = useCallback(() => {

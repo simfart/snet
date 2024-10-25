@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from 'react-query';
-import { useCurrentUser } from 'entities/user/hooks/useCurrentUser';
 import { IPost } from 'entities/post/model/PostModel';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
 import { deleteCommentFn } from '../api';
@@ -18,7 +17,6 @@ export const useDeleteComment = (
   setPostData: (data: IPost) => void,
 ) => {
   const queryClient = useQueryClient();
-  const currentUser = useCurrentUser().user;
 
   const mutation = useMutation({
     mutationFn: async ({ commentId, postId }: DeleteCommentInput) => {
@@ -59,7 +57,7 @@ export const useDeleteComment = (
       queryClient.invalidateQueries([QUERY_KEY.post, post.objectId]);
     },
     onSettled: () => {
-      queryClient.refetchQueries([QUERY_KEY.userPosts, currentUser.objectId]);
+      queryClient.refetchQueries([QUERY_KEY.userPosts, post.user.objectId]);
       queryClient.refetchQueries([QUERY_KEY.posts]);
       queryClient.invalidateQueries([QUERY_KEY.post, post.objectId]);
     },

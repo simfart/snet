@@ -57,13 +57,10 @@ export const useCreateComment = (
       console.error('Error creating comment:', error);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries([
-        QUERY_KEY.userPosts,
-        currentUser.objectId,
-      ]);
+      queryClient.invalidateQueries([QUERY_KEY.userPosts, post.user.objectId]);
     },
     onSettled: () => {
-      queryClient.refetchQueries([QUERY_KEY.userPosts, currentUser.objectId]);
+      queryClient.refetchQueries([QUERY_KEY.userPosts, post.user.objectId]);
       queryClient.refetchQueries([QUERY_KEY.posts]);
       queryClient.invalidateQueries([QUERY_KEY.post, post.objectId]);
     },
