@@ -15,12 +15,14 @@ interface ILikeButton {
   post: IPost;
   currentUser: IUser;
   invalidateKeys: (string | string[])[];
+  variant?: 'postPage';
 }
 
 export const LikeButton: FC<ILikeButton> = ({
   post,
   currentUser,
   invalidateKeys,
+  variant,
 }) => {
   const isLiked = post?.likes?.some(
     (like: ILike) => like.objectId === currentUser?.objectId,
@@ -43,7 +45,9 @@ export const LikeButton: FC<ILikeButton> = ({
   }
 
   return (
-    <div className={styles.like}>
+    <div
+      className={`${styles.like} ${variant === 'postPage' && styles.postPage}`}
+    >
       <button onClick={handleToggleLike} disabled={isLikeLoading}>
         <img
           src={isLiked ? heartIcon : heartOutlinedIcon}

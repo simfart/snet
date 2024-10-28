@@ -4,7 +4,9 @@
 .postContainer {
   display: flex;
   max-width: 1280px;
-  margin: 149px auto 0;
+  margin-top: 59px;
+  padding: 86px 20px 0;
+  gap: 10px;
 
   @include respond-to(tablet) {
     flex-direction: column;
@@ -21,10 +23,16 @@
   @include respond-to(tablet) {
     margin: 0;
   }
+}
 
-  img {
-    width: 100%;
-    max-height: 100%;
+.postOwner {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  justify-content: space-between;
+
+  @include respond-to(mobile) {
+    padding: 0 21px;
   }
 }
 .user {
@@ -71,7 +79,20 @@
   margin-top: 4px;
   color: #c4c4c4;
 }
-
+.description {
+  font-size: 14px;
+  line-height: 20px;
+  text-align: left;
+  @include respond-to(tablet) {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+.postImage {
+  width: 100%;
+  max-height: 100%;
+  border-radius: 10px;
+}
 .comments {
   width: 100%;
   max-width: 513px;

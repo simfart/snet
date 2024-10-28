@@ -1,9 +1,14 @@
+@import 'app/styles/variables.scss';
+@import 'app/styles/mixins';
+
 .like {
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   padding: 3px 0;
+  line-height: 0;
+  padding: 0;
 
   p {
     font-weight: 500;
@@ -15,12 +20,29 @@
   button {
     padding: 0;
     border: none;
-    background-color: #ffffff;
+    background-color: #00000000;
+    display: flex;
     img {
       height: 16px;
     }
     &:focus {
       outline: none;
     }
+  }
+}
+
+.postPage {
+  width: 79px;
+  height: 34px;
+  background: rgba(232, 77, 149, 0.08);
+  border-radius: 10px;
+  justify-content: center;
+
+  @include respond-to(mobile) {
+    width: auto;
+    height: auto;
+    background: none;
+    border-radius: none;
+    justify-content: center;
   }
 }

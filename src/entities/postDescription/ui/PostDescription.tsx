@@ -37,12 +37,14 @@ export const PostDescription: FC<ContentWithToggleProps> = ({
   }, [content]);
 
   return (
-    <div className={styles.contentWrapper}>
+    <div
+      className={`${styles.contentWrapper} ${
+        variant === 'postPage' && styles.postPage
+      }`}
+    >
       <div
         ref={contentRef}
-        className={`${styles.content} ${isExpanded ? styles.expanded : ''} ${
-          variant === 'postPage' && styles.postPage
-        }`}
+        className={`${styles.content} ${isExpanded ? styles.expanded : ''}`}
       >
         <div onClick={onPostClick}>{content}</div>
         <div className={styles.tags}>

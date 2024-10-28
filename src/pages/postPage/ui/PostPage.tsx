@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Header } from 'widgets/header';
 import { CommentList } from 'widgets/comments';
@@ -22,9 +22,8 @@ export const PostPage: FC = () => {
   const { post, isLoading, setPostData } = usePost(selectedPost);
   const { user: currentUser } = useCurrentUser();
   const owner = post?.user;
-  console.log(post);
   const { mutate } = useCreateComment(post, setPostData);
-
+  const [isNewPostOpen, setNewPostOpen] = useState(false);
   const handleTagClick = useCallback(
     (tagId: string, tagName: string) => {
       navigate(`/?tag=${tagId}&tagName=${encodeURIComponent(tagName)}`);
@@ -45,53 +44,78 @@ export const PostPage: FC = () => {
   const deleteComment = (commentId: string) => {
     commentDelete({ commentId, postId: post.objectId });
   };
-
+  const handleClick = () => setNewPostOpen(!isNewPostOpen);
   if (isLoading) return <Loader />;
   return (
     <>
       <Header />
-      <section className={styles.postContainer}>
-        <div className={styles.post}>
-          <div className={styles.postOwner}>
-            <div className={styles.user}>
-              <Avatar owner={owner} variant="postAvatar" />
-              <div className={styles.authorDetails}>
-                <div className={styles.author}>{owner?.name}</div>
-                <div className={styles.date}>
-                  {formatTimestamp(post?.created)}
+      {post && (
+        <section className={styles.postContainer}>
+          <div className={styles.post}>
+            <div className={styles.postOwner}>
+              <div className={styles.user}>
+                <Avatar owner={owner} variant="postAvatar" />
+                <div className={styles.authorDetails}>
+                  <div className={styles.author}>{owner?.name}</div>
+                  <div className={styles.date}>
+                    {formatTimestamp(post?.created)}
+                  </div>
                 </div>
               </div>
+              <LikeButton
+                currentUser={currentUser}
+                post={post}
+                invalidateKeys={[[QUERY_KEY.post, post?.objectId]]}
+                variant="postPage"
+              />
             </div>
-            <LikeButton
-              currentUser={currentUser}
-              post={post}
-              invalidateKeys={[[QUERY_KEY.post, post?.objectId]]}
-            />
+            {post.image ? (
+              post.description && (
+                <PostDescription
+                  content={post?.description}
+                  tags={post?.tags}
+                  onTagClick={handleTagClick}
+                  variant="postPage"
+                />
+              )
+            ) : (
+              <div className={styles.description}>{post.description}</div>
+            )}
+            {post.image && (
+              <img
+                className={styles.postImage}
+                src={post.image}
+                alt="Post image"
+              />
+            )}
           </div>
-          {post?.description && (
-            <PostDescription
-              content={post?.description}
-              tags={post?.tags}
-              onTagClick={handleTagClick}
-              variant="postPage"
-            />
-          )}
-          {post?.image && <img src={post.image} alt="Post image" />}
-        </div>
-        <div className={styles.comments}>
-          <InputPanel
-            user={currentUser}
-            onSubmit={handleSubmit}
-            selectedPost={post}
-          />
-          {post?.comments && (
-            <CommentList
-              comments={post.comments}
-              deleteComment={deleteComment}
-            />
-          )}
-        </div>
-      </section>
+          <div className={styles.comments}>
+            <div className={styles.commentsHeader}>
+              <div className={styles.commentsCount}>
+                Comments
+                {post.comments.length > 0 && (
+                  <span>{post.comments.length}</span>
+                )}
+              </div>
+              <div onClick={handleClick}>Write comment</div>
+            </div>
+            {isNewPostOpen && (
+              <InputPanel
+                user={currentUser}
+                onSubmit={handleSubmit}
+                selectedPost={post}
+              />
+            )}
+
+            {post?.comments && (
+              <CommentList
+                comments={post.comments}
+                deleteComment={deleteComment}
+              />
+            )}
+          </div>
+        </section>
+      )}
     </>
   );
 };

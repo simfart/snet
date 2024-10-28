@@ -6,10 +6,13 @@ export const CommentList: FC<{
   comments: IComment[];
   deleteComment: (commentId: string) => void;
 }> = ({ comments, deleteComment }) => {
+  const sortedComments = [...comments].sort(
+    (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime(),
+  );
   return (
     <div>
-      {comments &&
-        comments.map((comment) => (
+      {sortedComments &&
+        sortedComments.map((comment) => (
           <СommentItem
             key={comment.objectId}
             comment={comment}
