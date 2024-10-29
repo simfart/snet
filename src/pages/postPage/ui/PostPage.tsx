@@ -8,11 +8,12 @@ import { useCreateComment, useDeleteComment } from 'entities/comment/hooks';
 import { useCurrentUser } from 'entities/user/hooks';
 import { PostDescription } from 'entities/postDescription';
 import { InputPanel } from 'entities/inputPanel';
-import { Avatar } from 'shared/components';
+import { Avatar, Button } from 'shared/components';
 import { formatTimestamp } from 'shared/utils';
 import { Loader } from 'shared/ui';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
 import styles from './PostPage.module.scss';
+import { writeIcon } from 'shared/assets/images';
 
 export const PostPage: FC = () => {
   const location = useLocation();
@@ -91,13 +92,18 @@ export const PostPage: FC = () => {
           </div>
           <div className={styles.comments}>
             <div className={styles.commentsHeader}>
-              <div className={styles.commentsCount}>
+              <div>
                 Comments
                 {post.comments.length > 0 && (
                   <span>{post.comments.length}</span>
                 )}
               </div>
-              <div onClick={handleClick}>Write comment</div>
+              <Button
+                variant="lightcolor"
+                label="Write comment"
+                icon={writeIcon}
+                onClick={handleClick}
+              />
             </div>
             {isNewPostOpen && (
               <InputPanel

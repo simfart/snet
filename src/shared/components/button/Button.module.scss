@@ -12,7 +12,6 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 21px;
-
   transition: background-color 0.3s ease;
 
   &:disabled {
@@ -40,4 +39,40 @@
 
 .upload {
   align-self: center;
+}
+
+.light {
+  border-radius: 30px;
+  border: none;
+  font-weight: 500;
+  color: #555555;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  width: auto;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(219, 52, 158, 0.5);
+  }
+
+  img {
+    padding-right: 9px;
+  }
+}
+
+.lightcolor {
+  @extend .light;
+  color: #e25a99;
+  display: flex;
+  align-items: center;
+  padding: 7px 14px;
+  img {
+    width: 20px;
+    height: 20px;
+  }
 }

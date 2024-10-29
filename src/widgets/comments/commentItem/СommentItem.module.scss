@@ -1,16 +1,13 @@
 @import 'app/styles/variables.scss';
 @import 'app/styles/mixins';
 
-.postContainer {
-  border: 1px solid rgba(156, 44, 158, 0.08);
-  border-radius: 10px;
-  padding: 13px 0 14px;
-  margin-bottom: 27px;
+.commentContainer {
+  padding: 18px 20px 0;
+  margin-bottom: 40px;
   box-sizing: border-box;
 }
 
 .header {
-  padding: 0 27px;
   display: flex;
   align-items: center;
   margin-bottom: 16px;

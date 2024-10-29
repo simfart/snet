@@ -3,7 +3,6 @@ import { IUser } from 'entities/user/model/userModel';
 import { useCreatePost } from 'entities/post/hooks';
 import { Avatar, Button } from 'shared/components';
 import { UploadPopup } from 'features/uploadPopup';
-import { uploadButtonAuthAnimation } from 'shared/animations/animationSettings';
 import { cameraIcon } from 'shared/assets/images';
 import { AnimatePresence, motion } from 'framer-motion';
 import styles from './CreatePostForm.module.scss';
@@ -88,15 +87,13 @@ export const CreatePostForm: FC<Props> = ({
           />
         </div>
         <div className={styles.buttonsContainer}>
-          <motion.button
-            className={styles.upload}
-            onClick={openPopup}
+          <Button
+            variant="light"
+            label="Upload"
+            icon={cameraIcon}
             type="button"
-            {...uploadButtonAuthAnimation}
-          >
-            <img src={cameraIcon} alt="" />
-            Upload
-          </motion.button>
+            onClick={openPopup}
+          />
           <Button type="submit" label="Publish" size="small" />
         </div>
       </form>

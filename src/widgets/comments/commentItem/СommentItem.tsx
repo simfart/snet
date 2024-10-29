@@ -28,7 +28,7 @@ export const СommentItem: FC<PostProps> = ({ comment, deleteComment }) => {
   }, [isOwner, deleteComment, commentId]);
 
   return (
-    <div className={styles.postContainer} key={commentId}>
+    <div className={styles.commentContainer} key={commentId}>
       <div className={styles.header}>
         <div className={styles.user}>
           <Avatar owner={owner} variant="postAvatar" />

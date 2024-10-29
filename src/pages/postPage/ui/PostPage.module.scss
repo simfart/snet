@@ -6,7 +6,7 @@
   max-width: 1280px;
   margin-top: 59px;
   padding: 86px 20px 0;
-  gap: 10px;
+  gap: 57px;
 
   @include respond-to(tablet) {
     flex-direction: column;
@@ -19,7 +19,6 @@
 
 .post {
   width: 100%;
-  margin-right: 57px;
   @include respond-to(tablet) {
     margin: 0;
   }
@@ -98,4 +97,21 @@
   max-width: 513px;
   display: flex;
   flex-direction: column;
+}
+
+.commentsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 21px;
+  color: #555555;
+  padding-bottom: 21px;
+  span {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    padding-left: 9px;
+  }
 }
