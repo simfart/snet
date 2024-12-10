@@ -15,7 +15,7 @@ export const ProfilePage: FC = () => {
   const { user } = useUser(objectId!);
   const { user: currentUser } = useCurrentUser();
 
-  const { posts, isLoading, error, postsWithImages } = useUserPosts(objectId);
+  const { posts, isLoading, postsWithImages } = useUserPosts(objectId);
   const isOwner =
     currentUser && user ? currentUser.objectId === user.objectId : false;
 

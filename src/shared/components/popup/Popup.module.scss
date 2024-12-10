@@ -55,6 +55,8 @@
   }
 
   @include respond-to(mobile) {
+    margin: 10px;
+    padding: 20px;
   }
 }
 
@@ -68,7 +70,6 @@
 .settings {
   @include respond-to(tablet) {
     background-color: rgb(255, 255, 255);
-    // max-width: 511px;
     border-radius: 0;
     border: none;
   }
@@ -82,6 +83,10 @@
   border: none;
   &:focus {
     outline: none;
+  }
+
+  @include respond-to(mobile) {
+    right: 0;
   }
 }
 

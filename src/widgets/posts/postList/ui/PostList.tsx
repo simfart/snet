@@ -23,6 +23,7 @@ export const PostList: FC<PostsProps> = ({
 
   return (
     <div className={styles.postsContainer}>
+      <h2 className={styles.postsTitle}>Public Posts</h2>
       <div className={styles.createPostFormWrapper}>
         <CreatePostForm user={user} invalidateKeys={[QUERY_KEY.posts]} />
       </div>

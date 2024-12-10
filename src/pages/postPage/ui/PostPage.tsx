@@ -12,8 +12,11 @@ import { Avatar, Button } from 'shared/components';
 import { formatTimestamp } from 'shared/utils';
 import { Loader } from 'shared/ui';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
-import styles from './PostPage.module.scss';
 import { writeIcon } from 'shared/assets/images';
+
+import styles from './PostPage.module.scss';
+import { AnimatePresence } from 'framer-motion';
+import { ImageModal } from 'features/imageModal';
 
 export const PostPage: FC = () => {
   const location = useLocation();
@@ -23,8 +26,11 @@ export const PostPage: FC = () => {
   const { post, isLoading, setPostData } = usePost(selectedPost);
   const { user: currentUser } = useCurrentUser();
   const owner = post?.user;
+
   const { mutate } = useCreateComment(post, setPostData);
+
   const [isNewPostOpen, setNewPostOpen] = useState(false);
+
   const handleTagClick = useCallback(
     (tagId: string, tagName: string) => {
       navigate(`/?tag=${tagId}&tagName=${encodeURIComponent(tagName)}`);
@@ -46,6 +52,15 @@ export const PostPage: FC = () => {
     commentDelete({ commentId, postId: post.objectId });
   };
   const handleClick = () => setNewPostOpen(!isNewPostOpen);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const openImage = (image: string | undefined) => {
+    if (image) {
+      setSelectedImage(image);
+    }
+  };
+  const closeImage = () => setSelectedImage(null);
+
   if (isLoading) return <Loader />;
   return (
     <>
@@ -87,6 +102,7 @@ export const PostPage: FC = () => {
                 className={styles.postImage}
                 src={post.image}
                 alt="Post image"
+                onClick={() => openImage(post.image)}
               />
             )}
           </div>
@@ -122,6 +138,11 @@ export const PostPage: FC = () => {
           </div>
         </section>
       )}
+      <AnimatePresence>
+        {selectedImage && (
+          <ImageModal src={selectedImage} onClose={closeImage} />
+        )}
+      </AnimatePresence>
     </>
   );
 };

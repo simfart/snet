@@ -1,4 +1,6 @@
 import { FC, useCallback } from 'react';
+import { motion } from 'framer-motion';
+
 import { commentIcon } from 'shared/assets/images';
 import { formatTimestamp } from 'shared/utils';
 import { Avatar } from 'shared/components';
@@ -7,7 +9,9 @@ import { PostDescription } from 'entities/postDescription';
 import { useCurrentUser } from 'entities/user/hooks';
 import { useDeletePost } from 'entities/post/hooks';
 import { IPost } from 'entities/post/model/PostModel';
-import { PostDropdown } from 'entities/dropdown';
+import { Dropdown } from 'entities/dropdown';
+import { buttonHoverAnimation } from 'shared/animations/animationSettings';
+
 import styles from './PostCard.module.scss';
 
 interface PostCardProps {
@@ -57,7 +61,7 @@ export const PostCard: FC<PostCardProps> = ({
           </div>
         </div>
         {(isOwner || variant === 'profilePage') && (
-          <PostDropdown onDeleteClick={handleDelete} />
+          <Dropdown dropdownAction={handleDelete} label="Delete Post" />
         )}
       </div>
       <PostDescription
@@ -82,7 +86,12 @@ export const PostCard: FC<PostCardProps> = ({
         />
         <div className={styles.action}>
           <button>
-            <img src={commentIcon} alt="Comment Icon" onClick={handleClick} />
+            <motion.img
+              src={commentIcon}
+              alt="Comment Icon"
+              onClick={handleClick}
+              {...buttonHoverAnimation}
+            />
           </button>
           {post?.comments?.length > 0 && <p>{post.comments.length}</p>}
         </div>

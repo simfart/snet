@@ -1,11 +1,12 @@
 import { FC, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useCurrentUser } from 'entities/user/hooks';
+import { UserEditPopup } from 'features/userEditPopup';
+import { SearchForm } from 'features/searchForm';
+import { HeaderDropdown } from 'features/headerDropdown';
 import { Loader } from 'shared/ui';
 import { LogoItem } from 'shared/components';
-import { UserEditPopup } from 'features/userEditPopup';
-import { HeaderDropdown } from 'entities/dropdown';
-import { SearchForm } from 'features/searchForm';
+
 import styles from './Header.module.scss';
 
 interface HomeProps {

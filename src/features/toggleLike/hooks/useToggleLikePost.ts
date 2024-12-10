@@ -73,7 +73,6 @@ export const useToggleLikePost = (
             },
           );
         });
-        console.log('previousData', previousData);
         return { previousData } as ToggleLikePostContext;
       },
 

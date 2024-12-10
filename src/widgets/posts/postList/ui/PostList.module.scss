@@ -21,3 +21,16 @@
     display: none;
   }
 }
+
+.postsTitle {
+  display: none;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 700;
+  margin: 0 0 11px;
+  text-align: left;
+
+  @include respond-to(tablet) {
+    display: block;
+  }
+}

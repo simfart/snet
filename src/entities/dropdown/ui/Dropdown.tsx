@@ -8,13 +8,14 @@ import {
   itemVariants,
   overlayVariants,
 } from 'shared/animations/dropdownVariants';
-import styles from './PostDropdown.module.scss';
+import styles from './Dropdown.module.scss';
 
-interface PostDropdownProps {
-  onDeleteClick: () => void;
+interface DropdownProps {
+  dropdownAction: () => void;
+  label: string;
 }
 
-export const PostDropdown: FC<PostDropdownProps> = ({ onDeleteClick }) => {
+export const Dropdown: FC<DropdownProps> = ({ dropdownAction, label }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -31,10 +32,10 @@ export const PostDropdown: FC<PostDropdownProps> = ({ onDeleteClick }) => {
     }
   });
 
-  const postSettingsMenuItems = [
+  const menuItems = [
     {
-      label: 'Delete Post',
-      onClick: onDeleteClick,
+      label,
+      onClick: dropdownAction,
     },
   ];
 
@@ -62,7 +63,7 @@ export const PostDropdown: FC<PostDropdownProps> = ({ onDeleteClick }) => {
         animate={isOpen ? 'open' : 'closed'}
         variants={dropdownVariants}
       >
-        {postSettingsMenuItems.map((item, index) => (
+        {menuItems.map((item, index) => (
           <motion.button
             key={index}
             onClick={item.onClick}

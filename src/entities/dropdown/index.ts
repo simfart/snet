@@ -1,2 +1,1 @@
-export { HeaderDropdown } from './headerDropdown/HeaderDropdown';
-export { PostDropdown } from './postDropdown/PostDropdown';
+export { Dropdown } from './ui/Dropdown';

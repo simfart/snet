@@ -1,11 +1,13 @@
 import { FC, useCallback } from 'react';
-
-import styles from './LikeButton.module.scss';
+import { motion } from 'framer-motion';
 import { useToggleLikePost } from '../hooks/useToggleLikePost';
 import { likePostFn, removeLikePostFn } from 'entities/post/api/postApi';
 import { IPost } from 'entities/post/model/PostModel';
 import { IUser } from 'entities/user/model/userModel';
 import { heartIcon, heartOutlinedIcon } from 'shared/assets/images';
+import { likeButtonAnimations } from 'shared/animations/animationSettings';
+
+import styles from './LikeButton.module.scss';
 
 interface ILike {
   objectId: string;
@@ -49,9 +51,11 @@ export const LikeButton: FC<ILikeButton> = ({
       className={`${styles.like} ${variant === 'postPage' && styles.postPage}`}
     >
       <button onClick={handleToggleLike} disabled={isLikeLoading}>
-        <img
+        <motion.img
+          key={isLiked ? 'liked' : 'unliked'}
           src={isLiked ? heartIcon : heartOutlinedIcon}
           alt={isLiked ? 'Unlike' : 'Like'}
+          {...likeButtonAnimations}
         />
       </button>
       {post?.likes?.length > 0 && <p>{post.likes.length}</p>}

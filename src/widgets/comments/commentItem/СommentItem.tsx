@@ -1,12 +1,11 @@
 import { FC, useCallback } from 'react';
 import { formatTimestamp } from 'shared/utils';
 import { Avatar } from 'shared/components';
-import { PostDropdown } from 'entities/dropdown/postDropdown/PostDropdown';
-
-import { IComment } from '../../../entities/comment/model/CommentModel';
+import { Dropdown } from 'entities/dropdown';
+import { useCurrentUser } from 'entities/user/hooks';
+import { IComment } from 'entities/comment/model/CommentModel';
 
 import styles from './СommentItem.module.scss';
-import { useCurrentUser } from 'entities/user/hooks/useCurrentUser';
 
 interface PostProps {
   comment: IComment;
@@ -37,9 +36,11 @@ export const СommentItem: FC<PostProps> = ({ comment, deleteComment }) => {
             <div className={styles.date}>{formatTimestamp(created)}</div>
           </div>
         </div>
-        {isOwner && <PostDropdown onDeleteClick={handleDelete} />}
+        {isOwner && (
+          <Dropdown dropdownAction={handleDelete} label="Delete comment" />
+        )}
       </div>
-      <div>{text}</div>
+      <div className={styles.commentText}>{text}</div>
     </div>
   );
 };

@@ -10,9 +10,8 @@
 .header {
   display: flex;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 11px;
   justify-content: space-between;
-
   @include respond-to(mobile) {
     padding: 0 21px;
   }
@@ -110,4 +109,9 @@
       outline: none;
     }
   }
+}
+
+.commentText {
+  padding-left: 56px;
+  text-align: left;
 }

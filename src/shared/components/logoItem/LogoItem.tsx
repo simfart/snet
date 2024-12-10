@@ -2,15 +2,23 @@ import { FC } from 'react';
 import { logoIcon } from 'shared/assets/images';
 import { Link } from 'react-router-dom';
 import styles from './LogoItem.module.scss';
-
+import { motion } from 'framer-motion';
+import { logoAnimations } from 'shared/animations/animationSettings';
 export const LogoItem: FC = () => {
   return (
     <>
       <Link to="/" className={styles.logo}>
-        <img src={logoIcon} alt="Logo" />
-        <div className={`${styles['logo-title']} ${styles['logo-title_mark']}`}>
+        <motion.img
+          src={logoIcon}
+          alt="Logo"
+          {...logoAnimations.iconAnimation}
+        />
+        <motion.div
+          className={`${styles['logo-title']} ${styles['logo-title_mark']}`}
+          {...logoAnimations.titleAnimation}
+        >
           SOCIUM
-        </div>
+        </motion.div>
       </Link>
     </>
   );
