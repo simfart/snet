@@ -4,7 +4,6 @@ import {
   buttonAuthAnimation,
   uploadButtonAuthAnimation,
 } from 'shared/animations/animationSettings';
-
 import styles from './Button.module.scss';
 
 type ButtonProps = {

@@ -6,7 +6,6 @@ import {
   buttonAuthAnimation,
   containerAnimation,
 } from 'shared/animations/animationSettings';
-
 import styles from './AuthForm.module.scss';
 
 type InputConfig = {

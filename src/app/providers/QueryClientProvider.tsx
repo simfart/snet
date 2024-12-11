@@ -5,7 +5,7 @@ import {
   QueryCache,
 } from 'react-query';
 
-import { ReactQueryDevtools } from 'react-query/devtools';
+// import { ReactQueryDevtools } from 'react-query/devtools';
 
 const client = new QueryClient({
   defaultOptions: {
@@ -25,7 +25,7 @@ export const QueryClientProvider: FC<IQueryClientProviderProps> = ({
   return (
     <LQueryClientProvider client={client}>
       {children}
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </LQueryClientProvider>
   );
 };

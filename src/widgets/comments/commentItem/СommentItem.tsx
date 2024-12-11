@@ -4,7 +4,6 @@ import { Avatar } from 'shared/components';
 import { Dropdown } from 'entities/dropdown';
 import { useCurrentUser } from 'entities/user/hooks';
 import { IComment } from 'entities/comment/model/CommentModel';
-
 import styles from './СommentItem.module.scss';
 
 interface PostProps {

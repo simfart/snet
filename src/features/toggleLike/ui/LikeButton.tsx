@@ -6,7 +6,6 @@ import { IPost } from 'entities/post/model/PostModel';
 import { IUser } from 'entities/user/model/userModel';
 import { heartIcon, heartOutlinedIcon } from 'shared/assets/images';
 import { likeButtonAnimations } from 'shared/animations/animationSettings';
-
 import styles from './LikeButton.module.scss';
 
 interface ILike {

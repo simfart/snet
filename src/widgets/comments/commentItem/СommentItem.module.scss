@@ -5,6 +5,10 @@
   padding: 18px 20px 0;
   margin-bottom: 40px;
   box-sizing: border-box;
+
+  @include respond-to(tablet) {
+    padding: 0;
+  }
 }
 
 .header {
@@ -12,6 +16,7 @@
   align-items: center;
   margin-bottom: 11px;
   justify-content: space-between;
+
   @include respond-to(mobile) {
     padding: 0 21px;
   }

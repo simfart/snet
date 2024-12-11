@@ -2,9 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { buttonHoverAnimation } from 'shared/animations/animationSettings';
 import { clearIcon, seachIcon } from 'shared/assets/images';
-
-import styles from './SearchForm.module.scss';
 import { useLocation, useNavigate } from 'react-router-dom';
+import styles from './SearchForm.module.scss';
 
 interface SearchFormProps {
   selectedTagName?: string | null;

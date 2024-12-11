@@ -12,11 +12,10 @@ import { Avatar, Button } from 'shared/components';
 import { formatTimestamp } from 'shared/utils';
 import { Loader } from 'shared/ui';
 import { QUERY_KEY } from 'shared/constants/queryKeys';
-import { writeIcon } from 'shared/assets/images';
-
-import styles from './PostPage.module.scss';
+import { commentIcon, writeIcon } from 'shared/assets/images';
 import { AnimatePresence } from 'framer-motion';
 import { ImageModal } from 'features/imageModal';
+import styles from './PostPage.module.scss';
 
 export const PostPage: FC = () => {
   const location = useLocation();
@@ -108,10 +107,17 @@ export const PostPage: FC = () => {
           </div>
           <div className={styles.comments}>
             <div className={styles.commentsHeader}>
-              <div>
+              <div className={styles.commentsTitle}>
+                <img
+                  className={styles.commentsImg}
+                  src={commentIcon}
+                  alt="Comment Icon"
+                />
                 Comments
                 {post.comments.length > 0 && (
-                  <span>{post.comments.length}</span>
+                  <span className={styles.commentsCount}>
+                    {post.comments.length}
+                  </span>
                 )}
               </div>
               <Button

@@ -2,7 +2,7 @@ export const dropdownVariants = {
   open: {
     opacity: 1,
     y: 0,
-    display: 'block',
+    display: 'flex',
     transition: {
       type: 'spring',
       stiffness: 300,

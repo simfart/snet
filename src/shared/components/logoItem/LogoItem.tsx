@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { logoIcon } from 'shared/assets/images';
 import { Link } from 'react-router-dom';
-import styles from './LogoItem.module.scss';
 import { motion } from 'framer-motion';
 import { logoAnimations } from 'shared/animations/animationSettings';
+import styles from './LogoItem.module.scss';
+
 export const LogoItem: FC = () => {
   return (
     <>

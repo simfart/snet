@@ -27,6 +27,12 @@
   min-width: 342px;
   padding: 33px 20px 33px 20px;
   margin-top: 7px;
+
+  @include respond-to(mobile) {
+    right: -27px;
+    padding: 10px;
+    align-items: center;
+  }
 }
 
 .menuItem {
@@ -43,13 +49,19 @@
   transition: background-color 0.2s ease;
   border-radius: 10px;
   justify-content: space-between;
-  margin-bottom: 5px;
 
   &:hover {
     background-color: rgba(156, 44, 158, 0.08);
   }
   &:focus {
     outline: none;
+  }
+
+  @include respond-to(mobile) {
+    width: 90%;
+    padding: 16px;
+    font-size: 12px;
+    line-height: 18px;
   }
 }
 

@@ -6,7 +6,6 @@ import { SearchForm } from 'features/searchForm';
 import { HeaderDropdown } from 'features/headerDropdown';
 import { Loader } from 'shared/ui';
 import { LogoItem } from 'shared/components';
-
 import styles from './Header.module.scss';
 
 interface HomeProps {

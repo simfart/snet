@@ -1,6 +1,5 @@
 import { FC, useCallback } from 'react';
 import { motion } from 'framer-motion';
-
 import { commentIcon } from 'shared/assets/images';
 import { formatTimestamp } from 'shared/utils';
 import { Avatar } from 'shared/components';

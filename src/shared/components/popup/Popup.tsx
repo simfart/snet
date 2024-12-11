@@ -1,7 +1,6 @@
 import { FC, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { closeIcon } from 'shared/assets/images';
-
 import styles from './Popup.module.scss';
 
 interface PopupProps {

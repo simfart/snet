@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { motion } from 'framer-motion';
 import { inputFocusAnimation } from 'shared/animations/animationSettings';
-
 import styles from './Input.module.scss';
 
 interface InputProps {
