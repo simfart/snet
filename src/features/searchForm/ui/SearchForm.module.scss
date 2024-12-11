@@ -1,3 +1,6 @@
+@import 'app/styles/mixins';
+@import 'app/styles/variables';
+
 .searchForm {
   flex-grow: 1;
   display: flex;
@@ -30,6 +33,11 @@
     &::placeholder {
       color: #c4c4c4;
     }
+
+    @include respond-to(tablet) {
+      width: 100%;
+      padding: 8px;
+    }
   }
 }
 
@@ -51,6 +59,8 @@
 .clearButton {
   width: 21px;
   height: 21px;
+  min-width: 21px;
+  max-width: 21px;
   background-color: rgba(232, 77, 149, 0.093);
   border: none;
   padding: 8px 0;

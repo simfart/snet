@@ -1,7 +1,14 @@
+@import 'app/styles/mixins';
+@import 'app/styles/variables';
+
 .albumContainer {
   width: 100%;
   margin-right: 38px;
   max-width: 422px;
+
+  @include respond-to(tablet) {
+    margin-right: 0;
+  }
 }
 
 .album {
