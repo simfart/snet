@@ -1,4 +1,9 @@
 <script>
-    window.location.href = '/snet/' + location.pathname.substring(1);
+    const base = '/snet/';
+    if (!location.pathname.startsWith(base)) {
+      window.location.href = base;
+    } else {
+      window.location.href = base + location.pathname.substring(base.length);
+    }
   </script>
   
