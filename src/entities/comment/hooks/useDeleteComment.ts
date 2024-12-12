@@ -44,7 +44,7 @@ export const useDeleteComment = (
         previousPost,
       } as DeleteCommentContext;
     },
-    onError: (error, variables, context) => {
+    onError: (error, _, context) => {
       const ctx = context as DeleteCommentContext;
 
       if (ctx?.previousPost) {
