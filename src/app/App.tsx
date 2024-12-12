@@ -6,7 +6,7 @@ import './styles/global.scss';
 
 export const App: FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/snet">
       <ScrollToTop />
       <QueryClientProvider>
         <RoutesProvider />
