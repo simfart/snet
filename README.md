@@ -75,7 +75,7 @@ This project was built using the following technologies and tools: 🔍🔍🔍
 
 ### Mobile Version
 
-[![Mobile Version](https://i.postimg.cc/6pyYVh0h/Video-2024-12-11-231830.gif)](https://postimg.cc/WdcGTgxD)
+[![Video-2024-12-11-231830.gif](https://i.postimg.cc/6pyYVh0h/Video-2024-12-11-231830.gif)](https://postimg.cc/WdcGTgxD)
 
 
 ## Highlights 🎡🎡🎡
