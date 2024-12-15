@@ -75,10 +75,8 @@ This project was built using the following technologies and tools: 🔍🔍🔍
 
 ### Mobile Version
 
-![Mobile Version](https://imgur.com/GysMloJ.png)
-![Mobile Version](https://imgur.com/9NeV9nA.png)
-![Mobile Version](https://imgur.com/9NeV9nA.gif)
-![Mobile Version](https://imgur.com/9NeV9nA)
+[![Video-2024-12-11-231830.gif](https://i.postimg.cc/6pyYVh0h/Video-2024-12-11-231830.gif)](https://postimg.cc/WdcGTgxD)
+
 ## Highlights 🎡🎡🎡
 
 - **Interactive Interface**: Smooth transitions and animations using Framer Motion.
