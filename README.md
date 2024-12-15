@@ -1,30 +1,105 @@
-# React + TypeScript + Vite
+# Social
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Social is a responsive social network developed as an educational pet project. The application implements key features typical of modern social networks. 🌐🌐🌐
 
-Currently, two official plugins are available:
+## Features 🔧🔧🔧
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Registration and Authorization**: Users can create accounts and log in.
+- **Homepage**: A feed of all users' posts.
+- **User Page**:
+  - Tab with user posts.
+  - Tab with an image album.
+- **Post Management**:
+  - Adding text and graphic posts.
+  - Tagging posts during publication.
+  - Deleting posts.
+- **Comments and Likes**:
+  - Adding and deleting comments on posts.
+  - Liking and unliking posts.
+- **Search and Tagging**:
+  - Search bar for filtering posts by text and tags.
+  - Widget with popular tags.
+  - Clickable tags in posts for quick search.
+- **Profile Editing**:
+  - Changing the user's name.
+  - Adding/editing an avatar.
+  - Updating profile descriptions.
 
-## Expanding the ESLint configuration
+## Technologies 🛠️🛠️🛠️
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+This project was built using the following technologies and tools: 🔍🔍🔍
 
-- Configure the top-level `parserOptions` property like this:
+- **Frontend**:
+  - React
+  - TypeScript
+  - SCSS
+  - Zustand
+  - Axios
+  - React Query
+  - React Router DOM
+  - Framer Motion (for animations)
+- **Architecture**: Feature-Sliced Design (FSD).
+- **Backend**: API connected at `backendBaseUrl`.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Installation and Launch 🚪🚪🚪
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/username/social.git
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables by creating a `.env` file and adding the backend URL:
+
+   ```env
+   REACT_APP_BACKEND_URL=https://your-backend-url.com
+   ```
+
+4. Start the project:
+
+   ```bash
+   npm start
+   ```
+
+5. Open the application in your browser at [http://localhost:3000](http://localhost:3000). 🌐🌐🌐
+
+## Screenshots 📸📸📸
+
+### Homepage
+
+![Homepage](https://imgur.com/mwthVdQ.png)
+
+### Profile Page
+
+![Profile Page](https://imgur.com/ZxhgDoq.png)
+
+### Mobile Version
+
+![Mobile Version](https://imgur.com/GysMloJ.png)
+
+## Highlights 🎡🎡🎡
+
+- **Interactive Interface**: Smooth transitions and animations using Framer Motion.
+- **Data Optimization**: React Query is used for data fetching and caching.
+- **User-Friendly Search**: Intuitive search functionality by text and tags.
+- **Modular Architecture**: The project is structured according to FSD principles for easy scalability. 🔧🔧🔧
+
+## Future Plans 🌍🌍🌍
+
+- Add the ability to send private messages between users.
+- Implement a notification system.
+- Support video uploads.
+
+## Contribution 📚📚📚
+
+I welcome feedback and suggestions. If you want to make changes or propose improvements, please create an **issue** or submit a **pull request**. 🙏🙏🙏
+
+---
+
+Thank you for your interest in the Social project! I hope you enjoy using or contributing to it! 💖💖💖
