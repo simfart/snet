@@ -67,7 +67,7 @@ This project was built using the following technologies and tools: 🔍🔍🔍
 
 ### Homepage
 
-![Homepage](https://imgur.com/mwthVdQ.gif)
+![Homepage](https://imgur.com/mwthVdQ.gif).
 
 ### Profile Page
 
