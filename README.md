@@ -55,25 +55,19 @@ This project was built using the following technologies and tools: 🔍🔍🔍
    npm install
    ```
 
-3. Set up environment variables by creating a `.env` file and adding the backend URL:
-
-   ```env
-   REACT_APP_BACKEND_URL=https://your-backend-url.com
-   ```
-
-4. Start the project:
+3. Start the project:
 
    ```bash
    npm start
    ```
 
-5. Open the application in your browser at [http://localhost:3000](http://localhost:3000). 🌐🌐🌐
+4. Open the application in your browser at [http://localhost:3000](http://localhost:3000). 🌐🌐🌐
 
 ## Screenshots 📸📸📸
 
 ### Homepage
 
-![Homepage](https://imgur.com/mwthVdQ.png)
+![Homepage](https://imgur.com/EaCjq4q)
 
 ### Profile Page
 
