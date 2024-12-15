@@ -61,7 +61,7 @@ This project was built using the following technologies and tools: 🔍🔍🔍
    npm start
    ```
 
-4. Open the application in your browser at [http://localhost:3000](http://localhost:3000). 🌐🌐🌐
+4. Open the application in your browser at [http://localhost:5173/snet](http://localhost:5173/snet). 🌐🌐🌐
 
 ## Screenshots 📸📸📸
 
@@ -75,7 +75,7 @@ This project was built using the following technologies and tools: 🔍🔍🔍
 
 ### Mobile Version
 
-[![Video-2024-12-11-231830.gif](https://i.postimg.cc/6pyYVh0h/Video-2024-12-11-231830.gif)](https://postimg.cc/WdcGTgxD)
+![Mobile Version](https://imgur.com/42Z42rr.png)
 
 
 ## Highlights 🎡🎡🎡
